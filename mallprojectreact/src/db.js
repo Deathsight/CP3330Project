@@ -101,37 +101,11 @@ class Entity{
 }
 
 const DB = {
-    Advertisements: new Entity('Advertisements'),
     Assets: new Entity('Assets'),
-    AssetRentings: new Entity('AssetRentings'),
-    AssetRentingEvents: new Entity('AssetRentingEvents'),
-    BookingSeats: new Entity('BookingSeats'),
-    Cleanings: new Entity('Cleanings'),
-    Events: new Entity('Events'),
-    Favorites: new Entity('Favorites'),
-    FeedBacks: new Entity('FeedBacks'),
-    Likes: new Entity('Likes'),
-    Logs: new Entity('Logs'),
-    News: new Entity('News'),
-    Parkings: new Entity('Parkings'),
-    Payments: new Entity('Payments'),
-    Renters: new Entity('Renters'),
-    Rentings: new Entity('Rentings'),
-    Roles: new Entity('Roles'),
-    Seats: new Entity('Seats'),
-    Securitys: new Entity('Securitys'),
-    Services: new Entity('Services'),
-    STicketChats: new Entity('STicketChats'),
-    STicketTypes: new Entity('STicketTypes'),
-    Stores: new Entity('Stores'),
-    StorePMs: new Entity('StorePMs'),
-    Subscriptions: new Entity('Subscriptions'),
-    SubscriptionLevels: new Entity('SubscriptionLevels'),
-    SupportTickets: new Entity('SupportTickets'),
-    Theaters: new Entity('Theaters'),
-    TheaterPMes: new Entity('TheaterPMs'),
-    TheaterServices: new Entity('TheaterServices'),
-    Users: new Entity('Users')
+    PricingModels: new Entity('PricingModels'),
+    Customers: new Entity('Customers'),
+    Bookings: new Entity('Bookings'),
+    AssetBookings: new Entity('AssetBookings')
 }
 
 export default DB
