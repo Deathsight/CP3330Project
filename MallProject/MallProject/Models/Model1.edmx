@@ -1,0 +1,2410 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Database1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Advertisement">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserEmail" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Type" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="StartDateTime" Type="datetime" Nullable="false" />
+          <Property Name="EndDateTime" Type="datetime" Nullable="false" />
+          <Property Name="MediaContent" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Asset">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="LocationCode" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AssetRenting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RentingId" Type="int" Nullable="false" />
+          <Property Name="AssetId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AssetRentingEvent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EventId" Type="int" Nullable="false" />
+          <Property Name="BookingSeatId" Type="int" Nullable="false" />
+          <Property Name="AssetRentingId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BookingSeat">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserEmail" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SeatId" Type="int" Nullable="false" />
+          <Property Name="Price" Type="float" Nullable="false" />
+          <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="SubscriptionId" Type="int" />
+        </EntityType>
+        <EntityType Name="Cleaning">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RentingId" Type="int" Nullable="false" />
+          <Property Name="CleanerEmail" Type="nvarchar" MaxLength="50" />
+          <Property Name="Status" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StartTime" Type="datetime" Nullable="false" />
+          <Property Name="ShowName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Price" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Favorite">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserEmail" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RenterEmail" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FeedBack">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserEmail" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RenterEmail" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Rating" Type="int" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Like">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserEmail" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RenterEmail" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserEmail" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Action" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ActionTarget" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="New">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RenterEmail" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Topic" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Parking">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubscriptionID" Type="int" />
+          <Property Name="Floor" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ParkingNumber" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CarPlate" Type="nvarchar(max)" />
+          <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RentingID" Type="int" Nullable="false" />
+          <Property Name="Type" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Amount" Type="float" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Renter">
+          <Key>
+            <PropertyRef Name="Email" />
+          </Key>
+          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StoreName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="QIdPic" Type="nvarchar(max)" />
+          <Property Name="Type" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="RCodeUsed" Type="nvarchar(max)" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ReferralCode" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="RCUses" Type="int" Nullable="false" />
+          <Property Name="Tokens" Type="int" Nullable="false" />
+          <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Renting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RenterEmail" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StartDateTime" Type="datetime" />
+          <Property Name="EndDateTime" Type="datetime" />
+          <Property Name="TotalPrice" Type="float" />
+          <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ReferalCode" Type="nvarchar(max)" />
+          <Property Name="SecurityId" Type="int" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Seat">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TheaterId" Type="int" Nullable="false" />
+          <Property Name="Type" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Security">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Level" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Price" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Service">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Price" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="STicketChat">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="STicketId" Type="int" Nullable="false" />
+          <Property Name="UserEmail" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="STicketType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Priority" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Store">
+          <Key>
+            <PropertyRef Name="AssetId" />
+          </Key>
+          <Property Name="AssetId" Type="int" Nullable="false" />
+          <Property Name="Size" Type="int" />
+          <Property Name="StorePMId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StorePM">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Price" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Subscription">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserEmail" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ExpiryDate" Type="datetime" Nullable="false" />
+          <Property Name="SubscriptionLevelID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SubscriptionLevel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Level" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DiscountPercent" Type="float" Nullable="false" />
+          <Property Name="Price" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SupportTicket">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AgentEmail" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserEmail" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SubmitDate" Type="datetime" Nullable="false" />
+          <Property Name="ClosedDate" Type="datetime" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="STicketTypeId" Type="int" Nullable="false" />
+          <Property Name="Feedback" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Theater">
+          <Key>
+            <PropertyRef Name="AssetId" />
+          </Key>
+          <Property Name="AssetId" Type="int" Nullable="false" />
+          <Property Name="Capacity" Type="int" Nullable="false" />
+          <Property Name="TheaterPMId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TheaterPM">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Price" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TheaterService">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TheaterId" Type="int" Nullable="false" />
+          <Property Name="ServiceId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Email" />
+          </Key>
+          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="15" />
+          <Property Name="RoleID" Type="int" />
+        </EntityType>
+        <Association Name="FK__Advertise__UserE__3F466844">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Advertisement" Type="Self.Advertisement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="Advertisement">
+              <PropertyRef Name="UserEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AssetRent__Asset__3493CFA7">
+          <End Role="AssetRenting" Type="Self.AssetRenting" Multiplicity="1" />
+          <End Role="AssetRentingEvent" Type="Self.AssetRentingEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssetRenting">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AssetRentingEvent">
+              <PropertyRef Name="AssetRentingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AssetRent__Asset__6D0D32F4">
+          <End Role="Asset" Type="Self.Asset" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AssetRenting" Type="Self.AssetRenting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asset">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AssetRenting">
+              <PropertyRef Name="AssetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AssetRent__Booki__339FAB6E">
+          <End Role="BookingSeat" Type="Self.BookingSeat" Multiplicity="1" />
+          <End Role="AssetRentingEvent" Type="Self.AssetRentingEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BookingSeat">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AssetRentingEvent">
+              <PropertyRef Name="BookingSeatId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AssetRent__Event__32AB8735">
+          <End Role="Event" Type="Self.Event" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AssetRentingEvent" Type="Self.AssetRentingEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AssetRentingEvent">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AssetRent__Renti__6C190EBB">
+          <End Role="Renting" Type="Self.Renting" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AssetRenting" Type="Self.AssetRenting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Renting">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AssetRenting">
+              <PropertyRef Name="RentingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BookingSe__SeatI__2EDAF651">
+          <End Role="Seat" Type="Self.Seat" Multiplicity="1" />
+          <End Role="BookingSeat" Type="Self.BookingSeat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seat">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BookingSeat">
+              <PropertyRef Name="SeatId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BookingSe__Subsc__4D5F7D71">
+          <End Role="Subscription" Type="Self.Subscription" Multiplicity="0..1" />
+          <End Role="BookingSeat" Type="Self.BookingSeat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subscription">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BookingSeat">
+              <PropertyRef Name="SubscriptionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BookingSe__UserE__2DE6D218">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="BookingSeat" Type="Self.BookingSeat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="BookingSeat">
+              <PropertyRef Name="UserEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cleaning__Cleane__6477ECF3">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Cleaning" Type="Self.Cleaning" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="Cleaning">
+              <PropertyRef Name="CleanerEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cleaning__Rentin__6383C8BA">
+          <End Role="Renting" Type="Self.Renting" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Cleaning" Type="Self.Cleaning" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Renting">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cleaning">
+              <PropertyRef Name="RentingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Favorite__Renter__398D8EEE">
+          <End Role="Renter" Type="Self.Renter" Multiplicity="1" />
+          <End Role="Favorite" Type="Self.Favorite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Renter">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="Favorite">
+              <PropertyRef Name="RenterEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Favorite__UserEm__38996AB5">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Favorite" Type="Self.Favorite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="Favorite">
+              <PropertyRef Name="UserEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FeedBack__Renter__4F7CD00D">
+          <End Role="Renter" Type="Self.Renter" Multiplicity="1" />
+          <End Role="FeedBack" Type="Self.FeedBack" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Renter">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="FeedBack">
+              <PropertyRef Name="RenterEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FeedBack__UserEm__4E88ABD4">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="FeedBack" Type="Self.FeedBack" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="FeedBack">
+              <PropertyRef Name="UserEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Like__RenterEmai__35BCFE0A">
+          <End Role="Renter" Type="Self.Renter" Multiplicity="1" />
+          <End Role="Like" Type="Self.Like" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Renter">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="Like">
+              <PropertyRef Name="RenterEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Like__UserEmail__34C8D9D1">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Like" Type="Self.Like" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="Like">
+              <PropertyRef Name="UserEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Log__UserEmail__3C69FB99">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Log" Type="Self.Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="Log">
+              <PropertyRef Name="UserEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__New__RenterEmail__503BEA1C">
+          <End Role="Renter" Type="Self.Renter" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="New" Type="Self.New" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Renter">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="New">
+              <PropertyRef Name="RenterEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Parking__Subscri__693CA210">
+          <End Role="Subscription" Type="Self.Subscription" Multiplicity="0..1" />
+          <End Role="Parking" Type="Self.Parking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subscription">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Parking">
+              <PropertyRef Name="SubscriptionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Payment__Renting__60A75C0F">
+          <End Role="Renting" Type="Self.Renting" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Renting">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="RentingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Renter__Email__2A4B4B5E">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Renter" Type="Self.Renter" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="Renter">
+              <PropertyRef Name="Email" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Renting__RenterE__5CD6CB2B">
+          <End Role="Renter" Type="Self.Renter" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Renting" Type="Self.Renting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Renter">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="Renting">
+              <PropertyRef Name="RenterEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Renting__Securit__5DCAEF64">
+          <End Role="Security" Type="Self.Security" Multiplicity="0..1" />
+          <End Role="Renting" Type="Self.Renting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Security">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Renting">
+              <PropertyRef Name="SecurityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Seat__TheaterId__2180FB33">
+          <End Role="Theater" Type="Self.Theater" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Seat" Type="Self.Seat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Theater">
+              <PropertyRef Name="AssetId" />
+            </Principal>
+            <Dependent Role="Seat">
+              <PropertyRef Name="TheaterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__STicketCh__STick__4BAC3F29">
+          <End Role="SupportTicket" Type="Self.SupportTicket" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="STicketChat" Type="Self.STicketChat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SupportTicket">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="STicketChat">
+              <PropertyRef Name="STicketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Store__AssetId__71D1E811">
+          <End Role="Asset" Type="Self.Asset" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Store" Type="Self.Store" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Asset">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Store">
+              <PropertyRef Name="AssetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Store__StorePMId__72C60C4A">
+          <End Role="StorePM" Type="Self.StorePM" Multiplicity="1" />
+          <End Role="Store" Type="Self.Store" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StorePM">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Store">
+              <PropertyRef Name="StorePMId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Subscript__Subsc__5535A963">
+          <End Role="SubscriptionLevel" Type="Self.SubscriptionLevel" Multiplicity="1" />
+          <End Role="Subscription" Type="Self.Subscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubscriptionLevel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Subscription">
+              <PropertyRef Name="SubscriptionLevelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Subscript__UserE__5441852A">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Subscription" Type="Self.Subscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="Subscription">
+              <PropertyRef Name="UserEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SupportTi__Agent__3A4CA8FD">
+          <End Role="User" Type="Self.User" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="SupportTicket" Type="Self.SupportTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="SupportTicket">
+              <PropertyRef Name="AgentEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SupportTi__STick__48CFD27E">
+          <End Role="STicketType" Type="Self.STicketType" Multiplicity="1" />
+          <End Role="SupportTicket" Type="Self.SupportTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STicketType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SupportTicket">
+              <PropertyRef Name="STicketTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SupportTi__UserE__47DBAE45">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="SupportTicket" Type="Self.SupportTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="SupportTicket">
+              <PropertyRef Name="UserEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Theater__AssetId__236943A5">
+          <End Role="Asset" Type="Self.Asset" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Theater" Type="Self.Theater" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Asset">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Theater">
+              <PropertyRef Name="AssetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Theater__Theater__22751F6C">
+          <End Role="TheaterPM" Type="Self.TheaterPM" Multiplicity="1" />
+          <End Role="Theater" Type="Self.Theater" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TheaterPM">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Theater">
+              <PropertyRef Name="TheaterPMId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TheaterSe__Servi__0A9D95DB">
+          <End Role="Service" Type="Self.Service" Multiplicity="1" />
+          <End Role="TheaterService" Type="Self.TheaterService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TheaterService">
+              <PropertyRef Name="ServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TheaterSe__Theat__208CD6FA">
+          <End Role="Theater" Type="Self.Theater" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TheaterService" Type="Self.TheaterService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Theater">
+              <PropertyRef Name="AssetId" />
+            </Principal>
+            <Dependent Role="TheaterService">
+              <PropertyRef Name="TheaterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_ToRole">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Database1ModelStoreContainer">
+          <EntitySet Name="Advertisement" EntityType="Self.Advertisement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Asset" EntityType="Self.Asset" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AssetRenting" EntityType="Self.AssetRenting" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AssetRentingEvent" EntityType="Self.AssetRentingEvent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BookingSeat" EntityType="Self.BookingSeat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cleaning" EntityType="Self.Cleaning" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Favorite" EntityType="Self.Favorite" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FeedBack" EntityType="Self.FeedBack" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Like" EntityType="Self.Like" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="New" EntityType="Self.New" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Parking" EntityType="Self.Parking" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Renter" EntityType="Self.Renter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Renting" EntityType="Self.Renting" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Seat" EntityType="Self.Seat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Security" EntityType="Self.Security" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Service" EntityType="Self.Service" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="STicketChat" EntityType="Self.STicketChat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="STicketType" EntityType="Self.STicketType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Store" EntityType="Self.Store" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StorePM" EntityType="Self.StorePM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subscription" EntityType="Self.Subscription" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubscriptionLevel" EntityType="Self.SubscriptionLevel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SupportTicket" EntityType="Self.SupportTicket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Theater" EntityType="Self.Theater" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TheaterPM" EntityType="Self.TheaterPM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TheaterService" EntityType="Self.TheaterService" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Advertise__UserE__3F466844" Association="Self.FK__Advertise__UserE__3F466844">
+            <End Role="User" EntitySet="User" />
+            <End Role="Advertisement" EntitySet="Advertisement" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AssetRent__Asset__3493CFA7" Association="Self.FK__AssetRent__Asset__3493CFA7">
+            <End Role="AssetRenting" EntitySet="AssetRenting" />
+            <End Role="AssetRentingEvent" EntitySet="AssetRentingEvent" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AssetRent__Asset__6D0D32F4" Association="Self.FK__AssetRent__Asset__6D0D32F4">
+            <End Role="Asset" EntitySet="Asset" />
+            <End Role="AssetRenting" EntitySet="AssetRenting" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AssetRent__Booki__339FAB6E" Association="Self.FK__AssetRent__Booki__339FAB6E">
+            <End Role="BookingSeat" EntitySet="BookingSeat" />
+            <End Role="AssetRentingEvent" EntitySet="AssetRentingEvent" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AssetRent__Event__32AB8735" Association="Self.FK__AssetRent__Event__32AB8735">
+            <End Role="Event" EntitySet="Event" />
+            <End Role="AssetRentingEvent" EntitySet="AssetRentingEvent" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AssetRent__Renti__6C190EBB" Association="Self.FK__AssetRent__Renti__6C190EBB">
+            <End Role="Renting" EntitySet="Renting" />
+            <End Role="AssetRenting" EntitySet="AssetRenting" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BookingSe__SeatI__2EDAF651" Association="Self.FK__BookingSe__SeatI__2EDAF651">
+            <End Role="Seat" EntitySet="Seat" />
+            <End Role="BookingSeat" EntitySet="BookingSeat" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BookingSe__Subsc__4D5F7D71" Association="Self.FK__BookingSe__Subsc__4D5F7D71">
+            <End Role="Subscription" EntitySet="Subscription" />
+            <End Role="BookingSeat" EntitySet="BookingSeat" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BookingSe__UserE__2DE6D218" Association="Self.FK__BookingSe__UserE__2DE6D218">
+            <End Role="User" EntitySet="User" />
+            <End Role="BookingSeat" EntitySet="BookingSeat" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cleaning__Cleane__6477ECF3" Association="Self.FK__Cleaning__Cleane__6477ECF3">
+            <End Role="User" EntitySet="User" />
+            <End Role="Cleaning" EntitySet="Cleaning" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cleaning__Rentin__6383C8BA" Association="Self.FK__Cleaning__Rentin__6383C8BA">
+            <End Role="Renting" EntitySet="Renting" />
+            <End Role="Cleaning" EntitySet="Cleaning" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Favorite__Renter__398D8EEE" Association="Self.FK__Favorite__Renter__398D8EEE">
+            <End Role="Renter" EntitySet="Renter" />
+            <End Role="Favorite" EntitySet="Favorite" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Favorite__UserEm__38996AB5" Association="Self.FK__Favorite__UserEm__38996AB5">
+            <End Role="User" EntitySet="User" />
+            <End Role="Favorite" EntitySet="Favorite" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FeedBack__Renter__4F7CD00D" Association="Self.FK__FeedBack__Renter__4F7CD00D">
+            <End Role="Renter" EntitySet="Renter" />
+            <End Role="FeedBack" EntitySet="FeedBack" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FeedBack__UserEm__4E88ABD4" Association="Self.FK__FeedBack__UserEm__4E88ABD4">
+            <End Role="User" EntitySet="User" />
+            <End Role="FeedBack" EntitySet="FeedBack" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Like__RenterEmai__35BCFE0A" Association="Self.FK__Like__RenterEmai__35BCFE0A">
+            <End Role="Renter" EntitySet="Renter" />
+            <End Role="Like" EntitySet="Like" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Like__UserEmail__34C8D9D1" Association="Self.FK__Like__UserEmail__34C8D9D1">
+            <End Role="User" EntitySet="User" />
+            <End Role="Like" EntitySet="Like" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Log__UserEmail__3C69FB99" Association="Self.FK__Log__UserEmail__3C69FB99">
+            <End Role="User" EntitySet="User" />
+            <End Role="Log" EntitySet="Log" />
+          </AssociationSet>
+          <AssociationSet Name="FK__New__RenterEmail__503BEA1C" Association="Self.FK__New__RenterEmail__503BEA1C">
+            <End Role="Renter" EntitySet="Renter" />
+            <End Role="New" EntitySet="New" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Parking__Subscri__693CA210" Association="Self.FK__Parking__Subscri__693CA210">
+            <End Role="Subscription" EntitySet="Subscription" />
+            <End Role="Parking" EntitySet="Parking" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Payment__Renting__60A75C0F" Association="Self.FK__Payment__Renting__60A75C0F">
+            <End Role="Renting" EntitySet="Renting" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Renter__Email__2A4B4B5E" Association="Self.FK__Renter__Email__2A4B4B5E">
+            <End Role="User" EntitySet="User" />
+            <End Role="Renter" EntitySet="Renter" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Renting__RenterE__5CD6CB2B" Association="Self.FK__Renting__RenterE__5CD6CB2B">
+            <End Role="Renter" EntitySet="Renter" />
+            <End Role="Renting" EntitySet="Renting" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Renting__Securit__5DCAEF64" Association="Self.FK__Renting__Securit__5DCAEF64">
+            <End Role="Security" EntitySet="Security" />
+            <End Role="Renting" EntitySet="Renting" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Seat__TheaterId__2180FB33" Association="Self.FK__Seat__TheaterId__2180FB33">
+            <End Role="Theater" EntitySet="Theater" />
+            <End Role="Seat" EntitySet="Seat" />
+          </AssociationSet>
+          <AssociationSet Name="FK__STicketCh__STick__4BAC3F29" Association="Self.FK__STicketCh__STick__4BAC3F29">
+            <End Role="SupportTicket" EntitySet="SupportTicket" />
+            <End Role="STicketChat" EntitySet="STicketChat" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Store__AssetId__71D1E811" Association="Self.FK__Store__AssetId__71D1E811">
+            <End Role="Asset" EntitySet="Asset" />
+            <End Role="Store" EntitySet="Store" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Store__StorePMId__72C60C4A" Association="Self.FK__Store__StorePMId__72C60C4A">
+            <End Role="StorePM" EntitySet="StorePM" />
+            <End Role="Store" EntitySet="Store" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Subscript__Subsc__5535A963" Association="Self.FK__Subscript__Subsc__5535A963">
+            <End Role="SubscriptionLevel" EntitySet="SubscriptionLevel" />
+            <End Role="Subscription" EntitySet="Subscription" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Subscript__UserE__5441852A" Association="Self.FK__Subscript__UserE__5441852A">
+            <End Role="User" EntitySet="User" />
+            <End Role="Subscription" EntitySet="Subscription" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SupportTi__Agent__3A4CA8FD" Association="Self.FK__SupportTi__Agent__3A4CA8FD">
+            <End Role="User" EntitySet="User" />
+            <End Role="SupportTicket" EntitySet="SupportTicket" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SupportTi__STick__48CFD27E" Association="Self.FK__SupportTi__STick__48CFD27E">
+            <End Role="STicketType" EntitySet="STicketType" />
+            <End Role="SupportTicket" EntitySet="SupportTicket" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SupportTi__UserE__47DBAE45" Association="Self.FK__SupportTi__UserE__47DBAE45">
+            <End Role="User" EntitySet="User" />
+            <End Role="SupportTicket" EntitySet="SupportTicket" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Theater__AssetId__236943A5" Association="Self.FK__Theater__AssetId__236943A5">
+            <End Role="Asset" EntitySet="Asset" />
+            <End Role="Theater" EntitySet="Theater" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Theater__Theater__22751F6C" Association="Self.FK__Theater__Theater__22751F6C">
+            <End Role="TheaterPM" EntitySet="TheaterPM" />
+            <End Role="Theater" EntitySet="Theater" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TheaterSe__Servi__0A9D95DB" Association="Self.FK__TheaterSe__Servi__0A9D95DB">
+            <End Role="Service" EntitySet="Service" />
+            <End Role="TheaterService" EntitySet="TheaterService" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TheaterSe__Theat__208CD6FA" Association="Self.FK__TheaterSe__Theat__208CD6FA">
+            <End Role="Theater" EntitySet="Theater" />
+            <End Role="TheaterService" EntitySet="TheaterService" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_ToRole" Association="Self.FK_User_ToRole">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Database1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Advertisement">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StartDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="MediaContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Advertise__UserE__3F466844" FromRole="Advertisement" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Asset">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LocationCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AssetRentings" Relationship="Self.FK__AssetRent__Asset__6D0D32F4" FromRole="Asset" ToRole="AssetRenting" />
+          <NavigationProperty Name="Store" Relationship="Self.FK__Store__AssetId__71D1E811" FromRole="Asset" ToRole="Store" />
+          <NavigationProperty Name="Theater" Relationship="Self.FK__Theater__AssetId__236943A5" FromRole="Asset" ToRole="Theater" />
+        </EntityType>
+        <EntityType Name="AssetRenting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RentingId" Type="Int32" Nullable="false" />
+          <Property Name="AssetId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Asset" Relationship="Self.FK__AssetRent__Asset__6D0D32F4" FromRole="AssetRenting" ToRole="Asset" />
+          <NavigationProperty Name="AssetRentingEvents" Relationship="Self.FK__AssetRent__Asset__3493CFA7" FromRole="AssetRenting" ToRole="AssetRentingEvent" />
+          <NavigationProperty Name="Renting" Relationship="Self.FK__AssetRent__Renti__6C190EBB" FromRole="AssetRenting" ToRole="Renting" />
+        </EntityType>
+        <EntityType Name="AssetRentingEvent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventId" Type="Int32" Nullable="false" />
+          <Property Name="BookingSeatId" Type="Int32" Nullable="false" />
+          <Property Name="AssetRentingId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AssetRenting" Relationship="Self.FK__AssetRent__Asset__3493CFA7" FromRole="AssetRentingEvent" ToRole="AssetRenting" />
+          <NavigationProperty Name="BookingSeat" Relationship="Self.FK__AssetRent__Booki__339FAB6E" FromRole="AssetRentingEvent" ToRole="BookingSeat" />
+          <NavigationProperty Name="Event" Relationship="Self.FK__AssetRent__Event__32AB8735" FromRole="AssetRentingEvent" ToRole="Event" />
+        </EntityType>
+        <EntityType Name="BookingSeat">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SeatId" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Double" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SubscriptionId" Type="Int32" />
+          <NavigationProperty Name="AssetRentingEvents" Relationship="Self.FK__AssetRent__Booki__339FAB6E" FromRole="BookingSeat" ToRole="AssetRentingEvent" />
+          <NavigationProperty Name="Seat" Relationship="Self.FK__BookingSe__SeatI__2EDAF651" FromRole="BookingSeat" ToRole="Seat" />
+          <NavigationProperty Name="Subscription" Relationship="Self.FK__BookingSe__Subsc__4D5F7D71" FromRole="BookingSeat" ToRole="Subscription" />
+          <NavigationProperty Name="User" Relationship="Self.FK__BookingSe__UserE__2DE6D218" FromRole="BookingSeat" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Cleaning">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RentingId" Type="Int32" Nullable="false" />
+          <Property Name="CleanerEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Cleaning__Cleane__6477ECF3" FromRole="Cleaning" ToRole="User" />
+          <NavigationProperty Name="Renting" Relationship="Self.FK__Cleaning__Rentin__6383C8BA" FromRole="Cleaning" ToRole="Renting" />
+        </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ShowName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Double" Nullable="false" />
+          <NavigationProperty Name="AssetRentingEvents" Relationship="Self.FK__AssetRent__Event__32AB8735" FromRole="Event" ToRole="AssetRentingEvent" />
+        </EntityType>
+        <EntityType Name="Favorite">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RenterEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Renter" Relationship="Self.FK__Favorite__Renter__398D8EEE" FromRole="Favorite" ToRole="Renter" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Favorite__UserEm__38996AB5" FromRole="Favorite" ToRole="User" />
+        </EntityType>
+        <EntityType Name="FeedBack">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RenterEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Rating" Type="Int32" Nullable="false" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Renter" Relationship="Self.FK__FeedBack__Renter__4F7CD00D" FromRole="FeedBack" ToRole="Renter" />
+          <NavigationProperty Name="User" Relationship="Self.FK__FeedBack__UserEm__4E88ABD4" FromRole="FeedBack" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Like">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RenterEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Renter" Relationship="Self.FK__Like__RenterEmai__35BCFE0A" FromRole="Like" ToRole="Renter" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Like__UserEmail__34C8D9D1" FromRole="Like" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Action" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ActionTarget" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Log__UserEmail__3C69FB99" FromRole="Log" ToRole="User" />
+        </EntityType>
+        <EntityType Name="New">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RenterEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Topic" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Renter" Relationship="Self.FK__New__RenterEmail__503BEA1C" FromRole="New" ToRole="Renter" />
+        </EntityType>
+        <EntityType Name="Parking">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubscriptionID" Type="Int32" />
+          <Property Name="Floor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ParkingNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CarPlate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Subscription" Relationship="Self.FK__Parking__Subscri__693CA210" FromRole="Parking" ToRole="Subscription" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RentingID" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Amount" Type="Double" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Renting" Relationship="Self.FK__Payment__Renting__60A75C0F" FromRole="Payment" ToRole="Renting" />
+        </EntityType>
+        <EntityType Name="Renter">
+          <Key>
+            <PropertyRef Name="Email" />
+          </Key>
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StoreName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="QIdPic" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RCodeUsed" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ReferralCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RCUses" Type="Int32" Nullable="false" />
+          <Property Name="Tokens" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Favorites" Relationship="Self.FK__Favorite__Renter__398D8EEE" FromRole="Renter" ToRole="Favorite" />
+          <NavigationProperty Name="FeedBacks" Relationship="Self.FK__FeedBack__Renter__4F7CD00D" FromRole="Renter" ToRole="FeedBack" />
+          <NavigationProperty Name="Likes" Relationship="Self.FK__Like__RenterEmai__35BCFE0A" FromRole="Renter" ToRole="Like" />
+          <NavigationProperty Name="News" Relationship="Self.FK__New__RenterEmail__503BEA1C" FromRole="Renter" ToRole="New" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Renter__Email__2A4B4B5E" FromRole="Renter" ToRole="User" />
+          <NavigationProperty Name="Rentings" Relationship="Self.FK__Renting__RenterE__5CD6CB2B" FromRole="Renter" ToRole="Renting" />
+        </EntityType>
+        <EntityType Name="Renting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RenterEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StartDateTime" Type="DateTime" Precision="3" />
+          <Property Name="EndDateTime" Type="DateTime" Precision="3" />
+          <Property Name="TotalPrice" Type="Double" />
+          <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ReferalCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityId" Type="Int32" />
+          <NavigationProperty Name="AssetRentings" Relationship="Self.FK__AssetRent__Renti__6C190EBB" FromRole="Renting" ToRole="AssetRenting" />
+          <NavigationProperty Name="Cleanings" Relationship="Self.FK__Cleaning__Rentin__6383C8BA" FromRole="Renting" ToRole="Cleaning" />
+          <NavigationProperty Name="Payments" Relationship="Self.FK__Payment__Renting__60A75C0F" FromRole="Renting" ToRole="Payment" />
+          <NavigationProperty Name="Renter" Relationship="Self.FK__Renting__RenterE__5CD6CB2B" FromRole="Renting" ToRole="Renter" />
+          <NavigationProperty Name="Security" Relationship="Self.FK__Renting__Securit__5DCAEF64" FromRole="Renting" ToRole="Security" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_User_ToRole" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Seat">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TheaterId" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="BookingSeats" Relationship="Self.FK__BookingSe__SeatI__2EDAF651" FromRole="Seat" ToRole="BookingSeat" />
+          <NavigationProperty Name="Theater" Relationship="Self.FK__Seat__TheaterId__2180FB33" FromRole="Seat" ToRole="Theater" />
+        </EntityType>
+        <EntityType Name="Security">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Level" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Rentings" Relationship="Self.FK__Renting__Securit__5DCAEF64" FromRole="Security" ToRole="Renting" />
+        </EntityType>
+        <EntityType Name="Service">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Double" Nullable="false" />
+          <NavigationProperty Name="TheaterServices" Relationship="Self.FK__TheaterSe__Servi__0A9D95DB" FromRole="Service" ToRole="TheaterService" />
+        </EntityType>
+        <EntityType Name="STicketChat">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="STicketId" Type="Int32" Nullable="false" />
+          <Property Name="UserEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="SupportTicket" Relationship="Self.FK__STicketCh__STick__4BAC3F29" FromRole="STicketChat" ToRole="SupportTicket" />
+        </EntityType>
+        <EntityType Name="STicketType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Priority" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="SupportTickets" Relationship="Self.FK__SupportTi__STick__48CFD27E" FromRole="STicketType" ToRole="SupportTicket" />
+        </EntityType>
+        <EntityType Name="Store">
+          <Key>
+            <PropertyRef Name="AssetId" />
+          </Key>
+          <Property Name="AssetId" Type="Int32" Nullable="false" />
+          <Property Name="Size" Type="Int32" />
+          <Property Name="StorePMId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Asset" Relationship="Self.FK__Store__AssetId__71D1E811" FromRole="Store" ToRole="Asset" />
+          <NavigationProperty Name="StorePM" Relationship="Self.FK__Store__StorePMId__72C60C4A" FromRole="Store" ToRole="StorePM" />
+        </EntityType>
+        <EntityType Name="StorePM">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Stores" Relationship="Self.FK__Store__StorePMId__72C60C4A" FromRole="StorePM" ToRole="Store" />
+        </EntityType>
+        <EntityType Name="Subscription">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ExpiryDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SubscriptionLevelID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BookingSeats" Relationship="Self.FK__BookingSe__Subsc__4D5F7D71" FromRole="Subscription" ToRole="BookingSeat" />
+          <NavigationProperty Name="Parkings" Relationship="Self.FK__Parking__Subscri__693CA210" FromRole="Subscription" ToRole="Parking" />
+          <NavigationProperty Name="SubscriptionLevel" Relationship="Self.FK__Subscript__Subsc__5535A963" FromRole="Subscription" ToRole="SubscriptionLevel" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Subscript__UserE__5441852A" FromRole="Subscription" ToRole="User" />
+        </EntityType>
+        <EntityType Name="SubscriptionLevel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Level" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DiscountPercent" Type="Double" Nullable="false" />
+          <Property Name="Price" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Subscriptions" Relationship="Self.FK__Subscript__Subsc__5535A963" FromRole="SubscriptionLevel" ToRole="Subscription" />
+        </EntityType>
+        <EntityType Name="SupportTicket">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AgentEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SubmitDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ClosedDate" Type="DateTime" Precision="3" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="STicketTypeId" Type="Int32" Nullable="false" />
+          <Property Name="Feedback" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="STicketChats" Relationship="Self.FK__STicketCh__STick__4BAC3F29" FromRole="SupportTicket" ToRole="STicketChat" />
+          <NavigationProperty Name="STicketType" Relationship="Self.FK__SupportTi__STick__48CFD27E" FromRole="SupportTicket" ToRole="STicketType" />
+          <NavigationProperty Name="User" Relationship="Self.FK__SupportTi__Agent__3A4CA8FD" FromRole="SupportTicket" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="Self.FK__SupportTi__UserE__47DBAE45" FromRole="SupportTicket" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Theater">
+          <Key>
+            <PropertyRef Name="AssetId" />
+          </Key>
+          <Property Name="AssetId" Type="Int32" Nullable="false" />
+          <Property Name="Capacity" Type="Int32" Nullable="false" />
+          <Property Name="TheaterPMId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Asset" Relationship="Self.FK__Theater__AssetId__236943A5" FromRole="Theater" ToRole="Asset" />
+          <NavigationProperty Name="Seats" Relationship="Self.FK__Seat__TheaterId__2180FB33" FromRole="Theater" ToRole="Seat" />
+          <NavigationProperty Name="TheaterPM" Relationship="Self.FK__Theater__Theater__22751F6C" FromRole="Theater" ToRole="TheaterPM" />
+          <NavigationProperty Name="TheaterServices" Relationship="Self.FK__TheaterSe__Theat__208CD6FA" FromRole="Theater" ToRole="TheaterService" />
+        </EntityType>
+        <EntityType Name="TheaterPM">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Theaters" Relationship="Self.FK__Theater__Theater__22751F6C" FromRole="TheaterPM" ToRole="Theater" />
+        </EntityType>
+        <EntityType Name="TheaterService">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TheaterId" Type="Int32" Nullable="false" />
+          <Property Name="ServiceId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Service" Relationship="Self.FK__TheaterSe__Servi__0A9D95DB" FromRole="TheaterService" ToRole="Service" />
+          <NavigationProperty Name="Theater" Relationship="Self.FK__TheaterSe__Theat__208CD6FA" FromRole="TheaterService" ToRole="Theater" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Email" />
+          </Key>
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="RoleID" Type="Int32" />
+          <NavigationProperty Name="Advertisements" Relationship="Self.FK__Advertise__UserE__3F466844" FromRole="User" ToRole="Advertisement" />
+          <NavigationProperty Name="BookingSeats" Relationship="Self.FK__BookingSe__UserE__2DE6D218" FromRole="User" ToRole="BookingSeat" />
+          <NavigationProperty Name="Cleanings" Relationship="Self.FK__Cleaning__Cleane__6477ECF3" FromRole="User" ToRole="Cleaning" />
+          <NavigationProperty Name="Favorites" Relationship="Self.FK__Favorite__UserEm__38996AB5" FromRole="User" ToRole="Favorite" />
+          <NavigationProperty Name="FeedBacks" Relationship="Self.FK__FeedBack__UserEm__4E88ABD4" FromRole="User" ToRole="FeedBack" />
+          <NavigationProperty Name="Likes" Relationship="Self.FK__Like__UserEmail__34C8D9D1" FromRole="User" ToRole="Like" />
+          <NavigationProperty Name="Logs" Relationship="Self.FK__Log__UserEmail__3C69FB99" FromRole="User" ToRole="Log" />
+          <NavigationProperty Name="Renter" Relationship="Self.FK__Renter__Email__2A4B4B5E" FromRole="User" ToRole="Renter" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_User_ToRole" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="Subscriptions" Relationship="Self.FK__Subscript__UserE__5441852A" FromRole="User" ToRole="Subscription" />
+          <NavigationProperty Name="SupportTickets" Relationship="Self.FK__SupportTi__Agent__3A4CA8FD" FromRole="User" ToRole="SupportTicket" />
+          <NavigationProperty Name="SupportTickets1" Relationship="Self.FK__SupportTi__UserE__47DBAE45" FromRole="User" ToRole="SupportTicket" />
+        </EntityType>
+        <Association Name="FK__Advertise__UserE__3F466844">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Advertisement" Type="Self.Advertisement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="Advertisement">
+              <PropertyRef Name="UserEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AssetRent__Asset__6D0D32F4">
+          <End Role="Asset" Type="Self.Asset" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AssetRenting" Type="Self.AssetRenting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asset">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AssetRenting">
+              <PropertyRef Name="AssetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Store__AssetId__71D1E811">
+          <End Role="Asset" Type="Self.Asset" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Store" Type="Self.Store" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Asset">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Store">
+              <PropertyRef Name="AssetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Theater__AssetId__236943A5">
+          <End Role="Asset" Type="Self.Asset" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Theater" Type="Self.Theater" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Asset">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Theater">
+              <PropertyRef Name="AssetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AssetRent__Asset__3493CFA7">
+          <End Role="AssetRenting" Type="Self.AssetRenting" Multiplicity="1" />
+          <End Role="AssetRentingEvent" Type="Self.AssetRentingEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssetRenting">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AssetRentingEvent">
+              <PropertyRef Name="AssetRentingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AssetRent__Renti__6C190EBB">
+          <End Role="Renting" Type="Self.Renting" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AssetRenting" Type="Self.AssetRenting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Renting">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AssetRenting">
+              <PropertyRef Name="RentingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AssetRent__Booki__339FAB6E">
+          <End Role="BookingSeat" Type="Self.BookingSeat" Multiplicity="1" />
+          <End Role="AssetRentingEvent" Type="Self.AssetRentingEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BookingSeat">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AssetRentingEvent">
+              <PropertyRef Name="BookingSeatId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AssetRent__Event__32AB8735">
+          <End Role="Event" Type="Self.Event" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AssetRentingEvent" Type="Self.AssetRentingEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AssetRentingEvent">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BookingSe__SeatI__2EDAF651">
+          <End Role="Seat" Type="Self.Seat" Multiplicity="1" />
+          <End Role="BookingSeat" Type="Self.BookingSeat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seat">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BookingSeat">
+              <PropertyRef Name="SeatId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BookingSe__Subsc__4D5F7D71">
+          <End Role="Subscription" Type="Self.Subscription" Multiplicity="0..1" />
+          <End Role="BookingSeat" Type="Self.BookingSeat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subscription">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BookingSeat">
+              <PropertyRef Name="SubscriptionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BookingSe__UserE__2DE6D218">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="BookingSeat" Type="Self.BookingSeat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="BookingSeat">
+              <PropertyRef Name="UserEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cleaning__Cleane__6477ECF3">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Cleaning" Type="Self.Cleaning" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="Cleaning">
+              <PropertyRef Name="CleanerEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cleaning__Rentin__6383C8BA">
+          <End Role="Renting" Type="Self.Renting" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Cleaning" Type="Self.Cleaning" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Renting">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cleaning">
+              <PropertyRef Name="RentingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Favorite__Renter__398D8EEE">
+          <End Role="Renter" Type="Self.Renter" Multiplicity="1" />
+          <End Role="Favorite" Type="Self.Favorite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Renter">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="Favorite">
+              <PropertyRef Name="RenterEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Favorite__UserEm__38996AB5">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Favorite" Type="Self.Favorite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="Favorite">
+              <PropertyRef Name="UserEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FeedBack__Renter__4F7CD00D">
+          <End Role="Renter" Type="Self.Renter" Multiplicity="1" />
+          <End Role="FeedBack" Type="Self.FeedBack" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Renter">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="FeedBack">
+              <PropertyRef Name="RenterEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FeedBack__UserEm__4E88ABD4">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="FeedBack" Type="Self.FeedBack" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="FeedBack">
+              <PropertyRef Name="UserEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Like__RenterEmai__35BCFE0A">
+          <End Role="Renter" Type="Self.Renter" Multiplicity="1" />
+          <End Role="Like" Type="Self.Like" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Renter">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="Like">
+              <PropertyRef Name="RenterEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Like__UserEmail__34C8D9D1">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Like" Type="Self.Like" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="Like">
+              <PropertyRef Name="UserEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Log__UserEmail__3C69FB99">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Log" Type="Self.Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="Log">
+              <PropertyRef Name="UserEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__New__RenterEmail__503BEA1C">
+          <End Role="Renter" Type="Self.Renter" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="New" Type="Self.New" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Renter">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="New">
+              <PropertyRef Name="RenterEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Parking__Subscri__693CA210">
+          <End Role="Subscription" Type="Self.Subscription" Multiplicity="0..1" />
+          <End Role="Parking" Type="Self.Parking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subscription">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Parking">
+              <PropertyRef Name="SubscriptionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Payment__Renting__60A75C0F">
+          <End Role="Renting" Type="Self.Renting" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Renting">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="RentingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Renter__Email__2A4B4B5E">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Renter" Type="Self.Renter" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="Renter">
+              <PropertyRef Name="Email" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Renting__RenterE__5CD6CB2B">
+          <End Role="Renter" Type="Self.Renter" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Renting" Type="Self.Renting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Renter">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="Renting">
+              <PropertyRef Name="RenterEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Renting__Securit__5DCAEF64">
+          <End Role="Security" Type="Self.Security" Multiplicity="0..1" />
+          <End Role="Renting" Type="Self.Renting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Security">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Renting">
+              <PropertyRef Name="SecurityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_ToRole">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Seat__TheaterId__2180FB33">
+          <End Role="Theater" Type="Self.Theater" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Seat" Type="Self.Seat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Theater">
+              <PropertyRef Name="AssetId" />
+            </Principal>
+            <Dependent Role="Seat">
+              <PropertyRef Name="TheaterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TheaterSe__Servi__0A9D95DB">
+          <End Role="Service" Type="Self.Service" Multiplicity="1" />
+          <End Role="TheaterService" Type="Self.TheaterService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TheaterService">
+              <PropertyRef Name="ServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__STicketCh__STick__4BAC3F29">
+          <End Role="SupportTicket" Type="Self.SupportTicket" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="STicketChat" Type="Self.STicketChat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SupportTicket">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="STicketChat">
+              <PropertyRef Name="STicketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SupportTi__STick__48CFD27E">
+          <End Role="STicketType" Type="Self.STicketType" Multiplicity="1" />
+          <End Role="SupportTicket" Type="Self.SupportTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STicketType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SupportTicket">
+              <PropertyRef Name="STicketTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Store__StorePMId__72C60C4A">
+          <End Role="StorePM" Type="Self.StorePM" Multiplicity="1" />
+          <End Role="Store" Type="Self.Store" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StorePM">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Store">
+              <PropertyRef Name="StorePMId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Subscript__Subsc__5535A963">
+          <End Role="SubscriptionLevel" Type="Self.SubscriptionLevel" Multiplicity="1" />
+          <End Role="Subscription" Type="Self.Subscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubscriptionLevel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Subscription">
+              <PropertyRef Name="SubscriptionLevelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Subscript__UserE__5441852A">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Subscription" Type="Self.Subscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="Subscription">
+              <PropertyRef Name="UserEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SupportTi__Agent__3A4CA8FD">
+          <End Role="User" Type="Self.User" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="SupportTicket" Type="Self.SupportTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="SupportTicket">
+              <PropertyRef Name="AgentEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SupportTi__UserE__47DBAE45">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="SupportTicket" Type="Self.SupportTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="SupportTicket">
+              <PropertyRef Name="UserEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Theater__Theater__22751F6C">
+          <End Role="TheaterPM" Type="Self.TheaterPM" Multiplicity="1" />
+          <End Role="Theater" Type="Self.Theater" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TheaterPM">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Theater">
+              <PropertyRef Name="TheaterPMId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TheaterSe__Theat__208CD6FA">
+          <End Role="Theater" Type="Self.Theater" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TheaterService" Type="Self.TheaterService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Theater">
+              <PropertyRef Name="AssetId" />
+            </Principal>
+            <Dependent Role="TheaterService">
+              <PropertyRef Name="TheaterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Database1Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Advertisements" EntityType="Self.Advertisement" />
+          <EntitySet Name="Assets" EntityType="Self.Asset" />
+          <EntitySet Name="AssetRentings" EntityType="Self.AssetRenting" />
+          <EntitySet Name="AssetRentingEvents" EntityType="Self.AssetRentingEvent" />
+          <EntitySet Name="BookingSeats" EntityType="Self.BookingSeat" />
+          <EntitySet Name="Cleanings" EntityType="Self.Cleaning" />
+          <EntitySet Name="Events" EntityType="Self.Event" />
+          <EntitySet Name="Favorites" EntityType="Self.Favorite" />
+          <EntitySet Name="FeedBacks" EntityType="Self.FeedBack" />
+          <EntitySet Name="Likes" EntityType="Self.Like" />
+          <EntitySet Name="Logs" EntityType="Self.Log" />
+          <EntitySet Name="News" EntityType="Self.New" />
+          <EntitySet Name="Parkings" EntityType="Self.Parking" />
+          <EntitySet Name="Payments" EntityType="Self.Payment" />
+          <EntitySet Name="Renters" EntityType="Self.Renter" />
+          <EntitySet Name="Rentings" EntityType="Self.Renting" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Seats" EntityType="Self.Seat" />
+          <EntitySet Name="Securities" EntityType="Self.Security" />
+          <EntitySet Name="Services" EntityType="Self.Service" />
+          <EntitySet Name="STicketChats" EntityType="Self.STicketChat" />
+          <EntitySet Name="STicketTypes" EntityType="Self.STicketType" />
+          <EntitySet Name="Stores" EntityType="Self.Store" />
+          <EntitySet Name="StorePMs" EntityType="Self.StorePM" />
+          <EntitySet Name="Subscriptions" EntityType="Self.Subscription" />
+          <EntitySet Name="SubscriptionLevels" EntityType="Self.SubscriptionLevel" />
+          <EntitySet Name="SupportTickets" EntityType="Self.SupportTicket" />
+          <EntitySet Name="Theaters" EntityType="Self.Theater" />
+          <EntitySet Name="TheaterPMs" EntityType="Self.TheaterPM" />
+          <EntitySet Name="TheaterServices" EntityType="Self.TheaterService" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK__Advertise__UserE__3F466844" Association="Self.FK__Advertise__UserE__3F466844">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Advertisement" EntitySet="Advertisements" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AssetRent__Asset__6D0D32F4" Association="Self.FK__AssetRent__Asset__6D0D32F4">
+            <End Role="Asset" EntitySet="Assets" />
+            <End Role="AssetRenting" EntitySet="AssetRentings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Store__AssetId__71D1E811" Association="Self.FK__Store__AssetId__71D1E811">
+            <End Role="Asset" EntitySet="Assets" />
+            <End Role="Store" EntitySet="Stores" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Theater__AssetId__236943A5" Association="Self.FK__Theater__AssetId__236943A5">
+            <End Role="Asset" EntitySet="Assets" />
+            <End Role="Theater" EntitySet="Theaters" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AssetRent__Asset__3493CFA7" Association="Self.FK__AssetRent__Asset__3493CFA7">
+            <End Role="AssetRenting" EntitySet="AssetRentings" />
+            <End Role="AssetRentingEvent" EntitySet="AssetRentingEvents" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AssetRent__Renti__6C190EBB" Association="Self.FK__AssetRent__Renti__6C190EBB">
+            <End Role="Renting" EntitySet="Rentings" />
+            <End Role="AssetRenting" EntitySet="AssetRentings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AssetRent__Booki__339FAB6E" Association="Self.FK__AssetRent__Booki__339FAB6E">
+            <End Role="BookingSeat" EntitySet="BookingSeats" />
+            <End Role="AssetRentingEvent" EntitySet="AssetRentingEvents" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AssetRent__Event__32AB8735" Association="Self.FK__AssetRent__Event__32AB8735">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="AssetRentingEvent" EntitySet="AssetRentingEvents" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BookingSe__SeatI__2EDAF651" Association="Self.FK__BookingSe__SeatI__2EDAF651">
+            <End Role="Seat" EntitySet="Seats" />
+            <End Role="BookingSeat" EntitySet="BookingSeats" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BookingSe__Subsc__4D5F7D71" Association="Self.FK__BookingSe__Subsc__4D5F7D71">
+            <End Role="Subscription" EntitySet="Subscriptions" />
+            <End Role="BookingSeat" EntitySet="BookingSeats" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BookingSe__UserE__2DE6D218" Association="Self.FK__BookingSe__UserE__2DE6D218">
+            <End Role="User" EntitySet="Users" />
+            <End Role="BookingSeat" EntitySet="BookingSeats" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cleaning__Cleane__6477ECF3" Association="Self.FK__Cleaning__Cleane__6477ECF3">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Cleaning" EntitySet="Cleanings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cleaning__Rentin__6383C8BA" Association="Self.FK__Cleaning__Rentin__6383C8BA">
+            <End Role="Renting" EntitySet="Rentings" />
+            <End Role="Cleaning" EntitySet="Cleanings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Favorite__Renter__398D8EEE" Association="Self.FK__Favorite__Renter__398D8EEE">
+            <End Role="Renter" EntitySet="Renters" />
+            <End Role="Favorite" EntitySet="Favorites" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Favorite__UserEm__38996AB5" Association="Self.FK__Favorite__UserEm__38996AB5">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Favorite" EntitySet="Favorites" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FeedBack__Renter__4F7CD00D" Association="Self.FK__FeedBack__Renter__4F7CD00D">
+            <End Role="Renter" EntitySet="Renters" />
+            <End Role="FeedBack" EntitySet="FeedBacks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FeedBack__UserEm__4E88ABD4" Association="Self.FK__FeedBack__UserEm__4E88ABD4">
+            <End Role="User" EntitySet="Users" />
+            <End Role="FeedBack" EntitySet="FeedBacks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Like__RenterEmai__35BCFE0A" Association="Self.FK__Like__RenterEmai__35BCFE0A">
+            <End Role="Renter" EntitySet="Renters" />
+            <End Role="Like" EntitySet="Likes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Like__UserEmail__34C8D9D1" Association="Self.FK__Like__UserEmail__34C8D9D1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Like" EntitySet="Likes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Log__UserEmail__3C69FB99" Association="Self.FK__Log__UserEmail__3C69FB99">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Log" EntitySet="Logs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__New__RenterEmail__503BEA1C" Association="Self.FK__New__RenterEmail__503BEA1C">
+            <End Role="Renter" EntitySet="Renters" />
+            <End Role="New" EntitySet="News" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Parking__Subscri__693CA210" Association="Self.FK__Parking__Subscri__693CA210">
+            <End Role="Subscription" EntitySet="Subscriptions" />
+            <End Role="Parking" EntitySet="Parkings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Payment__Renting__60A75C0F" Association="Self.FK__Payment__Renting__60A75C0F">
+            <End Role="Renting" EntitySet="Rentings" />
+            <End Role="Payment" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Renter__Email__2A4B4B5E" Association="Self.FK__Renter__Email__2A4B4B5E">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Renter" EntitySet="Renters" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Renting__RenterE__5CD6CB2B" Association="Self.FK__Renting__RenterE__5CD6CB2B">
+            <End Role="Renter" EntitySet="Renters" />
+            <End Role="Renting" EntitySet="Rentings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Renting__Securit__5DCAEF64" Association="Self.FK__Renting__Securit__5DCAEF64">
+            <End Role="Security" EntitySet="Securities" />
+            <End Role="Renting" EntitySet="Rentings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_ToRole" Association="Self.FK_User_ToRole">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Seat__TheaterId__2180FB33" Association="Self.FK__Seat__TheaterId__2180FB33">
+            <End Role="Theater" EntitySet="Theaters" />
+            <End Role="Seat" EntitySet="Seats" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TheaterSe__Servi__0A9D95DB" Association="Self.FK__TheaterSe__Servi__0A9D95DB">
+            <End Role="Service" EntitySet="Services" />
+            <End Role="TheaterService" EntitySet="TheaterServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__STicketCh__STick__4BAC3F29" Association="Self.FK__STicketCh__STick__4BAC3F29">
+            <End Role="SupportTicket" EntitySet="SupportTickets" />
+            <End Role="STicketChat" EntitySet="STicketChats" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SupportTi__STick__48CFD27E" Association="Self.FK__SupportTi__STick__48CFD27E">
+            <End Role="STicketType" EntitySet="STicketTypes" />
+            <End Role="SupportTicket" EntitySet="SupportTickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Store__StorePMId__72C60C4A" Association="Self.FK__Store__StorePMId__72C60C4A">
+            <End Role="StorePM" EntitySet="StorePMs" />
+            <End Role="Store" EntitySet="Stores" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Subscript__Subsc__5535A963" Association="Self.FK__Subscript__Subsc__5535A963">
+            <End Role="SubscriptionLevel" EntitySet="SubscriptionLevels" />
+            <End Role="Subscription" EntitySet="Subscriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Subscript__UserE__5441852A" Association="Self.FK__Subscript__UserE__5441852A">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Subscription" EntitySet="Subscriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SupportTi__Agent__3A4CA8FD" Association="Self.FK__SupportTi__Agent__3A4CA8FD">
+            <End Role="User" EntitySet="Users" />
+            <End Role="SupportTicket" EntitySet="SupportTickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SupportTi__UserE__47DBAE45" Association="Self.FK__SupportTi__UserE__47DBAE45">
+            <End Role="User" EntitySet="Users" />
+            <End Role="SupportTicket" EntitySet="SupportTickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Theater__Theater__22751F6C" Association="Self.FK__Theater__Theater__22751F6C">
+            <End Role="TheaterPM" EntitySet="TheaterPMs" />
+            <End Role="Theater" EntitySet="Theaters" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TheaterSe__Theat__208CD6FA" Association="Self.FK__TheaterSe__Theat__208CD6FA">
+            <End Role="Theater" EntitySet="Theaters" />
+            <End Role="TheaterService" EntitySet="TheaterServices" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Database1ModelStoreContainer" CdmEntityContainer="Database1Entities">
+          <EntitySetMapping Name="Advertisements">
+            <EntityTypeMapping TypeName="Database1Model.Advertisement">
+              <MappingFragment StoreEntitySet="Advertisement">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="StartDateTime" ColumnName="StartDateTime" />
+                <ScalarProperty Name="EndDateTime" ColumnName="EndDateTime" />
+                <ScalarProperty Name="MediaContent" ColumnName="MediaContent" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Assets">
+            <EntityTypeMapping TypeName="Database1Model.Asset">
+              <MappingFragment StoreEntitySet="Asset">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="LocationCode" ColumnName="LocationCode" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AssetRentings">
+            <EntityTypeMapping TypeName="Database1Model.AssetRenting">
+              <MappingFragment StoreEntitySet="AssetRenting">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RentingId" ColumnName="RentingId" />
+                <ScalarProperty Name="AssetId" ColumnName="AssetId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AssetRentingEvents">
+            <EntityTypeMapping TypeName="Database1Model.AssetRentingEvent">
+              <MappingFragment StoreEntitySet="AssetRentingEvent">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="BookingSeatId" ColumnName="BookingSeatId" />
+                <ScalarProperty Name="AssetRentingId" ColumnName="AssetRentingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BookingSeats">
+            <EntityTypeMapping TypeName="Database1Model.BookingSeat">
+              <MappingFragment StoreEntitySet="BookingSeat">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+                <ScalarProperty Name="SeatId" ColumnName="SeatId" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="SubscriptionId" ColumnName="SubscriptionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cleanings">
+            <EntityTypeMapping TypeName="Database1Model.Cleaning">
+              <MappingFragment StoreEntitySet="Cleaning">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RentingId" ColumnName="RentingId" />
+                <ScalarProperty Name="CleanerEmail" ColumnName="CleanerEmail" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Events">
+            <EntityTypeMapping TypeName="Database1Model.Event">
+              <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="ShowName" ColumnName="ShowName" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Favorites">
+            <EntityTypeMapping TypeName="Database1Model.Favorite">
+              <MappingFragment StoreEntitySet="Favorite">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+                <ScalarProperty Name="RenterEmail" ColumnName="RenterEmail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FeedBacks">
+            <EntityTypeMapping TypeName="Database1Model.FeedBack">
+              <MappingFragment StoreEntitySet="FeedBack">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+                <ScalarProperty Name="RenterEmail" ColumnName="RenterEmail" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Likes">
+            <EntityTypeMapping TypeName="Database1Model.Like">
+              <MappingFragment StoreEntitySet="Like">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+                <ScalarProperty Name="RenterEmail" ColumnName="RenterEmail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logs">
+            <EntityTypeMapping TypeName="Database1Model.Log">
+              <MappingFragment StoreEntitySet="Log">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="ActionTarget" ColumnName="ActionTarget" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="News">
+            <EntityTypeMapping TypeName="Database1Model.New">
+              <MappingFragment StoreEntitySet="New">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RenterEmail" ColumnName="RenterEmail" />
+                <ScalarProperty Name="Topic" ColumnName="Topic" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Parkings">
+            <EntityTypeMapping TypeName="Database1Model.Parking">
+              <MappingFragment StoreEntitySet="Parking">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SubscriptionID" ColumnName="SubscriptionID" />
+                <ScalarProperty Name="Floor" ColumnName="Floor" />
+                <ScalarProperty Name="ParkingNumber" ColumnName="ParkingNumber" />
+                <ScalarProperty Name="CarPlate" ColumnName="CarPlate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="Database1Model.Payment">
+              <MappingFragment StoreEntitySet="Payment">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RentingID" ColumnName="RentingID" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Renters">
+            <EntityTypeMapping TypeName="Database1Model.Renter">
+              <MappingFragment StoreEntitySet="Renter">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="StoreName" ColumnName="StoreName" />
+                <ScalarProperty Name="QIdPic" ColumnName="QIdPic" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="RCodeUsed" ColumnName="RCodeUsed" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ReferralCode" ColumnName="ReferralCode" />
+                <ScalarProperty Name="RCUses" ColumnName="RCUses" />
+                <ScalarProperty Name="Tokens" ColumnName="Tokens" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rentings">
+            <EntityTypeMapping TypeName="Database1Model.Renting">
+              <MappingFragment StoreEntitySet="Renting">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RenterEmail" ColumnName="RenterEmail" />
+                <ScalarProperty Name="StartDateTime" ColumnName="StartDateTime" />
+                <ScalarProperty Name="EndDateTime" ColumnName="EndDateTime" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ReferalCode" ColumnName="ReferalCode" />
+                <ScalarProperty Name="SecurityId" ColumnName="SecurityId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="Database1Model.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Seats">
+            <EntityTypeMapping TypeName="Database1Model.Seat">
+              <MappingFragment StoreEntitySet="Seat">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TheaterId" ColumnName="TheaterId" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Securities">
+            <EntityTypeMapping TypeName="Database1Model.Security">
+              <MappingFragment StoreEntitySet="Security">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Services">
+            <EntityTypeMapping TypeName="Database1Model.Service">
+              <MappingFragment StoreEntitySet="Service">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STicketChats">
+            <EntityTypeMapping TypeName="Database1Model.STicketChat">
+              <MappingFragment StoreEntitySet="STicketChat">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="STicketId" ColumnName="STicketId" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STicketTypes">
+            <EntityTypeMapping TypeName="Database1Model.STicketType">
+              <MappingFragment StoreEntitySet="STicketType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stores">
+            <EntityTypeMapping TypeName="Database1Model.Store">
+              <MappingFragment StoreEntitySet="Store">
+                <ScalarProperty Name="AssetId" ColumnName="AssetId" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="StorePMId" ColumnName="StorePMId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StorePMs">
+            <EntityTypeMapping TypeName="Database1Model.StorePM">
+              <MappingFragment StoreEntitySet="StorePM">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subscriptions">
+            <EntityTypeMapping TypeName="Database1Model.Subscription">
+              <MappingFragment StoreEntitySet="Subscription">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="SubscriptionLevelID" ColumnName="SubscriptionLevelID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubscriptionLevels">
+            <EntityTypeMapping TypeName="Database1Model.SubscriptionLevel">
+              <MappingFragment StoreEntitySet="SubscriptionLevel">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="DiscountPercent" ColumnName="DiscountPercent" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SupportTickets">
+            <EntityTypeMapping TypeName="Database1Model.SupportTicket">
+              <MappingFragment StoreEntitySet="SupportTicket">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AgentEmail" ColumnName="AgentEmail" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+                <ScalarProperty Name="SubmitDate" ColumnName="SubmitDate" />
+                <ScalarProperty Name="ClosedDate" ColumnName="ClosedDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="STicketTypeId" ColumnName="STicketTypeId" />
+                <ScalarProperty Name="Feedback" ColumnName="Feedback" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Theaters">
+            <EntityTypeMapping TypeName="Database1Model.Theater">
+              <MappingFragment StoreEntitySet="Theater">
+                <ScalarProperty Name="AssetId" ColumnName="AssetId" />
+                <ScalarProperty Name="Capacity" ColumnName="Capacity" />
+                <ScalarProperty Name="TheaterPMId" ColumnName="TheaterPMId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TheaterPMs">
+            <EntityTypeMapping TypeName="Database1Model.TheaterPM">
+              <MappingFragment StoreEntitySet="TheaterPM">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TheaterServices">
+            <EntityTypeMapping TypeName="Database1Model.TheaterService">
+              <MappingFragment StoreEntitySet="TheaterService">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TheaterId" ColumnName="TheaterId" />
+                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="Database1Model.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

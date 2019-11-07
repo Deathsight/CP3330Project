@@ -6,12 +6,12 @@ import { Link } from "react-router-dom";
 
 export default class Profile extends React.Component {
   state = {
-    Customer: null
+    User: null
   };
 
   async componentDidMount() {
-    const json = await DB.Customers.findByQuery("profile");
-    this.setState({ Customer: json });
+    const json = await DB.Users.findByQuery("profile");
+    this.setState({ User: json });
   }
   
   handleDate = (item) => {
@@ -19,61 +19,155 @@ export default class Profile extends React.Component {
     return `${datetime.toDateString()} - ${datetime.toLocaleTimeString()}`
   }
 
-  handleBirthDate = (item) => {
-    const datetime = new Date(item)
-    return datetime.toLocaleDateString()
-  }
-
   render() {
-    return this.state.Customer ? (
+    return this.state.User ? (
       <div>
-        <h2>My Profile</h2>
+        {this.state.User.Role.Name === "Renter" ? ( <h2>User Profile</h2> ) : ( <h2>My Profile</h2> )}
+        
 
-        <table>
+        <Table striped bordered hover variant="dark">
           <thead>
+            <tr>
+              <th>Email:</th>
+              <td>{this.state.User.Email}</td>
+            </tr>
+
             <tr>
               <th>Name:</th>
-              <td>{this.state.Customer.Name}</td>
+              <td>{this.state.User.Name}</td>
             </tr>
-            <tr>
-              <th>Birth Date:</th>
-              <td>{this.handleBirthDate(this.state.Customer.BirthDate)}</td>
-            </tr>
+
               <tr>
               <th>Phone Number:</th>
-              <td>{this.state.Customer.Phone}</td>
+              <td>{this.state.User.Phone}</td>
             </tr>
-            <td><Link to={`/Profile/edit/`}>Edit Profile</Link></td>
-          </thead>
-        </table>
-        <br/>
 
-        <h2>My Appointments</h2>
-
-        <Table striped bordered hover>
-          <thead>
             <tr>
-            <th>Date/Time</th>
-            <th>Stylist</th>
-            <th>Price</th>
-            <th>Status</th>
-            <th>Cancel</th>
+              <th>Role:</th>
+              <td>{this.state.User.Role.Name}</td>
             </tr>
-            {this.state.Customer.Bookings.map(item => (
-              <tr key={item.Id}>
-              <td>{this.handleDate(item.StartDateTime)}</td>
-              <td>{item.AssetBookings[0].Asset.Description}</td>
-              <td>{item.TotalPrice}</td>
-              <td>{item.Status}</td>
-              <td>
-                  {
-                    <Link to={`/booking/delete/${item.Id}`}>Cancel Appointment</Link>
-                  }
-                </td>
-            </tr>
-            ))}
+            
+            <td><Link to={`/profile/edit/`}>Edit Profile</Link></td>
           </thead>
         </Table>
+        <br/>
+
+        {this.state.User.Role.Name === "Renter" ? (
+          <div>
+
+            <h2>Store Information</h2>
+
+            <Table striped bordered hover variant="dark">
+              <thead>
+                <tr>
+                  <th>Store Name:</th>
+                  <td>{this.state.User.Renter.StoreName}</td>
+                </tr>
+
+                <tr>
+                  <th>Type:</th>
+                  <td>{this.state.User.Renter.Type}</td>
+                </tr>
+
+                  <tr>
+                  <th>Description:</th>
+                  <td>{this.state.User.Renter.Description}</td>
+                </tr>
+
+                <tr>
+                  <th>Available Discount Tokens:</th>
+                  <td>{this.state.User.Renter.Tokens}</td>
+                </tr>
+
+                <tr>
+                  <th>Store Status:</th>
+                  <td>{this.state.User.Renter.Status}</td>
+                </tr>
+                
+                <td><Link to={`/profile/editRenter/`}>Edit Renter Info</Link></td>
+              </thead>
+            </Table>
+            <br/>
+            
+
+            <h2>My Rents</h2>
+
+            <Table striped bordered hover variant="dark">
+              <thead>
+
+                <tr>
+                <th>Start Date/Time</th>
+                <th>End Date/Time</th>
+                <th>Asset</th>
+                <th>Total Price</th>
+                <th>Status</th>
+                <th>ReferalCode</th>
+                <th>Security Company Name</th>
+                <th>Security Level</th>
+                
+                <th>Renew Contract</th>
+                <th>End Contract</th>
+                
+                </tr>
+
+                {this.state.User.Renter.Rentings.map(item => (
+                  <tr key={item.Id}>
+                  <td>{this.handleDate(item.StartDateTime)}</td>
+
+                  <td>{this.handleDate(item.EndDateTime)}</td>
+
+                  <thead>
+
+                  <tr>
+                    <th>Asset Type</th>
+                    <th>Asset Name</th>
+                    <th>Asset Description</th>
+                  </tr>
+                    
+                  {item.AssetRentings.map(item => (
+                    <tr key={item.Id}>
+
+                      <td>{item.Type}</td>
+
+                      <td>{item.Name}</td>
+
+                      <td>{item.Description}</td>
+
+                    </tr>
+                  ))}
+                  </thead>
+
+                  <td>{item.TotalPrice}</td>
+
+                  <td>{item.Status}</td>
+
+                  <td>{item.ReferalCode}</td>
+
+                  <td>{item.Security.CompanyName}</td>
+
+                  <td>{item.Security.Level}</td>
+
+                  <td>
+                    {
+                      <Link to={`/renting/renew/${item.Id}`}>Renew Contract</Link>
+                    }
+                  </td>
+
+                  <td>
+                    {
+                      <Link to={`/renting/end/${item.Id}`}>End Contract</Link>
+                    }
+                  </td>
+                </tr>
+                ))}
+              </thead>
+            </Table>
+          </div>
+        ) : ( 
+
+        <h1>Nothing yet for this user</h1>
+
+        )}
       </div>
     ) : (
       <h1>Loading...</h1>

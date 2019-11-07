@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2ec000ca618f49a595efb52175bf21da" Name="Diagram1">
+        <EntityTypeShape EntityType="Database1Model.Advertisement" Width="1.5" PointX="5.25" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Asset" Width="1.5" PointX="1.5" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.AssetRenting" Width="1.5" PointX="12.75" PointY="38.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.AssetRentingEvent" Width="1.5" PointX="7.5" PointY="22.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.BookingSeat" Width="1.5" PointX="5.25" PointY="19.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Cleaning" Width="1.5" PointX="8.25" PointY="20" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Event" Width="1.5" PointX="5.25" PointY="27.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Favorite" Width="1.5" PointX="7.5" PointY="29.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.FeedBack" Width="1.5" PointX="7.5" PointY="26" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Like" Width="1.5" PointX="7.5" PointY="32.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Log" Width="1.5" PointX="5.25" PointY="34.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.New" Width="1.5" PointX="7.5" PointY="38.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Parking" Width="1.5" PointX="7.5" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Payment" Width="1.5" PointX="12.75" PointY="41.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Renter" Width="1.5" PointX="5.25" PointY="37.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Renting" Width="1.5" PointX="10.5" PointY="37.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Role" Width="1.5" PointX="0.75" PointY="20.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Seat" Width="1.5" PointX="3" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Security" Width="1.5" PointX="8.25" PointY="35.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Service" Width="1.5" PointX="6.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.STicketChat" Width="1.5" PointX="10.5" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.STicketType" Width="1.5" PointX="6" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Store" Width="1.5" PointX="3.75" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.StorePM" Width="1.5" PointX="1.5" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Subscription" Width="1.5" PointX="5.25" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.SubscriptionLevel" Width="1.5" PointX="3" PointY="24.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.SupportTicket" Width="1.5" PointX="8.25" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Theater" Width="1.5" PointX="0.75" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.TheaterPM" Width="1.5" PointX="1.5" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.TheaterService" Width="1.5" PointX="9" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.User" Width="1.5" PointX="3" PointY="19" IsExpanded="true" />
+        <AssociationConnector Association="Database1Model.FK__Advertise__UserE__3F466844" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__AssetRent__Asset__6D0D32F4" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__Store__AssetId__71D1E811" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__Theater__AssetId__236943A5" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__AssetRent__Asset__3493CFA7" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__AssetRent__Renti__6C190EBB" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__AssetRent__Booki__339FAB6E" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__AssetRent__Event__32AB8735" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__BookingSe__SeatI__2EDAF651" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__BookingSe__Subsc__4D5F7D71" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__BookingSe__UserE__2DE6D218" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__Cleaning__Cleane__6477ECF3" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__Cleaning__Rentin__6383C8BA" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__Favorite__Renter__398D8EEE" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__Favorite__UserEm__38996AB5" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__FeedBack__Renter__4F7CD00D" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__FeedBack__UserEm__4E88ABD4" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__Like__RenterEmai__35BCFE0A" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__Like__UserEmail__34C8D9D1" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__Log__UserEmail__3C69FB99" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__New__RenterEmail__503BEA1C" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__Parking__Subscri__693CA210" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__Payment__Renting__60A75C0F" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__Renter__Email__2A4B4B5E" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__Renting__RenterE__5CD6CB2B" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__Renting__Securit__5DCAEF64" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK_User_ToRole" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__Seat__TheaterId__2180FB33" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__TheaterSe__Servi__0A9D95DB" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__STicketCh__STick__4BAC3F29" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__SupportTi__STick__48CFD27E" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__Store__StorePMId__72C60C4A" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__Subscript__Subsc__5535A963" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__Subscript__UserE__5441852A" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__SupportTi__Agent__3A4CA8FD" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__SupportTi__UserE__47DBAE45" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__Theater__Theater__22751F6C" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__TheaterSe__Theat__208CD6FA" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
