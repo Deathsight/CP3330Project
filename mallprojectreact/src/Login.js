@@ -38,7 +38,7 @@ export default class Login extends React.Component {
         if(response.ok){
             console.log('Logged in successfully')
             Auth.login(json.access_token, json.userName)
-            if(!await DB.Customers.create()){
+            if(!await DB.Users.create()){
                 console.log('Customer creation failed')
             }
             this.setState({ isLoggedIn: true });

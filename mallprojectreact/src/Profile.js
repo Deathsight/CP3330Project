@@ -25,8 +25,8 @@ export default class Profile extends React.Component {
         {this.state.User.Role.Name === "Renter" ? ( <h2>User Profile</h2> ) : ( <h2>My Profile</h2> )}
         
 
-        <Table striped bordered hover variant="dark">
-          <thead>
+        <Table striped bordered hover>
+          <tbody>
             <tr>
               <th>Email:</th>
               <td>{this.state.User.Email}</td>
@@ -47,8 +47,8 @@ export default class Profile extends React.Component {
               <td>{this.state.User.Role.Name}</td>
             </tr>
             
-            <td><Link to={`/profile/edit/`}>Edit Profile</Link></td>
-          </thead>
+            <tr><td><Link to={`/profile/edit`}>Edit Profile</Link></td></tr>
+          </tbody>
         </Table>
         <br/>
 
@@ -57,7 +57,7 @@ export default class Profile extends React.Component {
 
             <h2>Store Information</h2>
 
-            <Table striped bordered hover variant="dark">
+            <Table striped bordered hover>
               <thead>
                 <tr>
                   <th>Store Name:</th>
@@ -92,7 +92,7 @@ export default class Profile extends React.Component {
 
             <h2>My Rents</h2>
 
-            <Table striped bordered hover variant="dark">
+            <Table striped bordered hover>
               <thead>
 
                 <tr>
@@ -165,7 +165,7 @@ export default class Profile extends React.Component {
           </div>
         ) : ( 
 
-        <h1>Nothing yet for this user</h1>
+        <h1>Nothing else for your role. Soooon</h1>
 
         )}
       </div>

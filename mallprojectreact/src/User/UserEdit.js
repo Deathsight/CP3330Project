@@ -14,7 +14,8 @@ export default class UserEdit extends React.Component {
 
   async componentDidMount() {
     const json = await DB.Users.findByQuery("profile");
-    this.setState({ Email: json.Email, Name: json.Name, Phone: json.Phone, User: json });
+    console.log("test")
+    this.setState({ User: json, Name: json.Name, Phone: json.Phone });
   }
 
 
@@ -44,6 +45,7 @@ export default class UserEdit extends React.Component {
     return this.state.isEdited ? (
       <Redirect to="/profile" />
     ) : (
+        this.state.User ? 
         <div>
           <h2>Edit Profile</h2>
           <br />
@@ -52,7 +54,7 @@ export default class UserEdit extends React.Component {
           <input
             value={this.state.User.Email}
             type="text"
-            disabled="disabled"
+            disabled
           ></input>
           <br></br>
 
@@ -74,7 +76,7 @@ export default class UserEdit extends React.Component {
 
           <label>Role: </label>
           <input
-            value={this.state.User.Roles.Name}
+            value={this.state.User.Role.Name}
             type="text"
             disabled
           ></input>
@@ -82,6 +84,8 @@ export default class UserEdit extends React.Component {
 
           <Button onClick={() => this.handleEditDB()}>Save</Button>
         </div>
+        :
+        <h1>Loading...</h1>
       );
   }
 }

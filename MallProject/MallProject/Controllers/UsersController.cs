@@ -88,10 +88,63 @@ namespace MallProject.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        // PUT: api/Users
+        // Edit Profile
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutCustomer(User user)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            string email = User.Identity.GetUserName();
+
+            if (email != user.Email)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UserExists(email))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
         // POST: api/Users
         [ResponseType(typeof(User))]
         public IHttpActionResult PostUser(User user)
         {
+            if (user == null)
+            {
+                string email = User.Identity.GetUserName();
+                user = db.Users.Find(email);
+                if (user == null)
+                {
+                    user = new User { Email = email };
+                }
+                else
+                {
+                    return Ok();
+                }
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
