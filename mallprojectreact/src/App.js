@@ -10,6 +10,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import UserEdit from "./User/UserEdit";
+import RentingIndex from "./Renting/RentingIndex";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
 export default class app extends React.Component {
@@ -38,11 +39,16 @@ export default class app extends React.Component {
                     Home
                   </Nav.Link>
                 </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link as={Link} to="/renting/">
+                    Renting
+                  </Nav.Link>
+                </Nav.Item>
                 
                 {Auth.isLoggedIn() ? (
                   <React.Fragment>
                     <Nav.Item>
-                      <Nav.Link as={Link} to="/profile">
+                      <Nav.Link as={Link} to="/profile/">
                         Profile
                       </Nav.Link>
                     </Nav.Item>
@@ -73,7 +79,11 @@ export default class app extends React.Component {
 
           <Switch>
             <Route path="/profile/edit/" component={UserEdit} />
-            
+
+            {/* Renting create not imported yet!! */}
+            {/* <Route path="/renting/create/:id" component={RentingCreate} /> */}
+
+            <Route path="/renting/" component={RentingIndex} />
             <Route path="/" exact component={Home} />
             <Route path="/login" component={Login} />
             <Route path="/logout" exact component={Logout} />
