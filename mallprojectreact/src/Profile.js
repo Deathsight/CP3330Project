@@ -6,12 +6,17 @@ import { Link } from "react-router-dom";
 
 export default class Profile extends React.Component {
   state = {
-    User: null
+    User: null,
+    Tickets: []
   };
 
   async componentDidMount() {
     const json = await DB.Users.findByQuery("profile");
     this.setState({ User: json });
+    if(this.state.User.Role.Name === "SupportAgent"){
+      const json2 = await DB.SupportTickets.findAll();
+      this.setState({ Tickets: json2 });
+    }
   }
   
   handleDate = (item) => {
@@ -163,8 +168,63 @@ export default class Profile extends React.Component {
               </thead>
             </Table>
           </div>
-        ) : ( 
+        ) : this.state.User.Role.Name === "SupportAgent" ? (
 
+          <div>
+            <h2>Tickets</h2>
+
+            <Table striped bordered hover>
+              <thead>
+
+                <tr>
+                <th>User Email</th>
+                <th>Start Date</th>
+                <th>Close Date</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Type</th>
+                <th>Priority</th>
+                
+                <th>Details</th>
+                <th>Close Ticket</th>
+                
+                </tr>
+
+                {this.state.Tickets.map(item => (
+                  <tr key={item.Id}>
+
+                  <td>{item.UserEmail}</td>
+                  
+                  <td>{this.handleDate(item.SubmitDate)}</td>
+
+                  <td>{this.handleDate(item.ClosedDate)}</td>
+
+                  <td>{item.Description}</td>
+
+                  <td>{item.Status}</td>
+
+                  <td>{item.STicketType.Name}</td>
+
+                  <td>{item.STicketType.Priority}</td>
+
+                  <td>
+                    {
+                      <Link to={`/support/details/${item.Id}`}>Details</Link>
+                    }
+                  </td>
+
+                  <td>
+                    {
+                      <Link to={`/support/close/${item.Id}`}>Close Ticket</Link>
+                    }
+                  </td>
+                </tr>
+                ))}
+              </thead>
+            </Table>
+          </div>
+
+         ) : (
         <h1>Nothing else for your role. Soooon</h1>
 
         )}
