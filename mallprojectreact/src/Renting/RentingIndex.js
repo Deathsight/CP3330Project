@@ -31,19 +31,21 @@ export default class AssetIndex extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.Assets.map(item => (
-              item.Type === "Store" ?(
-              <tr key={item.Id}>
-                <td>{item.LocationCode}</td>
-                <td>{item.Description}</td>
-                <td>{item.Store.Size}</td>
-                <td>{item.Store.StorePM.Price}</td>
-                {Auth.isLoggedIn() &&
-                <td><Link to={`/renting/create/${item.Id}`}>Rent</Link></td>
-                }
-              </tr>
-              ) : (null)
-            ))}
+            {this.state.Assets.map(item =>
+              item.Type === "Store" ? (
+                <tr key={item.Id}>
+                  <td>{item.LocationCode}</td>
+                  <td>{item.Description}</td>
+                  <td>{item.Store.Size}</td>
+                  <td>{item.Store.StorePM.Price}</td>
+                  {Auth.isLoggedIn() && (
+                    <td>
+                      <Link to={`/renting/create/${item.Id}`}>Rent</Link>
+                    </td>
+                  )}
+                </tr>
+              ) : null
+            )}
           </tbody>
         </Table>
       </div>
