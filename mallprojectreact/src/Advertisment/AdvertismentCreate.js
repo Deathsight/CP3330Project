@@ -1,46 +1,60 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import DB from "./db"
-import auth from "./auth"
+import DB from "../db"
+import auth from "../auth"
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
 import {Button} from "react-bootstrap";
-import { Redirect } from "react-router-dom";
-import {TextField,MenuItem,Select,InputLabel,FormHelperText,Grid,NativeSelect } from '@material-ui/core';
+import {Redirect } from "react-router-dom";
+import {TextField,InputLabel,Grid,NativeSelect } from '@material-ui/core';
 
-export default class CreateAdvertisment extends React.Component {
+export default class AdvertismentCreate extends React.Component {
   state = {
     Advertisment:{
       UserEmail: "",
-      Types: "",
+      Type: "Sports wear",
       StartDateTime: "",
       EndDateTime: "",
       MediaContent: "",
       Description: "",
-      Status: "",
+      Status: "waitingApproval",
     },
+    Types:[],
     User: null,
     isCreated: false
   };
   componentDidMount = async () =>{
     if(auth.isLoggedIn()){
       const json = await DB.Users.findByQuery("profile");
+      const jsonType = await DB.Renters.findAll();
       const temp = this.state.Advertisment;
-      console.log("Advertisment/User: ",json);
+      const tempArr = [];
       temp.UserEmail = json.Email;
+
+      // the map is to take all items that has "Type" and add it to a temp array.
+        jsonType.map(item =>
+          tempArr.push(item.Type) 
+        )
+      // this line will take the array and remove duplicates.
+        const uniqueTypes = Array.from(new Set(tempArr));
+
       this.setState({
         User : json,
-        Advertisment : temp
-      })
+        Advertisment : temp,
+        Types: uniqueTypes
+      })}
+  }
+  
+  HandleCreate = async () =>{
+    const response = await DB.Advertisements.create(
+      this.state.Advertisment
+    )
+    if(response){
+      this.setState({isCreated : true})
     }
   }
-  HandleCreate = async () =>{
-    console.log("Finaly Object: ",this.state.Advertisment)
-    await DB.Advertisements.create(
 
-    )
-  }
   handleType = event => {
     console.log("type ", event.target.value)
     const temp = this.state.Advertisment
@@ -75,14 +89,15 @@ export default class CreateAdvertisment extends React.Component {
 
   render(){
     return this.state.isCreated ? (
-      <Redirect to="/profile" />
+      <Redirect to="/advertisment/" />
     ) : (
         this.state.User ? 
         <React.Fragment>
+          <Paper style={{width:"550px", height:"530px"}}>
         <CssBaseline />
         <Container maxWidth="sm">
         
-        <Grid container spacing={3} style={{marginTop:"5%"}}>
+        <Grid container spacing={3} style={{PaddingTop:"5%"}}>
         <Grid container item xs={12} spacing={1}>
         <h2 style={{borderBottom:"1.8px solid lightgray",width:"100%"}}>Advertisment</h2>
         </Grid>
@@ -101,16 +116,16 @@ export default class CreateAdvertisment extends React.Component {
         Type
         </InputLabel>
         <NativeSelect
+          value={this.state.Types[0].Type}
           onChange={this.handleType}
           inputProps={{
             name: 'Advertisment',
             id: 'age-native-label-placeholder',
           }}
         >
-          <option value="">None</option>
-          <option value={10}>Sport</option>
-          <option value={20}>Music</option>
-          <option value={30}>Food</option>
+          {this.state.Types.map( item =>
+            <option value={item}>{item}</option>
+          )}
         </NativeSelect>
 
 
@@ -169,6 +184,7 @@ export default class CreateAdvertisment extends React.Component {
           </Grid>
           
           </Container>
+          </Paper>
           </React.Fragment>
         :
         <h1>Loading...</h1>
