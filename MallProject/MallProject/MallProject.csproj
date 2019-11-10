@@ -213,6 +213,7 @@
     <Compile Include="Controllers\AssetsController.cs" />
     <Compile Include="Controllers\BookingSeatsController.cs" />
     <Compile Include="Controllers\CleaningsController.cs" />
+    <Compile Include="Controllers\EmailsController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\FavoritesController.cs" />
     <Compile Include="Controllers\FeedBacksController.cs" />
