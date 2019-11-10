@@ -11,7 +11,7 @@ export default class NewsPublic extends React.Component {
     Role: ""
   };
 
-  async componentDidMount() {
+  componentDidMount = async () =>{
     const json = await DB.News.findAll();
     this.setState({ News: json });
 

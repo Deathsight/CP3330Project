@@ -47,18 +47,18 @@ namespace MallProject.Controllers
             {
                 return Ok(user);
             }
-            else if (query == "getRole" && user != null)
+
+            if (query == "getRole" && user != null)
             {
                 return Ok(user.Role.Name);
             }
-            else if (query == "getNews" && user != null)
+
+            if (query == "getNews" && user != null)
             {
                 return Ok(user.Renter.News);
             }
-            else
-            {
-                return NotFound();
-            }
+
+            return NotFound();
         }
 
         // PUT: api/Users/5

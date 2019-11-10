@@ -48,8 +48,9 @@ class Entity {
   findByQuery = async query => {
     // console.log(id);
     const response = await this.authFetch(`/api/${this.entity}?query=${query}`);
+    console.log("response:" + response);
     const json = await response.json();
-    console.log(json);
+    console.log("json:" + json);
     if (response.ok) {
       return json;
     }
