@@ -4,13 +4,20 @@ import Login from "./Login";
 import Auth from "./auth";
 import Logout from "./Logout";
 import Register from "./Register";
+import NewsPublic from "./News/NewsPublic";
+import NewsIndex from "./News/NewsIndex";
+import NewsCreate from "./News/NewsCreate";
 import Profile from "./Profile";
 import Home from "./Home";
+import Email from "./Email";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import UserEdit from "./User/UserEdit";
 import RentingIndex from "./Renting/RentingIndex";
+import RentingCreate from "./Renting/RentingCreate";
+import CreateAdvertisment from "./CreateAdvertisment";
+
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
 export default class app extends React.Component {
@@ -43,13 +50,23 @@ export default class app extends React.Component {
                   <Nav.Link as={Link} to="/renting/">
                     Renting
                   </Nav.Link>
+                 
                 </Nav.Item>
-                
+                <Nav.Item>
+                   <Nav.Link as={Link} to="/news/">
+                    News
+                   </Nav.Link> {/* I add a news linke on the nave bar*/ }
+                 </Nav.Item>
                 {Auth.isLoggedIn() ? (
                   <React.Fragment>
                     <Nav.Item>
                       <Nav.Link as={Link} to="/profile/">
                         Profile
+                      </Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                      <Nav.Link as={Link} to="/advertisment/create/">
+                        Advertise
                       </Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
@@ -79,10 +96,15 @@ export default class app extends React.Component {
 
           <Switch>
             <Route path="/profile/edit/" component={UserEdit} />
+            
+            <Route path="/advertisment/create" component={CreateAdvertisment} />
 
-            {/* Renting create not imported yet!! */}
-            {/* <Route path="/renting/create/:id" component={RentingCreate} /> */}
+            <Route path="/news/create" component={NewsCreate} />
+            <Route path="/news/index" component={NewsIndex} />
+            <Route path="/news/" component={NewsPublic} />
 
+            <Route path="/renting/create/:id" component={RentingCreate} />
+            <Route path="/email/" component={Email} />
             <Route path="/renting/" component={RentingIndex} />
             <Route path="/" exact component={Home} />
             <Route path="/login" component={Login} />

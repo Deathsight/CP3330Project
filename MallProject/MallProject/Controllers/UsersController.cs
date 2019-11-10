@@ -37,15 +37,23 @@ namespace MallProject.Controllers
             return Ok(user);
         }
 
-        // GET: api/Customers/?query=query
+        // GET: api/Users/?query=query
         [ResponseType(typeof(User))]
-        public IHttpActionResult GetCustomerByQuery(string query)
+        public IHttpActionResult GetUserByQuery(string query)
         {
             User user = db.Users.Find(User.Identity.GetUserName());
 
             if (query == "profile" && user != null)
             {
                 return Ok(user);
+            }
+            else if (query == "getRole" && user != null)
+            {
+                return Ok(user.Role.Name);
+            }
+            else if (query == "getNews" && user != null)
+            {
+                return Ok(user.Renter.News);
             }
             else
             {
