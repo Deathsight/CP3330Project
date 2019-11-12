@@ -218,6 +218,7 @@
     <Compile Include="Controllers\FavoritesController.cs" />
     <Compile Include="Controllers\FeedBacksController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IActionResult.cs" />
     <Compile Include="Controllers\LikesController.cs" />
     <Compile Include="Controllers\LogsController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
@@ -239,6 +240,7 @@
     <Compile Include="Controllers\TheaterPMsController.cs" />
     <Compile Include="Controllers\TheatersController.cs" />
     <Compile Include="Controllers\TheaterServicesController.cs" />
+    <Compile Include="Controllers\UploadImagesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -468,6 +470,9 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UserImage\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
