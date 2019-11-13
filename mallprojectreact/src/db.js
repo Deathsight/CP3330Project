@@ -48,9 +48,8 @@ class Entity {
   findByQuery = async query => {
     // console.log(id);
     const response = await this.authFetch(`/api/${this.entity}?query=${query}`);
-    console.log("response:" + response);
     const json = await response.json();
-    console.log("json:" + json);
+    console.log(json);
     if (response.ok) {
       return json;
     }
@@ -80,11 +79,25 @@ class Entity {
     return response.ok;
   };
 
+  // this function connected wtih Email Controller to send an email using POSST
   SendEmail = async item => {
     const response = await this.authFetch(`/api/${this.entity}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
+      },
+      body: JSON.stringify(item)
+    });
+
+    console.log("response", response);
+    return response.ok;
+  };
+
+  UploadImage = async item => {
+    const response = await this.authFetch(`/api/${this.entity}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
       },
       body: JSON.stringify(item)
     });
@@ -146,7 +159,8 @@ const DB = {
   TheaterPMes: new Entity("TheaterPMs"),
   TheaterServices: new Entity("TheaterServices"),
   Users: new Entity("Users"),
-  Emails: new Entity("Emails")
+  Emails: new Entity("Emails"),
+  UploadImages: new Entity("UploadImages")
 };
 
 export default DB;
