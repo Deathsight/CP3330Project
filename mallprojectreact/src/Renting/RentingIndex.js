@@ -62,6 +62,43 @@ export default class AssetIndex extends React.Component {
 
           <Link to={`/renting/create/${this.state.SelectedAssets}`}>Create</Link>
         </div>
+        {/*Displaying the Rentable Theaters */}
+            <h1>Theaters</h1>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Location Code</th>
+              <th>Description</th>
+              <th>Size</th>
+              <th>Price</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.state.Assets.map(item =>
+              item.Type === "Theater" ? (
+                <tr key={item.Id}>
+                  <td>{item.LocationCode}</td>
+                  <td>{item.Description}</td>
+                  <td>{item.Theater.Size}</td>
+                  <td>{item.Theater.TheaterPM.Price}</td>
+                  {Auth.isLoggedIn() && (
+                    <td>
+                      <button onClick={() => this.handleSelect(item.Id)}>Rent</button>
+                    </td>
+                  )}
+                </tr>
+              ) : null
+            )}
+          </tbody>
+        </Table>
+        <div>
+          {this.state.SelectedAssets.map(item =>
+          <p>{item}</p>
+          )}
+
+          <Link to={`/renting/theaterRenting/${this.state.SelectedAssets}`}>Create</Link>
+        </div>
       </div>
     );
   }

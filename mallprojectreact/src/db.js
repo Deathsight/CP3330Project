@@ -36,7 +36,7 @@ class Entity {
   findByName = async username => {
     // console.log(id);
     const response = await this.authFetch(
-      `/api/${this.entity}?username=${username}`
+      `/api/${this.entity}/${username}/`
     );
     const json = await response.json();
     console.log(json);

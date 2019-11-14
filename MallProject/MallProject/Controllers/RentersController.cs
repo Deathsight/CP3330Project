@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using MallProject.Models;
+using Microsoft.AspNet.Identity;
 
 namespace MallProject.Controllers
 {
@@ -33,6 +34,20 @@ namespace MallProject.Controllers
             }
 
             return Ok(renter);
+        }
+
+        // GET: api/Users/?query=query
+        [ResponseType(typeof(Renter))]
+        public IHttpActionResult GetUserByQuery(string query)
+        {
+            Renter renter = db.Renters.Find(User.Identity.GetUserName());
+
+            if (query == "getRenter" && renter != null)
+            {
+                return Ok(renter);
+            }
+
+            return NotFound();
         }
 
         // PUT: api/Renters/5
