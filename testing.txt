@@ -1,1 +1,20 @@
 git@github.com:Deathsight/CP3330Project.git
+
+<Switch>
+            <Route path="/profile/edit/" component={UserEdit} />
+
+            
+            <Route path="/news/create" component={NewsCreate} />
+            <Route path="/news/index" component={NewsIndex} />
+            <Route path="/news/" component={NewsPublic} />
+
+            <Route path="/renting/create/:id" component={RentingCreate} />
+            <Route path="/renting/theaterRenting/:id" component={TheaterRentingCreate} />
+            <Route path="/email/" component={Email} />
+            <Route path="/renting/" component={RentingIndex} />
+            <Route path="/" exact component={Home} />
+            <Route path="/login" component={Login} />
+            <Route path="/logout" exact component={Logout} />
+            <Route path="/register" exact component={Register} />
+            <Route path="/profile" exact component={Profile} />
+</Switch>
