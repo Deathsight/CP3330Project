@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using MallProject.Models;
+using Microsoft.AspNet.Identity;
 
 namespace MallProject.Controllers
 {
@@ -70,19 +71,62 @@ namespace MallProject.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        public class AssetRentingPlus
+        {
+            public List<int> AssetId { get; set; }
+            public DateTime StartDateTime { get; set; }
+            public DateTime EndDateTime { get; set; }
+            public double TotalPrice { get; set; }
+            public string Status { get; set; }
+            public string ReferalCode { get; set; }
+            public int SecurityId { get; set; }
+            
+        }
+
         // POST: api/AssetRentings
         [ResponseType(typeof(AssetRenting))]
-        public IHttpActionResult PostAssetRenting(AssetRenting assetRenting)
+        public IHttpActionResult PostAssetRenting(AssetRentingPlus assetRentingPlus)
         {
-            if (!ModelState.IsValid)
+            string email = User.Identity.GetUserName();
+
+            Renting renting = db.Rentings.SingleOrDefault(r =>
+                r.RenterEmail == email &&
+                r.StartDateTime == assetRentingPlus.StartDateTime &&
+                r.EndDateTime == assetRentingPlus.EndDateTime
+                );
+
+            if (renting == null)
             {
-                return BadRequest(ModelState);
+                // make new renting record
+                renting = new Renting
+                {
+                    RenterEmail = email,
+                    StartDateTime = assetRentingPlus.StartDateTime,
+                    EndDateTime = assetRentingPlus.EndDateTime,
+                    TotalPrice = assetRentingPlus.TotalPrice,
+                    Status = assetRentingPlus.Status,
+                    ReferalCode = assetRentingPlus.ReferalCode,
+                    SecurityId = assetRentingPlus.SecurityId
+                };
+                db.Rentings.Add(renting);
+                db.SaveChanges();
             }
 
-            db.AssetRentings.Add(assetRenting);
-            db.SaveChanges();
+            renting = db.Rentings.SingleOrDefault(r =>
+                r.RenterEmail == email &&
+                r.StartDateTime == assetRentingPlus.StartDateTime &&
+                r.EndDateTime == assetRentingPlus.EndDateTime
+            );
 
-            return CreatedAtRoute("DefaultApi", new { id = assetRenting.Id }, assetRenting);
+            foreach(int id in assetRentingPlus.AssetId)
+            {
+                AssetRenting assetRenting = new AssetRenting { RentingId = renting.Id, AssetId = id};
+
+                db.AssetRentings.Add(assetRenting);
+                db.SaveChanges();
+            }
+
+            return CreatedAtRoute("DefaultApi", new { id = assetRentingPlus.AssetId }, assetRentingPlus);
         }
 
         // DELETE: api/AssetRentings/5

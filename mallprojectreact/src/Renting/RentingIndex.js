@@ -7,13 +7,20 @@ import { Link } from "react-router-dom";
 
 export default class AssetIndex extends React.Component {
   state = {
-    Assets: []
+    Assets: [],
+    SelectedAssets: []
   };
 
   async componentDidMount() {
     const json = await DB.Assets.findAll();
     this.setState({ Assets: json });
   }
+
+  handleSelect = (Id) => {
+    let temp = [Id]
+    this.setState({ SelectedAssets: this.state.SelectedAssets.concat(temp) });
+    console.log(this.state.SelectedAssets)
+  };
 
   render() {
     return (
@@ -40,7 +47,7 @@ export default class AssetIndex extends React.Component {
                   <td>{item.Store.StorePM.Price}</td>
                   {Auth.isLoggedIn() && (
                     <td>
-                      <Link to={`/renting/create/${item.Id}`}>Rent</Link>
+                      <button onClick={() => this.handleSelect(item.Id)}>Rent</button>
                     </td>
                   )}
                 </tr>
@@ -48,6 +55,13 @@ export default class AssetIndex extends React.Component {
             )}
           </tbody>
         </Table>
+        <div>
+          {this.state.SelectedAssets.map(item =>
+          <p>{item}</p>
+          )}
+
+          <Link to={`/renting/create/${this.state.SelectedAssets}`}>Create</Link>
+        </div>
       </div>
     );
   }

@@ -13,7 +13,8 @@ export default class RentingCreate extends React.Component {
     Security: null,
     securityCompanies: [],
     isCreated: false,
-    store: null,
+    SelectedStores: [],
+    SelectedIds: [],
     StartDateTime: null,
     EndDateTime: null,
     TotalPrice: 0,
@@ -21,14 +22,22 @@ export default class RentingCreate extends React.Component {
   };
 
   async componentDidMount() {
-    const store = await DB.Stores.findOne(this.props.match.params.id);
+    let assetIds = this.props.match.params.id.split(",")
+    assetIds = assetIds.map(item => parseInt(item))
+
+    const stores = await DB.Stores.findAll();
+
+    const SelectedStores = stores.filter(function(item) {
+      return assetIds.indexOf(item.AssetId) !== -1;
+    });
+    
     const renters = await DB.Renters.findByName(Auth.username());
     const securityCompanies = await DB.Securities.findAll();
     const renter = renters[0];
     console.log(renter);
     //console.log(securityCompanies);
-    console.log(store);
-    this.setState({ store });
+    this.setState({ SelectedIds: assetIds});
+    this.setState({ SelectedStores });
     this.setState({ securityCompanies });
     this.setState({ renter });
   }
@@ -51,8 +60,8 @@ export default class RentingCreate extends React.Component {
     console.log(this.state.Time);
 
     if (
-      await DB.Rentings.create({
-        RenterEmail: this.state.renter.Email,
+      await DB.AssetRentings.create({
+        AssetId: this.state.SelectedIds,
         StartDateTime: `${this.state.StartDateTime}T00:00:00`,
         EndDateTime: `${this.state.EndDateTime}T00:00:00`,
         TotalPrice: this.state.TotalPrice,
@@ -69,16 +78,21 @@ export default class RentingCreate extends React.Component {
     var d = this.handleDuration();
     console.log(d);
     console.log(this.state.Security);
+    var totalPrice = 0
     if (
       this.state.StartDateTime != null &&
       this.state.EndDateTime != null &&
       this.state.Security != null
     ) {
-      var price = d * this.state.store.StorePM.Price;
+
+      this.state.SelectedStores.map(item => (
+        totalPrice = totalPrice + (d * item.StorePM.Price)
+      ))
+
       //console.log(price);
-      price = price + this.state.Security.Price;
-      console.log(price);
-      this.setState({ TotalPrice: price });
+      totalPrice = totalPrice + this.state.Security.Price;
+      console.log(totalPrice);
+      this.setState({ TotalPrice: totalPrice });
     }
   };
 
