@@ -214,7 +214,6 @@ export default class app extends React.Component {
           </Switch>
         </div>
       </Router>
-
     );
   }
 }
