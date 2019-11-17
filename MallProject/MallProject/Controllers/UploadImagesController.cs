@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -10,7 +12,7 @@ using System.Web.Http;
 
 namespace MallProject.Controllers
 {
-
+    [Authorize]
     //[RoutePrefix("api/Upload")]
     public class UploadImagesController : ApiController
     {
@@ -33,7 +35,7 @@ namespace MallProject.Controllers
 
                         int MaxContentLength = 1024 * 1024 * 1; //Size = 1 MB  
 
-                        IList<string> AllowedFileExtensions = new List<string> { ".jpg", ".gif", ".png" };
+                        IList<string> AllowedFileExtensions = new List<string> { ".jpg", ".gif", ".png", ".jfif" };
                         var ext = postedFile.FileName.Substring(postedFile.FileName.LastIndexOf('.'));
                         var extension = ext.ToLower();
                         if (!AllowedFileExtensions.Contains(extension))
@@ -54,10 +56,11 @@ namespace MallProject.Controllers
                         }
                         else
                         {
+                            string email = User.Identity.GetUserName();
 
+                            var filePath = HttpContext.Current.Server.MapPath("~/mallprojectreact/public/ProfileImages/" + email + ".png");
 
-
-                            var filePath = HttpContext.Current.Server.MapPath("~/UserImage/" + postedFile.FileName + extension);
+                            filePath = filePath.Replace(@"\MallProject\MallProject", "");
 
                             postedFile.SaveAs(filePath);
 
