@@ -139,13 +139,14 @@ namespace MallProject.Controllers
         [ResponseType(typeof(User))]
         public IHttpActionResult PostUser(User user)
         {
-            if (user == null)
+            User info = user;
+            if (user.Email == null)
             {
                 string email = User.Identity.GetUserName();
                 user = db.Users.Find(email);
                 if (user == null)
                 {
-                    user = new User { Email = email };
+                    user = new User { Email = email, Name = info.Name, Phone = info.Phone, RoleID = info.RoleID };
                 }
                 else
                 {
