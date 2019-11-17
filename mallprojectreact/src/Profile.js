@@ -2,6 +2,7 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Table from "react-bootstrap/Table";
 import DB from "./db.js";
+import Auth from "./auth.js";
 import { Link } from "react-router-dom";
 
 export default class Profile extends React.Component {
@@ -13,6 +14,7 @@ export default class Profile extends React.Component {
   async componentDidMount() {
     const json = await DB.Users.findByQuery("profile");
     this.setState({ User: json });
+    console.log(json)
     if(this.state.User.Role.Name === "SupportAgent"){
       const json2 = await DB.SupportTickets.findAll();
       this.setState({ Tickets: json2 });
@@ -89,7 +91,7 @@ export default class Profile extends React.Component {
                   <td>{this.state.User.Renter.Status}</td>
                 </tr>
                 
-                <td><Link to={`/profile/editRenter/`}>Edit Renter Info</Link></td>
+                <tr><td><Link to={`/profile/editRenter/`}>Edit Renter Info</Link></td></tr>
               </thead>
             </Table>
             <br/>
@@ -103,7 +105,7 @@ export default class Profile extends React.Component {
                 <tr>
                 <th>Start Date/Time</th>
                 <th>End Date/Time</th>
-                <th>Asset</th>
+                <th>Assets</th>
                 <th>Total Price</th>
                 <th>Status</th>
                 <th>ReferalCode</th>
@@ -125,18 +127,18 @@ export default class Profile extends React.Component {
 
                   <tr>
                     <th>Asset Type</th>
-                    <th>Asset Name</th>
-                    <th>Asset Description</th>
+                    <th>Asset Size</th>
+                    <th>Asset Location</th>
                   </tr>
-                    
+                  {console.log(item.AssetRentings)}
                   {item.AssetRentings.map(item => (
                     <tr key={item.Id}>
 
-                      <td>{item.Type}</td>
+                      <td>{item.Asset.Type}</td>
 
-                      <td>{item.Name}</td>
+                      <td>{item.Asset.Store.StorePM.Description}</td>
 
-                      <td>{item.Description}</td>
+                      <td>{item.Asset.LocationCode}</td>
 
                     </tr>
                   ))}
@@ -177,27 +179,28 @@ export default class Profile extends React.Component {
               <thead>
 
                 <tr>
+                <th>Agent Name</th>  
                 <th>User Email</th>
                 <th>Start Date</th>
-                <th>Close Date</th>
                 <th>Description</th>
                 <th>Status</th>
                 <th>Type</th>
                 <th>Priority</th>
                 
                 <th>Details</th>
-                <th>Close Ticket</th>
+                <th>Ticket</th>
                 
                 </tr>
 
                 {this.state.Tickets.map(item => (
+                  item.Status === "open" ? ( 
                   <tr key={item.Id}>
+
+                  <td>{item.User ? ( item.User.Name ):("")}</td>
 
                   <td>{item.UserEmail}</td>
                   
                   <td>{this.handleDate(item.SubmitDate)}</td>
-
-                  <td>{this.handleDate(item.ClosedDate)}</td>
 
                   <td>{item.Description}</td>
 
@@ -209,14 +212,67 @@ export default class Profile extends React.Component {
 
                   <td>
                     {
+                      item.AgentEmail === Auth.username() ? (
+                      <Link to={`/support/details/${item.Id}`}>Details</Link>
+                      ):("Not Available")
+                    }
+                  </td>
+
+                  <td>
+                    {item.AgentEmail === Auth.username() ? ( 
+                      <Link to={`/support/close/${item.Id}`}>Close Ticket</Link>
+                    ): item.AgentEmail ? ( "Ticket Taken" ):( <Link to={`/support/accept/${item.Id}`}>Take Ticket</Link>)
+                    }
+                  </td>
+                </tr>
+                  ):(null)
+                ))}
+              </thead>
+            </Table>
+          </div>
+
+         ) : this.state.User.Role.Name !== "SupportAgent" ? (
+
+          <div>
+            <h2>My Support Tickets</h2>
+
+            <Table striped bordered hover>
+              <thead>
+
+                <tr>
+                <th>Topic</th>
+                <th>Description</th>
+                <th>Start Date</th>
+                <th>Close Date</th>
+                <th>Status</th>
+                
+                <th>Details</th>
+                <th>Close Ticket</th>
+                
+                </tr>
+
+                {this.state.User.SupportTickets1.map(item => (
+                  <tr key={item.Id}>
+
+                  <td>{item.STicketType.Name}</td>
+
+                  <td>{item.Description}</td>
+                  
+                  <td>{this.handleDate(item.SubmitDate)}</td>
+
+                  <td>{item.ClosedDate ? ( this.handleDate(item.ClosedDate)):("")}</td>
+
+                  <td>{item.Status}</td>
+
+
+                  <td>
+                    {
                       <Link to={`/support/details/${item.Id}`}>Details</Link>
                     }
                   </td>
 
                   <td>
-                    {
-                      <Link to={`/support/close/${item.Id}`}>Close Ticket</Link>
-                    }
+                  {item.ClosedDate ? ( "Ticket Closed" ):( <Link to={`/support/close/${item.Id}`}>Close Ticket</Link>)}
                   </td>
                 </tr>
                 ))}

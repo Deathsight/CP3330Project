@@ -24,7 +24,7 @@ export default class NewsPublic extends React.Component {
       <div>
           {this.state.Role === "Renter" ? ( <Link to={`/news/index`}>My News</Link> ) : ( null )}
         <h2>News</h2>
-
+{this.state.News?
         <Table striped bordered hover>
           <thead>
             <tr>
@@ -41,13 +41,14 @@ export default class NewsPublic extends React.Component {
                 <td>{item.RenterEmail}</td>
                 <td>{item.Topic}</td>
                 <td>{item.Content}</td>
-                
-               
               </tr>
               ) 
             )}
           </tbody>
         </Table>
+        :
+        <p>Loading...</p>
+}
       </div>
     );
   }
