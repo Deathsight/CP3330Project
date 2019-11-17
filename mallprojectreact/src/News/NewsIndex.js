@@ -36,9 +36,16 @@ export default class NewsPublic extends React.Component {
 
                 <td>{item.Topic}</td>
                 <td>{item.Content}</td>
+                <td>
+                <Link to={`/news/edit/${item.Id}`}>Edit</Link>
+                </td>
                 
+                <td>
+                <Link to={`/news/delete/${item.Id}`}>Delete</Link>
+                </td>
                 
               </tr>
+              
               )
             )}
           </tbody>

@@ -4,11 +4,10 @@ import DB from "../db.js";
 import Button from "react-bootstrap/Button";
 import { Link, Redirect } from "react-router-dom";
 
-export default class AssetCreate extends React.Component {
+export default class NewsCreate extends React.Component {
   state = {
     Topic: "",
     Content: "",
-    PricingModelId: 1,
     isCreated: false
   };
 

@@ -10,7 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import Paper from '@material-ui/core/Paper'
+import {Paper,Tabs,Tab} from '@material-ui/core'
 
 
 
@@ -19,7 +19,9 @@ export default class Register extends React.Component {
         Email: "",
         Password: "",
         ConfirmPassword: "",
-        isRegistered: false
+        isRegistered: false,
+        accountType: null,
+        role: "Customer"
     }
     useStyles = {
         '@global': {
@@ -74,13 +76,19 @@ export default class Register extends React.Component {
     handleEmail = (event) => {
         this.setState({Email: event.target.value})
     }
-
+    handleRole = (role) => {
+        this.setState({role})
+        console.log(this.state.role)
+    }
     handlePassword = (event) => {
         this.setState({Password: event.target.value})
     }
 
     handleConfirmPassword = (event) => {
         this.setState({ConfirmPassword: event.target.value})
+    }
+    switchType = (event, switchedType) => {
+      this.setState({accountType: switchedType})
     }
     handleRegisterDB = async () => {
 
@@ -105,13 +113,24 @@ export default class Register extends React.Component {
       <div style={this.useStyles.background}>
     <Container component="main" >
       <CssBaseline />
-      <Paper style={this.useStyles.paper}>
-        <Avatar style={this.useStyles.avatar}>
+      <Paper style={this.useStyles.paper}>      
+      <Avatar style={this.useStyles.avatar}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
+        <Tabs
+          value={this.state.accountType}
+          indicatorColor="primary"
+          textColor="primary"
+          onChange={this.switchType}
+          style={{paddingTop:10}}
+          aria-label="disabled tabs example"
+        >
+          <Tab label="Business" onClick={()=> this.handleRole("Renter")}/>
+          <Tab label="Consumer" onClick={()=> this.handleRole("Customer")}/>
+        </Tabs>
         <div style={this.useStyles.form}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
