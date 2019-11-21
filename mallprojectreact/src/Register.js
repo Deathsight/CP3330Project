@@ -105,9 +105,7 @@ export default class Register extends React.Component {
     }
 
     render(){
-        return this.state.isRegistered ?(
-            <Redirect to = "/"/>
-            ) : (
+        return this.state.isRegistered ? <Redirect to = "/"/>  :  this.state.isRegistered && this.state.Role === 6?  <Redirect to = "/"/> : (
                 
             <div>
                 {this.state.Roles? 
