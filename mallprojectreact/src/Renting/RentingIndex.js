@@ -25,6 +25,7 @@ export default class AssetIndex extends React.Component {
   render() {
     return (
       <div>
+        <Link to={`/profile/complete`}>complete profile</Link>
         <h2>Stores</h2>
 
         <Table striped bordered hover>

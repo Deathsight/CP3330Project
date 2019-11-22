@@ -16,9 +16,11 @@ import Nav from "react-bootstrap/Nav";
 import UserEdit from "./User/UserEdit";
 import RentingIndex from "./Renting/RentingIndex";
 import RentingCreate from "./Renting/RentingCreate";
-import CreateAdvertisment from "./CreateAdvertisment";
+
 
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import CompleteInfo from "./User/RenterCreate";
+import RenterCreate from "./User/RenterCreate";
 
 export default class app extends React.Component {
   state = {
@@ -96,8 +98,8 @@ export default class app extends React.Component {
 
           <Switch>
             <Route path="/profile/edit/" component={UserEdit} />
-            
-            <Route path="/advertisment/create" component={CreateAdvertisment} />
+            <Route path="/profile/complete" component={RenterCreate} />
+
 
             <Route path="/news/create" component={NewsCreate} />
             <Route path="/news/index" component={NewsIndex} />

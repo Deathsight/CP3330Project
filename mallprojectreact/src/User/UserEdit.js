@@ -72,7 +72,7 @@ export default class UserEdit extends React.Component {
     console.log(e.target.files[0])
   }
   fileUpload(file){
-    const url = 'http://localhost:3000/api/UploadImages';
+    const url = 'http://localhost:3000/api/UploadImages?type=Profile';
     const formData = new FormData();
     formData.append('file',file)
     const config = {

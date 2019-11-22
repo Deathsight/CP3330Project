@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using MallProject.Models;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -16,9 +18,11 @@ namespace MallProject.Controllers
     //[RoutePrefix("api/Upload")]
     public class UploadImagesController : ApiController
     {
+        private Database1Entities db = new Database1Entities();
         //[Route("user/PostUserImage")]
-        public async Task<HttpResponseMessage> PostUploadImage()
+        public async Task<HttpResponseMessage> PostUploadImage(string type)
         {
+
             Dictionary<string, object> dict = new Dictionary<string, object>();
             try
             {
@@ -53,6 +57,25 @@ namespace MallProject.Controllers
 
                             dict.Add("error", message);
                             return Request.CreateResponse(HttpStatusCode.BadRequest, dict);
+                        }
+                        else if (type == "QID") {
+                            string imgName = postedFile.FileName.Substring(0, postedFile.FileName.LastIndexOf('.') - 1);
+
+                            var filePath = HttpContext.Current.Server.MapPath("~/mallprojectreact/public/RentersQIDs/" + imgName + ".png");
+
+                            filePath = filePath.Replace(@"\MallProject\MallProject", "");
+
+                            postedFile.SaveAs(filePath);
+
+                            string email = User.Identity.GetUserName();
+
+                            Renter renter = db.Renters.Find(email);
+
+                            renter.QIdPic = imgName + ".png";
+
+                            db.Entry(renter).State = EntityState.Modified;
+
+                            db.SaveChanges();
                         }
                         else
                         {
