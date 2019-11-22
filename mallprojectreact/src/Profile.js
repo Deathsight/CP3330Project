@@ -8,17 +8,27 @@ import { Link } from "react-router-dom";
 export default class Profile extends React.Component {
   state = {
     User: null,
-    Tickets: []
+    Tickets: [],
+    SubscriptionLastDay: null,
+    TodayDate: null
   };
 
   async componentDidMount() {
     const json = await DB.Users.findByQuery("profile");
     this.setState({ User: json });
-    console.log(json)
+    console.log("this is json",json)
     if(this.state.User.Role.Name === "SupportAgent"){
       const json2 = await DB.SupportTickets.findAll();
       this.setState({ Tickets: json2 });
     }
+    var date = new Date();
+    this.setState({ TodayDate: date });
+    if(json.Subscriptions.length !== 0){
+      const json3 = await DB.Subscriptions.findOne(json.Subscriptions[0].Id)
+      this.setState({ SubscriptionLastDay: json3.ExpiryDate });
+      console.log(this.state.SubscriptionLastDay)
+    }
+    console.log(date.toLocaleDateString())
   }
   
   handleDate = (item) => {
@@ -52,6 +62,11 @@ export default class Profile extends React.Component {
             <tr>
               <th>Role:</th>
               <td>{this.state.User.Role.Name}</td>
+            </tr>
+
+            <tr>
+              <th>Subscription:</th>
+              <td><Link to={`/Subscription`}>Subscribe now !</Link></td>
             </tr>
             
             <tr><td><Link to={`/profile/edit`}>Edit Profile</Link></td></tr>

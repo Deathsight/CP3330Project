@@ -125,6 +125,17 @@ class Entity {
     // console.log('json',json)
     return response.ok;
   };
+
+  editPark = async item => {
+    const response = await this.authFetch(`/api/${this.entity}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(item)
+    });
+    return response.ok;
+  };
 }
 
 const DB = {
@@ -160,7 +171,8 @@ const DB = {
   TheaterServices: new Entity("TheaterServices"),
   Users: new Entity("Users"),
   Emails: new Entity("Emails"),
-  UploadImages: new Entity("UploadImages")
+  UploadImages: new Entity("UploadImages"),
+  Parkings: new Entity("Parkings")
 };
 
 export default DB;

@@ -17,6 +17,10 @@ import UserEdit from "./User/UserEdit";
 import RentingIndex from "./Renting/RentingIndex";
 import RentingCreate from "./Renting/RentingCreate";
 
+import ParkingIndex from "./Parking/ParkingIndex";
+import ParkingEdit from "./Parking/ParkingEdit";
+import Subscription from "./Subscription";
+
 
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import CompleteInfo from "./User/RenterCreate";
@@ -100,6 +104,8 @@ export default class app extends React.Component {
             <Route path="/profile/edit/" component={UserEdit} />
             <Route path="/profile/complete" component={RenterCreate} />
 
+            <Route path="/Parking/ParkingEdit/:id" component={ParkingEdit} />
+            
 
             <Route path="/news/create" component={NewsCreate} />
             <Route path="/news/index" component={NewsIndex} />
@@ -113,6 +119,8 @@ export default class app extends React.Component {
             <Route path="/logout" exact component={Logout} />
             <Route path="/register" exact component={Register} />
             <Route path="/profile" exact component={Profile} />
+            <Route path="/Subscription" exact component={Subscription} />
+            <Route path="/Parking/" component={ParkingIndex} />
           </Switch>
         </div>
       </Router>
