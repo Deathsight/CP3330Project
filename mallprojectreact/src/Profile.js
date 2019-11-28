@@ -107,6 +107,8 @@ export default class Profile extends React.Component {
                 </tr>
                 
                 <tr><td><Link to={`/profile/editRenter/`}>Edit Renter Info</Link></td></tr>
+                <tr><td> <Link to={`/cleanings/create/`}>Create Cleaning Request</Link> </td></tr>
+                <tr><td> <Link to={`/cleaningsPro/`}>Cleaning Request Process</Link> </td></tr>
               </thead>
             </Table>
             <br/>
@@ -294,11 +296,20 @@ export default class Profile extends React.Component {
               </thead>
             </Table>
           </div>
+          ) : this.state.User.Role.Name === "Cleaner" ? (
 
-         ) : (
-        <h1>Nothing else for your role. Soooon</h1>
 
-        )}
+            <div>
+            <h2>Cleaning Request</h2>
+
+            <Link to={`/cleanings/public/`}>Show Cleaning Request</Link>
+          </div>
+
+
+          ) :    ( 
+          <h1>Nothing else for your role. Soooon</h1>
+
+          )}
       </div>
     ) : (
       <h1>Loading...</h1>

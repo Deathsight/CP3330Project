@@ -57,6 +57,14 @@ namespace MallProject.Controllers
             {
                 return Ok(user.Renter.News);
             }
+            if (query == "getRenting" && user != null)
+            {
+                return Ok(user.Renter.Rentings);
+            }
+            if (query == "getCleanings" && user != null)
+            {
+                return Ok(user.Cleanings);
+            }
 
             return NotFound();
         }

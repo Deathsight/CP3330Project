@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using MallProject.Models;
+using Microsoft.AspNet.Identity;
 
 namespace MallProject.Controllers
 {
@@ -74,6 +75,9 @@ namespace MallProject.Controllers
         [ResponseType(typeof(New))]
         public IHttpActionResult PostNew(New @new)
         {
+            if (@new.RenterEmail == null) {
+                @new.RenterEmail = User.Identity.GetUserName();
+            }
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

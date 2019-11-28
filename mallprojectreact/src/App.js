@@ -4,9 +4,13 @@ import Login from "./Login";
 import Auth from "./auth";
 import Logout from "./Logout";
 import Register from "./Register";
+
 import NewsPublic from "./News/NewsPublic";
 import NewsIndex from "./News/NewsIndex";
 import NewsCreate from "./News/NewsCreate";
+import NewsEdit from "./News/NewsEdit";
+import NewsDelete from "./News/NewsDelete";
+
 import Profile from "./Profile";
 import Home from "./Home";
 import Email from "./Email";
@@ -20,6 +24,13 @@ import RentingCreate from "./Renting/RentingCreate";
 import ParkingIndex from "./Parking/ParkingIndex";
 import ParkingEdit from "./Parking/ParkingEdit";
 import Subscription from "./Subscription";
+
+import CleaningsIndex from "./Cleanings/CleaningsIndex";
+import CleaningsCreate from "./Cleanings/CleaningsCreate";
+import CleaningsDelete from "./Cleanings/CleaningsDelete";
+import CleaningsEdit from "./Cleanings/CleaningsEdit";
+import CleaningsPublic from "./Cleanings/CleaningsPublic";
+import CleaningsIndexPro from "./Cleanings/CleaningsIndexPro";
 
 
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
@@ -59,7 +70,7 @@ export default class app extends React.Component {
                  
                 </Nav.Item>
                 <Nav.Item>
-                   <Nav.Link as={Link} to="/news/">
+                   <Nav.Link as={Link} to="/news/public">
                     News
                    </Nav.Link> {/* I add a news linke on the nave bar*/ }
                  </Nav.Item>
@@ -108,8 +119,17 @@ export default class app extends React.Component {
             
 
             <Route path="/news/create" component={NewsCreate} />
-            <Route path="/news/index" component={NewsIndex} />
-            <Route path="/news/" component={NewsPublic} />
+            <Route path="/news/delete/:id" component={NewsDelete} />
+            <Route path="/news/edit/:id" component={NewsEdit} />
+            <Route path="/news/public/" component={NewsPublic} />
+            <Route path="/news/" component={NewsIndex} />
+
+            <Route path="/cleanings/create" component={CleaningsCreate} />
+            <Route path="/cleanings/delete/:id" component={CleaningsDelete} />
+            <Route path="/cleanings/edit/:id" component={CleaningsEdit} />  
+            <Route path="/cleanings/public/" component={CleaningsPublic} /> 
+            <Route path="/cleaningsPro/" component={CleaningsIndexPro} />
+            <Route path="/cleanings/" component={CleaningsIndex} />
 
             <Route path="/renting/create/:id" component={RentingCreate} />
             <Route path="/email/" component={Email} />
