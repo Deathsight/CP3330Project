@@ -5,14 +5,14 @@ import DB from "../db.js";
 import Auth from "../auth";
 import { Link } from "react-router-dom";
 
-export default class AssetIndex extends React.Component {
+export default class RentingIndex extends React.Component {
   state = {
     Assets: [],
     SelectedAssets: []
   };
 
   async componentDidMount() {
-    const json = await DB.Assets.findAll();
+    const json = await DB.Assets.findByQuery("getAssets");
     this.setState({ Assets: json });
   }
 

@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 export default class Profile extends React.Component {
   state = {
     User: null,
+    Email: null,
     Tickets: [],
     SubscriptionLastDay: null,
     TodayDate: null
@@ -21,7 +22,8 @@ export default class Profile extends React.Component {
       const json2 = await DB.SupportTickets.findAll();
       this.setState({ Tickets: json2 });
     }
-    var date = new Date();
+	
+	var date = new Date();
     this.setState({ TodayDate: date });
     if(json.Subscriptions.length !== 0){
       const json3 = await DB.Subscriptions.findOne(json.Subscriptions[0].Id)
@@ -63,12 +65,12 @@ export default class Profile extends React.Component {
               <th>Role:</th>
               <td>{this.state.User.Role.Name}</td>
             </tr>
-
+            
             <tr>
               <th>Subscription:</th>
               <td><Link to={`/Subscription`}>Subscribe now !</Link></td>
             </tr>
-            
+			
             <tr><td><Link to={`/profile/edit`}>Edit Profile</Link></td></tr>
           </tbody>
         </Table>
@@ -187,7 +189,8 @@ export default class Profile extends React.Component {
               </thead>
             </Table>
           </div>
-        ) : this.state.User.Role.Name === "SupportAgent" ? (
+        ) : (null)}
+        {this.state.User.Role.Name === "SupportAgent" ? (
 
           <div>
             <h2>Tickets</h2>
@@ -238,7 +241,7 @@ export default class Profile extends React.Component {
                   <td>
                     {item.AgentEmail === Auth.username() ? ( 
                       <Link to={`/support/close/${item.Id}`}>Close Ticket</Link>
-                    ): item.AgentEmail ? ( "Ticket Taken" ):( <Link to={`/support/accept/${item.Id}`}>Take Ticket</Link>)
+                    ): item.AgentEmail ? ( "Ticket Taken" ):( <Link to={`/support/edit/${item.Id}`}>Take Ticket</Link>)
                     }
                   </td>
                 </tr>
@@ -297,18 +300,13 @@ export default class Profile extends React.Component {
             </Table>
           </div>
           ) : this.state.User.Role.Name === "Cleaner" ? (
-
-
             <div>
             <h2>Cleaning Request</h2>
 
             <Link to={`/cleanings/public/`}>Show Cleaning Request</Link>
           </div>
-
-
-          ) :    ( 
+          ) : ( 
           <h1>Nothing else for your role. Soooon</h1>
-
           )}
       </div>
     ) : (

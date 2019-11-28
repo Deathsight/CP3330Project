@@ -641,6 +641,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__STicketCh__UserE__607251E5">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="STicketChat" Type="Self.STicketChat" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Email" />
+      </Principal>
+      <Dependent Role="STicketChat">
+        <PropertyRef Name="UserEmail" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__Store__AssetId__71D1E811">
     <End Role="Asset" Type="Self.Asset" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -931,6 +943,10 @@
     </AssociationSet>
     <AssociationSet Name="FK__STicketCh__STick__4BAC3F29" Association="Self.FK__STicketCh__STick__4BAC3F29">
       <End Role="SupportTicket" EntitySet="SupportTicket" />
+      <End Role="STicketChat" EntitySet="STicketChat" />
+    </AssociationSet>
+    <AssociationSet Name="FK__STicketCh__UserE__607251E5" Association="Self.FK__STicketCh__UserE__607251E5">
+      <End Role="User" EntitySet="User" />
       <End Role="STicketChat" EntitySet="STicketChat" />
     </AssociationSet>
     <AssociationSet Name="FK__Store__AssetId__71D1E811" Association="Self.FK__Store__AssetId__71D1E811">

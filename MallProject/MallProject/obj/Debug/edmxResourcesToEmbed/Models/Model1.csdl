@@ -250,6 +250,7 @@
     <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="SupportTicket" Relationship="Self.FK__STicketCh__STick__4BAC3F29" FromRole="STicketChat" ToRole="SupportTicket" />
+    <NavigationProperty Name="User" Relationship="Self.FK__STicketCh__UserE__607251E5" FromRole="STicketChat" ToRole="User" />
   </EntityType>
   <EntityType Name="STicketType">
     <Key>
@@ -369,6 +370,7 @@
     <NavigationProperty Name="Logs" Relationship="Self.FK__Log__UserEmail__3C69FB99" FromRole="User" ToRole="Log" />
     <NavigationProperty Name="Renter" Relationship="Self.FK__Renter__Email__2A4B4B5E" FromRole="User" ToRole="Renter" />
     <NavigationProperty Name="Role" Relationship="Self.FK_User_ToRole" FromRole="User" ToRole="Role" />
+    <NavigationProperty Name="STicketChats" Relationship="Self.FK__STicketCh__UserE__607251E5" FromRole="User" ToRole="STicketChat" />
     <NavigationProperty Name="Subscriptions" Relationship="Self.FK__Subscript__UserE__5441852A" FromRole="User" ToRole="Subscription" />
     <NavigationProperty Name="SupportTickets" Relationship="Self.FK__SupportTi__Agent__3A4CA8FD" FromRole="User" ToRole="SupportTicket" />
     <NavigationProperty Name="SupportTickets1" Relationship="Self.FK__SupportTi__UserE__47DBAE45" FromRole="User" ToRole="SupportTicket" />
@@ -771,6 +773,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__STicketCh__UserE__607251E5">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="STicketChat" Type="Self.STicketChat" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Email" />
+      </Principal>
+      <Dependent Role="STicketChat">
+        <PropertyRef Name="UserEmail" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__SupportTi__STick__48CFD27E">
     <End Role="STicketType" Type="Self.STicketType" Multiplicity="1" />
     <End Role="SupportTicket" Type="Self.SupportTicket" Multiplicity="*" />
@@ -1023,6 +1037,10 @@
     </AssociationSet>
     <AssociationSet Name="FK__STicketCh__STick__4BAC3F29" Association="Self.FK__STicketCh__STick__4BAC3F29">
       <End Role="SupportTicket" EntitySet="SupportTickets" />
+      <End Role="STicketChat" EntitySet="STicketChats" />
+    </AssociationSet>
+    <AssociationSet Name="FK__STicketCh__UserE__607251E5" Association="Self.FK__STicketCh__UserE__607251E5">
+      <End Role="User" EntitySet="Users" />
       <End Role="STicketChat" EntitySet="STicketChats" />
     </AssociationSet>
     <AssociationSet Name="FK__SupportTi__STick__48CFD27E" Association="Self.FK__SupportTi__STick__48CFD27E">

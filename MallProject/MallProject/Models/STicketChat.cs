@@ -21,5 +21,6 @@ namespace MallProject.Models
         public string Comment { get; set; }
     
         public virtual SupportTicket SupportTicket { get; set; }
+        public virtual User User { get; set; }
     }
 }

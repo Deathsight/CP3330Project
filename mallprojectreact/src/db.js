@@ -125,7 +125,14 @@ class Entity {
     // console.log('json',json)
     return response.ok;
   };
-
+  
+  editSupportTicket = async (id, email) => {
+    const response = await this.authFetch(`/api/${this.entity}/${id}?email=${email}`,{
+      method: "PUT"
+    });
+    return response.ok;
+  };
+  
   editPark = async item => {
     const response = await this.authFetch(`/api/${this.entity}`, {
       method: "PUT",

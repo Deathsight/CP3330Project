@@ -11,6 +11,13 @@ import NewsCreate from "./News/NewsCreate";
 import NewsEdit from "./News/NewsEdit";
 import NewsDelete from "./News/NewsDelete";
 
+import CleaningsIndex from "./Cleanings/CleaningsIndex";
+import CleaningsCreate from "./Cleanings/CleaningsCreate";
+import CleaningsDelete from "./Cleanings/CleaningsDelete";
+import CleaningsEdit from "./Cleanings/CleaningsEdit";
+import CleaningsPublic from "./Cleanings/CleaningsPublic";
+import CleaningsIndexPro from "./Cleanings/CleaningsIndexPro";
+
 import Profile from "./Profile";
 import Home from "./Home";
 import Email from "./Email";
@@ -20,22 +27,19 @@ import Nav from "react-bootstrap/Nav";
 import UserEdit from "./User/UserEdit";
 import RentingIndex from "./Renting/RentingIndex";
 import RentingCreate from "./Renting/RentingCreate";
+import SupportIndex from "./Support/SupportIndex";
+import TicketDetails from "./Support/TicketDetaiIs";
 
 import ParkingIndex from "./Parking/ParkingIndex";
 import ParkingEdit from "./Parking/ParkingEdit";
 import Subscription from "./Subscription";
 
-import CleaningsIndex from "./Cleanings/CleaningsIndex";
-import CleaningsCreate from "./Cleanings/CleaningsCreate";
-import CleaningsDelete from "./Cleanings/CleaningsDelete";
-import CleaningsEdit from "./Cleanings/CleaningsEdit";
-import CleaningsPublic from "./Cleanings/CleaningsPublic";
-import CleaningsIndexPro from "./Cleanings/CleaningsIndexPro";
-
-
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
-import CompleteInfo from "./User/RenterCreate";
+import TicketClose from "./Support/TicketClose";
+import TicketEdit from "./Support/TicketEdit";
 import RenterCreate from "./User/RenterCreate";
+
+
 
 export default class app extends React.Component {
   state = {
@@ -70,7 +74,7 @@ export default class app extends React.Component {
                  
                 </Nav.Item>
                 <Nav.Item>
-                   <Nav.Link as={Link} to="/news/public">
+                  <Nav.Link as={Link} to="/news/public">
                     News
                    </Nav.Link> {/* I add a news linke on the nave bar*/ }
                  </Nav.Item>
@@ -115,9 +119,6 @@ export default class app extends React.Component {
             <Route path="/profile/edit/" component={UserEdit} />
             <Route path="/profile/complete" component={RenterCreate} />
 
-            <Route path="/Parking/ParkingEdit/:id" component={ParkingEdit} />
-            
-
             <Route path="/news/create" component={NewsCreate} />
             <Route path="/news/delete/:id" component={NewsDelete} />
             <Route path="/news/edit/:id" component={NewsEdit} />
@@ -130,7 +131,14 @@ export default class app extends React.Component {
             <Route path="/cleanings/public/" component={CleaningsPublic} /> 
             <Route path="/cleaningsPro/" component={CleaningsIndexPro} />
             <Route path="/cleanings/" component={CleaningsIndex} />
+			
+			      <Route path="/Parking/ParkingEdit/:id" component={ParkingEdit} />
 
+            <Route path="/support/close/:id" component={TicketClose} />
+            <Route path="/support/edit/:id" component={TicketEdit} />
+            <Route path="/support/details/:id" component={TicketDetails} />
+            <Route path="/support" component={SupportIndex} />
+            
             <Route path="/renting/create/:id" component={RentingCreate} />
             <Route path="/email/" component={Email} />
             <Route path="/renting/" component={RentingIndex} />
@@ -139,7 +147,7 @@ export default class app extends React.Component {
             <Route path="/logout" exact component={Logout} />
             <Route path="/register" exact component={Register} />
             <Route path="/profile" exact component={Profile} />
-            <Route path="/Subscription" exact component={Subscription} />
+			<Route path="/Subscription" exact component={Subscription} />
             <Route path="/Parking/" component={ParkingIndex} />
           </Switch>
         </div>

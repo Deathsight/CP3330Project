@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using MallProject.Models;
+using Microsoft.AspNet.Identity;
 
 namespace MallProject.Controllers
 {
@@ -70,16 +72,71 @@ namespace MallProject.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        // PUT: api/SupportTickets/5
+        // Take Ticket - Transfer Ticket
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutSupportTicket(int id, string email)
+        {
+            SupportTicket supportTicket = db.SupportTickets.Find(id);
+
+            if (supportTicket == null)
+            {
+                return BadRequest();
+            }
+
+            if(email == "null")
+            {
+                supportTicket.AgentEmail = User.Identity.GetUserName();
+            }
+            else
+            {
+                User user = db.Users.Find(email);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    supportTicket.AgentEmail = email;
+                }
+            }
+            db.Entry(supportTicket).State = EntityState.Modified;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!SupportTicketExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
         // POST: api/SupportTickets
         [ResponseType(typeof(SupportTicket))]
         public IHttpActionResult PostSupportTicket(SupportTicket supportTicket)
         {
+            supportTicket.UserEmail = User.Identity.GetUserName();
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
             db.SupportTickets.Add(supportTicket);
+            db.SaveChanges();
+
+            STicketChat ticketChat = new STicketChat { STicketId = supportTicket.Id, UserEmail = supportTicket.UserEmail, DateTime = supportTicket.SubmitDate, Comment = supportTicket.Description };
+
+            db.STicketChats.Add(ticketChat);
             db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = supportTicket.Id }, supportTicket);

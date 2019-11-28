@@ -18,10 +18,12 @@ class SimpleReactFileUpload extends React.Component {
       console.log(response.data);
     })
   }
+
   onChange(e) {
     this.setState({file:e.target.files[0]})
     console.log(e.target.files[0])
   }
+
   fileUpload(file){
     const url = 'http://localhost:3000/api/UploadImages';
     const formData = new FormData();

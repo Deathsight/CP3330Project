@@ -35,6 +35,46 @@ namespace MallProject.Controllers
             return Ok(asset);
         }
 
+        // GET: api/Assets/?query=query
+        [ResponseType(typeof(Asset))]
+        public IHttpActionResult GetUserByQuery(string query)
+        {
+
+            if (query == "getAssets")
+            {
+                List<Asset> availableAssets =  db.Assets.Where(a => a.AssetRentings.Where(ar => ar.Renting.EndDateTime > DateTime.Now).Count() == 0).ToList();
+
+                //foreach (Asset asset in assets)
+                //{
+                //    if(asset.AssetRentings == null)
+                //    {
+                //        availableAssets.Add(asset);
+                //    }
+                //    else
+                //    {
+                //        Boolean status = true;
+                //        foreach (AssetRenting assetRenting in asset.AssetRentings)
+                //        {
+                //            if(assetRenting.Renting.EndDateTime > DateTime.Now)
+                //            {
+                //                status = false;
+                //            }
+                //        }
+
+                //        if(status == true)
+                //        {
+                //            availableAssets.Add(asset);
+                //        }
+                //    }
+                //}
+
+                return Ok(availableAssets);
+            }
+
+
+            return NotFound();
+        }
+
         // PUT: api/Assets/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutAsset(int id, Asset asset)

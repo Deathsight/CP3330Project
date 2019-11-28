@@ -24,6 +24,7 @@ namespace MallProject.Models
             this.FeedBacks = new HashSet<FeedBack>();
             this.Likes = new HashSet<Like>();
             this.Logs = new HashSet<Log>();
+            this.STicketChats = new HashSet<STicketChat>();
             this.Subscriptions = new HashSet<Subscription>();
             this.SupportTickets = new HashSet<SupportTicket>();
             this.SupportTickets1 = new HashSet<SupportTicket>();
@@ -50,6 +51,8 @@ namespace MallProject.Models
         public virtual ICollection<Log> Logs { get; set; }
         public virtual Renter Renter { get; set; }
         public virtual Role Role { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<STicketChat> STicketChats { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Subscription> Subscriptions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

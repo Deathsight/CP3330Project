@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using MallProject.Models;
+using Microsoft.AspNet.Identity;
 
 namespace MallProject.Controllers
 {
@@ -74,15 +75,19 @@ namespace MallProject.Controllers
         [ResponseType(typeof(STicketChat))]
         public IHttpActionResult PostSTicketChat(STicketChat sTicketChat)
         {
+            string email = User.Identity.GetUserName();
+
+            STicketChat ticket = new STicketChat { STicketId = sTicketChat.STicketId, UserEmail = email, DateTime = sTicketChat.DateTime, Comment = sTicketChat.Comment };
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.STicketChats.Add(sTicketChat);
+            db.STicketChats.Add(ticket);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = sTicketChat.Id }, sTicketChat);
+            return CreatedAtRoute("DefaultApi", new { id = ticket.Id }, ticket);
         }
 
         // DELETE: api/STicketChats/5

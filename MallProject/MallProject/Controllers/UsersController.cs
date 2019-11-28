@@ -57,6 +57,10 @@ namespace MallProject.Controllers
             {
                 return Ok(user.Renter.News);
             }
+            if (query == "getAgents" && user != null)
+            {
+                return Ok(db.Users.Where(r => r.RoleID == 3));
+            }
             if (query == "getRenting" && user != null)
             {
                 return Ok(user.Renter.Rentings);
