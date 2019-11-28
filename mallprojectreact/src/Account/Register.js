@@ -11,6 +11,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import {Paper,Tabs,Tab} from '@material-ui/core'
+import DB from '../db'
+import Auth from '../auth'
 
 
 
@@ -19,8 +21,10 @@ export default class Register extends React.Component {
         Email: "",
         Password: "",
         ConfirmPassword: "",
+        Name: null,
+        Phone: null,
         isRegistered: false,
-        accountType: null,
+        accountType: 1,
         role: "Customer"
     }
     useStyles = {
@@ -73,17 +77,21 @@ export default class Register extends React.Component {
           marginBottom:10
         },
       };
+    handleName = (event) => {
+        this.setState({Name: event.target.value})
+    }
+    handlePhone = (event) => {
+        this.setState({Phone: event.target.value})
+    }
     handleEmail = (event) => {
         this.setState({Email: event.target.value})
     }
     handleRole = (role) => {
         this.setState({role})
-        console.log(this.state.role)
     }
     handlePassword = (event) => {
         this.setState({Password: event.target.value})
     }
-
     handleConfirmPassword = (event) => {
         this.setState({ConfirmPassword: event.target.value})
     }
@@ -107,7 +115,36 @@ export default class Register extends React.Component {
             console.log('Successfully')
             this.setState({ isRegistered: true });
           }
+          this.registerLogin();
     }
+    registerLogin = async () => {
+        
+      const response = await fetch(`/Token`,{
+          method : 'POST',
+          headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: `grant_type=password&username=${this.state.Email}&password=${this.state.Password}`
+      })
+      const json = await response.json()
+      console.log('json',json)
+
+      console.log('response', response)
+      if(response.ok){
+          console.log('Logged in successfully')
+          Auth.login(json.access_token, json.userName)
+          if(!await DB.Users.create({
+              Name: this.state.Name,
+              Phone: this.state.Phone,
+              RoleID: this.state.Role
+
+          })){
+              console.log('Customer creation failed')
+          }
+          this.setState({ isLoggedIn: true });
+      }
+  }
+
     render(){
   return (
       <div style={this.useStyles.background}>
@@ -133,6 +170,28 @@ export default class Register extends React.Component {
         </Tabs>
         <div style={this.useStyles.form}>
           <Grid container spacing={2}>
+          <Grid item xs={6}>
+              <TextField
+                variant="outlined"
+                fullWidth
+                id="name"
+                label="Name"
+                name="name"
+                onChange={this.handleName}
+                autoComplete="name"
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                variant="outlined"
+                fullWidth
+                id="phone"
+                label="Phone"
+                name="phone"
+                onChange={this.handlePhone}
+                autoComplete="phone"
+              />
+            </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
