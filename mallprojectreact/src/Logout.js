@@ -12,7 +12,7 @@ export default class Logout extends React.Component {
 
     handleLogout = () => {
         Auth.logout()
-        
+        window.location.reload()
     }
 
     render(){

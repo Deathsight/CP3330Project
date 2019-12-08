@@ -2,12 +2,13 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DB from "../db"
 import auth from "../auth"
+import { post } from 'axios';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
-import {Button} from "react-bootstrap";
+import {Button,Dropdown} from "react-bootstrap";
 import {Redirect } from "react-router-dom";
-import {TextField,InputLabel,Grid,NativeSelect } from '@material-ui/core';
+import {TextField,InputLabel,Grid,FormControl,Select } from '@material-ui/core';
 
 export default class AdvertismentCreate extends React.Component {
   state = {
@@ -30,7 +31,7 @@ export default class AdvertismentCreate extends React.Component {
       const jsonType = await DB.Renters.findAll();
       const temp = this.state.Advertisment;
       const tempArr = [];
-      temp.UserEmail = json.Email;
+      temp.UserEmail = auth.username();
 
       // the map is to take all items that has "Type" and add it to a temp array.
         jsonType.map(item =>
@@ -87,19 +88,29 @@ export default class AdvertismentCreate extends React.Component {
     this.setState({Advertisment : temp})
   } 
 
+ 
   render(){
+
     return this.state.isCreated ? (
       <Redirect to="/advertisment/" />
     ) : (
         this.state.User ? 
-        <React.Fragment>
-          <Paper style={{width:"550px", height:"530px"}}>
+        <div style={{  
+        backgroundImage:`url(https://w.wallhaven.cc/full/4y/wallhaven-4yd13k.jpg)`,
+        paddingTop:"16.8%",
+        paddingBottom:"11.5%",
+        width:"100%",
+        marginTop:28,
+        }}>
+        <div>
+          <div style={{  position: 'absolute',  left: '0px', top: '0px',zIndex: -1, backgroundImage:`url(https://w.wallhaven.cc/full/4y/wallhaven-4yd13k.jpg)`}}></div>
+        <Paper style={{marginLeft:"auto",marginRight:"auto",width:"550px", height:"530px",boxShadow:" 25px 25px 50px"}}>
         <CssBaseline />
         <Container maxWidth="sm">
         
-        <Grid container spacing={3} style={{PaddingTop:"5%"}}>
+        <Grid container spacing={3} >
         <Grid container item xs={12} spacing={1}>
-        <h2 style={{borderBottom:"1.8px solid lightgray",width:"100%"}}>Advertisment</h2>
+        <h2 style={{borderBottom:"1.8px solid lightgray"}}>Advertisment</h2>
         </Grid>
         <Grid container item xs={6} spacing={1}>
             <TextField
@@ -110,26 +121,32 @@ export default class AdvertismentCreate extends React.Component {
               disabled
             />   
         </Grid>
-        <Grid container item xs={6} spacing={1}>
+        
+        <Grid container item xs={6}>
 
-        <InputLabel shrink htmlFor="age-native-label-placeholder">
+        <FormControl variant="outlined">
+        <InputLabel style={{marginTop:10}} shrink htmlFor="outlined-age-native-simple">
         Type
         </InputLabel>
-        <NativeSelect
+        <Select
+          native
           value={this.state.Types[0].Type}
           onChange={this.handleType}
           inputProps={{
             name: 'Advertisment',
-            id: 'age-native-label-placeholder',
+            id: 'outlined-age-native-simple',
           }}
         >
           {this.state.Types.map( item =>
-            <option value={item}>{item}</option>
-          )}
-        </NativeSelect>
-
-
+              <option value={item}>{item}</option>
+            )}
+        </Select>
+        
+        </FormControl>
+        
         </Grid>
+
+
         <Grid container item xs={6} spacing={1}>
            <TextField
               id="datetime-local"
@@ -163,8 +180,8 @@ export default class AdvertismentCreate extends React.Component {
               label="Attach Media"
               margin="normal"
             />
-                      
-          
+  
+
         </Grid>
         <Grid container item xs={12} spacing={1}>
           <TextField
@@ -185,7 +202,8 @@ export default class AdvertismentCreate extends React.Component {
           
           </Container>
           </Paper>
-          </React.Fragment>
+          </div>
+          </div>
         :
         <h1>Loading...</h1>
       );
