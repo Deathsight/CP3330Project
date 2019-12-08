@@ -36,7 +36,7 @@ export default class TheaterRentingCreate extends React.Component {
     console.log(renter);
     //console.log(securityCompanies);
     this.setState({ SelectedIds: assetIds});
-    this.setState({ SelectedTheaters });
+    this.setState({ theater : SelectedTheaters });
     this.setState({ securityCompanies });
     this.setState({ renter });
   }
@@ -58,7 +58,7 @@ export default class TheaterRentingCreate extends React.Component {
     console.log(this.state.StartDate);
 
     if (
-      await DB.Rentings.create({
+      await DB.AssetRentings.create({
         AssetId: this.state.SelectedIds,
         StartDateTime: `${this.state.StartDate}T${this.state.StartTime}:00`,
         EndDateTime: `${this.state.StartDate}T${this.state.EndTime}:00`,
@@ -75,19 +75,26 @@ export default class TheaterRentingCreate extends React.Component {
   handleTotalPrice = () => {
     var d = this.handleDuration();
     console.log(d);
-    console.log(this.state.theater.TheaterPM.Price);
+    console.log(this.state.theater[0].TheaterPM.Price);
     console.log(this.state.EndTime);
+    console.log(this.state.StartTime);
+    console.log(this.state.Security);
+    var price =0;
+
     if (
       this.state.StartTime != null &&
       this.state.EndTime != null &&
       this.state.Security != null
     ) {
-      var price = d * this.state.theater.TheaterPM.Price;
-      //console.log(price);
-      price = price + this.state.Security.Price;
-      console.log(price);
-      this.setState({ TotalPrice: price });
+      console.log("sdadad");
+      this.state.theater.map((t, index) => (
+      price = price + d * t.TheaterPM.Price,
+      price = price + this.state.Security.Price
+    ));
     }
+    
+    console.log(price);
+    this.setState({ TotalPrice: price });
   };
 
   handleDuration = () => {
@@ -97,6 +104,7 @@ export default class TheaterRentingCreate extends React.Component {
       
       var Difference_In_Time = edt[0] - sdt[0];
       
+      console.log(Difference_In_Time);
       
       return Difference_In_Time;
     }
