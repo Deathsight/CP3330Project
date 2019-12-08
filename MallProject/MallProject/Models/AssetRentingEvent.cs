@@ -16,7 +16,7 @@ namespace MallProject.Models
     {
         public int Id { get; set; }
         public int EventId { get; set; }
-        public int BookingSeatId { get; set; }
+        public Nullable<int> BookingSeatId { get; set; }
         public int AssetRentingId { get; set; }
     
         public virtual AssetRenting AssetRenting { get; set; }

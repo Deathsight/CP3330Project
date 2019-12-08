@@ -37,7 +37,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="EventId" Type="int" Nullable="false" />
-    <Property Name="BookingSeatId" Type="int" Nullable="false" />
+    <Property Name="BookingSeatId" Type="int" />
     <Property Name="AssetRentingId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="BookingSeat">
@@ -337,8 +337,8 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__AssetRent__Booki__339FAB6E">
-    <End Role="BookingSeat" Type="Self.BookingSeat" Multiplicity="1" />
+  <Association Name="FK__AssetRent__Booki__73852659">
+    <End Role="BookingSeat" Type="Self.BookingSeat" Multiplicity="0..1" />
     <End Role="AssetRentingEvent" Type="Self.AssetRentingEvent" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="BookingSeat">
@@ -853,7 +853,7 @@
       <End Role="Asset" EntitySet="Asset" />
       <End Role="AssetRenting" EntitySet="AssetRenting" />
     </AssociationSet>
-    <AssociationSet Name="FK__AssetRent__Booki__339FAB6E" Association="Self.FK__AssetRent__Booki__339FAB6E">
+    <AssociationSet Name="FK__AssetRent__Booki__73852659" Association="Self.FK__AssetRent__Booki__73852659">
       <End Role="BookingSeat" EntitySet="BookingSeat" />
       <End Role="AssetRentingEvent" EntitySet="AssetRentingEvent" />
     </AssociationSet>
