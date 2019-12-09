@@ -232,7 +232,7 @@ export default class AdvertismentCreate extends React.Component {
           </Grid>
           <Grid item xs={12}>
           <Button type="submit" onClick={() => this.HandleEdit()}>Save</Button>
-          <Button style={{float:"right"}} onClick={<Redirect  to={"/profile/"} />}>Back</Button>
+          <Button style={{float:"right"}} onClick={() => this.setState({isCreated : !this.state.isCreated})}>Back</Button>
           </Grid>
           </Grid>
           

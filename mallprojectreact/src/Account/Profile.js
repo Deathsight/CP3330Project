@@ -367,6 +367,7 @@ export default class Profile extends React.Component {
         </div>
       }
        {this.state.User.Role.Name === "Renter" ? 
+        this.state.User.Renter ?
        <div style={{float:'Right', marginLeft:10,marginTop:10}}>
       <Paper style={this.useStyles.paper}>      
           <Typography component="h1" variant="h5">
@@ -463,6 +464,7 @@ export default class Profile extends React.Component {
           </Grid>
         </Paper>
         </div>
+        :<Redirect to={`/profile/complete/${this.state.User.Email}`}/>
         :null}
         </Grid >
         
