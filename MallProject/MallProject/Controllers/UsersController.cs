@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Runtime.Caching;
+using System.Text;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using MallProject.Models;
@@ -17,6 +21,47 @@ namespace MallProject.Controllers
     public class UsersController : ApiController
     {
         private Database1Entities db = new Database1Entities();
+        
+        [AllowAnonymous]
+        [Route("api/Users/verifyCode/{code?}/{email?}")]
+        public IHttpActionResult GetVerifyCode(string code, string email)
+        {
+            MemoryCache memoryCache = MemoryCache.Default;
+            
+            if (memoryCache.Get(code) != null)
+            {
+                
+                if (memoryCache.Get(code).ToString() == email)
+                {
+                    return Ok("Success");
+                }
+            }
+            return BadRequest("Failed");
+        }
+
+        [AllowAnonymous]
+        [Route ("api/Users/generateCode/{email?}")]
+        public IHttpActionResult GetGenerateCode(string email)
+        {
+
+            Random random = new Random();
+            StringBuilder strBuilder = new StringBuilder();
+            char ch;
+            for (int i = 0; i < 6; i++)
+            {
+                ch = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * random.NextDouble() + 65)));
+                strBuilder.Append(ch);
+            }
+            string code = strBuilder.ToString();
+
+            MemoryCache memoryCache = MemoryCache.Default;
+            bool result = memoryCache.Add(code, email, DateTimeOffset.UtcNow.AddMinutes(1));
+            Email mail = new Email { To = email, Subject = "Account Activation", Body = "Your Activation Code is: " + code };
+            var emailController = new EmailsController();
+            emailController.SendEmail(mail);
+            
+            return Ok("Code Sent");
+        }
 
         // GET: api/Users
         public IQueryable<User> GetUsers()
@@ -55,7 +100,10 @@ namespace MallProject.Controllers
 
             if (query == "getNews" && user != null)
             {
-                return Ok(user.Renter.News);
+                if (user.Renter != null)
+                {
+                    return Ok(user.Renter.News);
+                }
             }
             if (query == "getAgents" && user != null)
             {

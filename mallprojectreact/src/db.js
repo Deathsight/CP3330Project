@@ -55,6 +55,22 @@ class Entity {
     }
   };
 
+  generateCode = async email => {
+    // console.log(id);
+    const response = await this.authFetch(`/api/Users/generateCode?email=${email}`);
+    const json = await response.json();
+    console.log(json);
+    return response;
+  };
+
+  verifyCode = async (code,email) => {
+    // console.log(id);
+    const response = await this.authFetch(`/api/Users/verifyCode?code=${code}&email=${email}`);
+    const json = await response.json();
+    console.log(json);
+    return response;
+  };
+
   editProfile = async item => {
     const response = await this.authFetch(`/api/${this.entity}`, {
       method: "PUT",
