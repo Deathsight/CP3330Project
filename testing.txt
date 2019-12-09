@@ -23,9 +23,10 @@ import BookTicket from "./Event/BookTicket";
 import SeatIndex from "./Event/SeatIndex";
 import EventCreate from "./Event/EventCreate";
 import EventIndex from "./Event/EventIndex";
+import TheaterRentingCreate from "./Renting/TheaterRentingCreate";
 
-
-<Route path="/event/create/:id" component={EventCreate} />
+            <Route path="/renting/theaterRenting/:id" component={TheaterRentingCreate} />
+	    <Route path="/event/create/:id" component={EventCreate} />
             <Route path="/event" component={EventIndex} />
             <Route path="/seat/:id" component={SeatIndex} />
             <Route path="/book/:id" component={BookTicket} />
