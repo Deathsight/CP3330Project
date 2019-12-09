@@ -16,6 +16,7 @@ class Entity {
   };
 
   findAll = async () => {
+    console.log("finding: "+this.entity);
     const response = await this.authFetch(`/api/${this.entity}`);
     const json = await response.json();
     console.log(json);
@@ -56,7 +57,7 @@ class Entity {
   };
 
   findByQuery = async query => {
-    // console.log(id);
+    console.log("finding: "+this.entity);
     const response = await this.authFetch(`/api/${this.entity}?query=${query}`);
     const json = await response.json();
     console.log(json);
@@ -158,6 +159,17 @@ class Entity {
 
   edit = async (id, item) => {
     const response = await this.authFetch(`/api/${this.entity}/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(item)
+    });
+    return response.ok;
+  };
+
+  approveRenter = async (id, item) => {
+    const response = await this.authFetch(`/api/${this.entity}?id=${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
