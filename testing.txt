@@ -18,3 +18,14 @@ git@github.com:Deathsight/CP3330Project.git
             <Route path="/register" exact component={Register} />
             <Route path="/profile" exact component={Profile} />
 </Switch>
+
+import BookTicket from "./Event/BookTicket";
+import SeatIndex from "./Event/SeatIndex";
+import EventCreate from "./Event/EventCreate";
+import EventIndex from "./Event/EventIndex";
+
+
+<Route path="/event/create/:id" component={EventCreate} />
+            <Route path="/event" component={EventIndex} />
+            <Route path="/seat/:id" component={SeatIndex} />
+            <Route path="/book/:id" component={BookTicket} />
