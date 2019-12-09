@@ -80,11 +80,9 @@ export default class Login extends React.Component {
     if(response.ok){
         console.log('Logged in successfully')
         Auth.login(json.access_token, json.userName)
-        if(!await DB.Users.create()){
-            console.log('Customer creation failed')
-        }
         this.setState({ isLoggedIn: true });
     }
+    window.location.reload()
   }
   render(){
 
@@ -142,7 +140,7 @@ export default class Login extends React.Component {
             
             <Grid container>
               <Grid item>
-                <Link href="/register" variant="body2" >
+                <Link to="/register" variant="body2" >
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

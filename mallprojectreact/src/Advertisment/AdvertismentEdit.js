@@ -12,24 +12,14 @@ import {TextField,InputLabel,Grid,FormControl,Select } from '@material-ui/core';
 
 export default class AdvertismentCreate extends React.Component {
   state = {
-    Advertisment:{
-      UserEmail: "",
-      Type: "Sports wear",
-      StartDateTime: "",
-      EndDateTime: "",
-      MediaContent: "Empty",
-      Description: "",
-      Status: "waitingApproval",
-    },
-    Types:["Sport","Electronic","Clothes","Accesory's","Prefium","Entertaniment","Food"],
-    User: null,
+    Advertisment:null,
+    
     isCreated: false
   };
+  Types=["Sport","Electronic","Clothes","Accessories","Perfume","Entertaniment","Food"]
   componentDidMount = async () =>{
     if(auth.isLoggedIn()){
-      const json = await DB.Users.findByQuery("profile");
-      const temp = this.state.Advertisment;
-      temp.UserEmail = auth.username();
+      const json = await DB.Advertisements.findOne(this.props.match.params.id)
 
       // the map is to take all items that has "Type" and add it to a temp array.
       //  jsonType.map(item =>
@@ -39,16 +29,24 @@ export default class AdvertismentCreate extends React.Component {
       //  const uniqueTypes = Array.from(new Set(tempArr));
 
       this.setState({
-        User : json,
-        Advertisment : temp
+        Advertisment : json
       })}
   }
   
-  HandleCreate = async () =>{
+  HandleEdit = async () =>{
     console.log("Advertisment : ", this.state.Advertisment)
-    const response = await DB.Advertisements.create(
-      this.state.Advertisment
-    )
+    const response = await DB.Advertisements.edit(
+      this.state.Advertisment.Id,
+      {
+       Id : this.state.Advertisment.Id,
+       UserEmail : this.state.Advertisment.UserEmail,
+       Type : this.state.Advertisment.Type,
+       StartDateTime : this.state.Advertisment.StartDateTime,
+       EndDateTime : this.state.Advertisment.EndDateTime,
+       MediaContent : this.state.Advertisment.MediaContent,
+       Description : this.state.Advertisment.Description,
+       Status : this.state.Advertisment.Status
+      })
     if(response){
       this.setState({isCreated : true})
     }
@@ -80,13 +78,53 @@ export default class AdvertismentCreate extends React.Component {
     temp.Status = event.target.value;
     this.setState({Advertisment : temp})
   } 
+   ///////////////////////////////////
+  //////Uploading Profile Image//////
+  ///////////////////////////////////
 
+  constructor(props) {
+    super(props);
+    this.state ={
+      file:null
+    }
+    this.onFormSubmit = this.onFormSubmit.bind(this)
+    this.onChange = this.onChange.bind(this)
+    this.fileUpload = this.fileUpload.bind(this)
+  }
+  onFormSubmit(e){
+    e.preventDefault() // Stop form submit
+    this.fileUpload(this.state.file).then((response)=>{
+      console.log(response.data);
+    })
+    this.setState({isCreated:true})
+  }
+  onChange(e) {
+    this.setState({file:e.target.files[0]})
+    console.log(e.target.files[0])
+  }
+  fileUpload(file){
+    const url = `http://localhost:3000/api/UploadImages?type=Advertisment&id=${this.state.Advertisment.Id}`;
+    const formData = new FormData();
+    formData.append('file',file)
+    const config = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+      },
+    }
+    console.log(url,formData,config)
+    return  post(url, formData,config)
+  }
+
+  ///////////////////////////////////
+  ///////////////////////////////////
   render(){
 
     return this.state.isCreated ? (
-      <Redirect to="/advertisment/create/upload" />
+      <Redirect to="/profile/" />
     ) : (
-        this.state.User ? 
+        this.state.Advertisment ? 
         <div style={{  
         backgroundImage:`url(https://w.wallhaven.cc/full/4y/wallhaven-4yd13k.jpg)`,
         paddingTop:"16.8%",
@@ -97,16 +135,17 @@ export default class AdvertismentCreate extends React.Component {
           <div style={{  position: 'absolute',  left: '0px', top: '0px',zIndex: -1, backgroundImage:`url(https://w.wallhaven.cc/full/4y/wallhaven-4yd13k.jpg)`}}></div>
         <Paper style={{marginLeft:"auto",marginRight:"auto",width:"550px", height:"530px",boxShadow:" 25px 25px 50px"}}>
         <CssBaseline />
+        <form onSubmit={this.onFormSubmit}>
         <Container maxWidth="sm">
         
         <Grid container spacing={3} >
         <Grid container item xs={12} spacing={1}>
-        <h2 style={{borderBottom:"1.8px solid lightgray"}}>Advertisment</h2>
+        <h2 style={{borderBottom:"1.8px solid lightgray"}}>Advertisment Edit</h2>
         </Grid>
         <Grid container item xs={6} spacing={1}>
             <TextField
               id="standard-basic"
-              value={this.state.User.Email}
+              value={this.state.Advertisment.UserEmail}
               label="Email"
               margin="normal"
               disabled
@@ -121,16 +160,18 @@ export default class AdvertismentCreate extends React.Component {
         </InputLabel>
         <Select
           native
-          value={this.state.Types[0].Type}
+          value={this.state.Advertisment.Type}
           onChange={this.handleType}
           inputProps={{
             name: 'Advertisment',
             id: 'outlined-age-native-simple',
           }}
         >
-          {this.state.Types.map( item =>
+          {this.Types?
+            this.Types.map( item =>
               <option value={item}>{item}</option>
-            )}
+            )
+          :null}
         </Select>
         
         </FormControl>
@@ -144,6 +185,7 @@ export default class AdvertismentCreate extends React.Component {
               type="datetime-local"
               label="Start Time"
               defaultValue="2017-05-24T10:30"
+              value={this.state.Advertisment.StartDateTime}
               InputLabelProps={{
                 shrink: true,
               }}
@@ -155,6 +197,7 @@ export default class AdvertismentCreate extends React.Component {
               id="datetime-local"
               type="datetime-local"
               label="End Time"
+              value={this.state.Advertisment.EndDateTime}
               defaultValue="2017-05-24T10:30"
               InputLabelProps={{
                 shrink: true,
@@ -162,24 +205,39 @@ export default class AdvertismentCreate extends React.Component {
               onChange={this.handleEndDateTime}
             />
         </Grid>
-        <Grid container item xs={12} spacing={1}>
+        <Grid container item xs={6} spacing={1}>
           <TextField
           id="outlined-multiline-static"
           label="Description"
           multiline
           rows="4"
           column="4"
+          value={this.state.Advertisment.Description}
           onChange={this.handleDescription}
           margin="normal"
           variant="outlined"
         />
 
         </Grid>
-          <Button onClick={() => this.HandleCreate()}>Next</Button>
-         
+        <Grid container item xs={6} spacing={1}>
+        <img src={`/Advertisment/${this.state.Advertisment.MediaContent}`} alt={'img'} style={{width:250}}/>
+
+              <input
+                  style={{padding:5,paddingBottom:10}}
+                  name="file"
+                  type="file"
+                  onChange={this.onChange}
+                />
+            
+          </Grid>
+          <Grid item xs={12}>
+          <Button type="submit" onClick={() => this.HandleEdit()}>Save</Button>
+          <Button style={{float:"right"}} onClick={() => this.setState({isCreated : !this.state.isCreated})}>Back</Button>
+          </Grid>
           </Grid>
           
           </Container>
+          </form>
           </Paper>
           </div>
           </div>

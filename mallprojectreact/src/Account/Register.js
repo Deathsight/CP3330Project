@@ -80,6 +80,12 @@ export default class Register extends React.Component {
           marginBottom:10
         },
       };
+    handleName = (event) => {
+        this.setState({Name: event.target.value})
+    }
+    handlePhone = (event) => {
+        this.setState({Phone: event.target.value})
+    }
     handleEmail = (event) => {
         this.setState({Email: event.target.value})
     }
@@ -96,13 +102,11 @@ export default class Register extends React.Component {
 
     handleRole = (role) => {
         this.setState({role})
-        console.log(this.state.role)
     }
 
     handlePassword = (event) => {
         this.setState({Password: event.target.value})
     }
-
     handleConfirmPassword = (event) => {
         this.setState({ConfirmPassword: event.target.value})
     }
