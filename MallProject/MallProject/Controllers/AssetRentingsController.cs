@@ -90,13 +90,25 @@ namespace MallProject.Controllers
             string email = User.Identity.GetUserName();
 
             Renting renting = db.Rentings.SingleOrDefault(r =>
-                r.RenterEmail == email &&
-                r.StartDateTime == assetRentingPlus.StartDateTime &&
-                r.EndDateTime == assetRentingPlus.EndDateTime
-                );
+            r.RenterEmail == email &&
+            r.StartDateTime == assetRentingPlus.StartDateTime &&
+            r.EndDateTime == assetRentingPlus.EndDateTime
+            
+            );
+            if (renting != null) { 
+            if (renting.Status == "Draft") {
 
+                foreach (AssetRenting item in renting.AssetRentings)
+                {
+                    db.AssetRentings.Remove(item); 
+                }
+                db.Rentings.Remove(renting);
+                db.SaveChanges();
+                renting = null;
+            }}
             if (renting == null)
             {
+ 
                 // make new renting record
                 renting = new Renting
                 {
@@ -118,8 +130,23 @@ namespace MallProject.Controllers
                 r.EndDateTime == assetRentingPlus.EndDateTime
             );
 
-            foreach(int id in assetRentingPlus.AssetId)
+
+            foreach (int id in assetRentingPlus.AssetId)
             {
+                if(assetRentingPlus.Status != "Draft") { 
+                    List<Renting> draftRentings = db.Rentings.Where(r => r.Status == "Draft" && r.AssetRentings.Where(ar => ar.AssetId == id).Count() > 0).ToList();
+                        foreach (Renting item in draftRentings)
+                        {
+                            //foreach (AssetRenting aRenting in item.AssetRentings)
+                            //{
+                            //    db.AssetRentings.Remove(aRenting);
+                            //    db.SaveChanges();
+                            //}
+                            db.Rentings.Remove(item);
+                            db.SaveChanges();
+                        }
+                }
+
                 AssetRenting assetRenting = new AssetRenting { RentingId = renting.Id, AssetId = id};
 
                 db.AssetRentings.Add(assetRenting);
