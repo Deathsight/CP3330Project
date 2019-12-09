@@ -13,23 +13,43 @@ export default class EventCreate extends React.Component {
     theater:null,
     isCreated: false,
     StartTime: null,
-    StartDate:null
+    StartDate:null,
+    RentingId: null,
+    AssetId: null,
+    AssetRenting: null
   };
 
   async componentDidMount() {
     
     const theater = await DB.Theaters.findOne(this.props.match.params.id);
     const renter = await DB.Renters.findByQuery("getRenter");
-    const rentings  = await DB.AssetRentings.findAll();
-    const renting = rentings.filter( a => a.AssetId == this.props.match.params.id)[0];
-    const StartDate = renting.Renting.StartDateTime.split("T")[0];
+    console.log(theater);
+    const assetRent = await DB.AssetRentings.findAll();
+    console.log(assetRent);
+    
+    const manyRentings = await DB.Rentings.findByQuery("many");
+
+    console.log(manyRentings);
+
+    const renting = manyRentings.filter( r => r.RenterEmail == renter.Email && r.Status != "expired");
+    
+    //const rentings  = await DB.Rentings.findOne(result.Id);
+
+    console.log(renting);
+    const StartDate = renting[0].StartDateTime.split("T")[0];
+    const AssetRenting = assetRent.filter(a => a.AssetId == theater.AssetId && a.RentingId == renting[0].Id);
+
 
     console.log(theater);
     console.log(renter);
+    console.log(renting[0].Id);
     
+    this.setState({ RentingId: renting[0].Id});
+    this.setState({ AssetId : this.props.match.params.id});
     this.setState({ StartDate });
     this.setState({ theater });
     this.setState({ renter });
+    this.setState({ AssetRenting });
 
   }
 
@@ -48,11 +68,11 @@ export default class EventCreate extends React.Component {
     console.log(`${this.state.StartDate}T${this.state.StartTime}:00`);
 
     if (
-      await DB.Events.create({
+      await DB.AssetRentingEvents.createEvent({
         StartTime: `${this.state.StartDate}T${this.state.StartTime}:00`,
         Price: this.state.Price,
-        ShowName: this.state.ShowName,
-      })
+        ShowName: `${this.state.ShowName}>${this.state.theater.AssetId}`,
+      },this.state.RentingId,this.state.AssetId)
     ) {
       this.setState({ isCreated: true });
     }

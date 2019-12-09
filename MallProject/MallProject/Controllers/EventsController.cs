@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -32,6 +33,16 @@ namespace MallProject.Controllers
                 return NotFound();
             }
 
+            return Ok(@event);
+        }
+
+        // GET: api/Events/5
+        [ResponseType(typeof(Event))]
+        public IHttpActionResult GetEvent(string query, string id)
+        {
+            Debug.WriteLine(id);
+            Event @event = db.Events.SingleOrDefault(e => e.ShowName == id);
+       
             return Ok(@event);
         }
 
@@ -72,17 +83,20 @@ namespace MallProject.Controllers
 
         // POST: api/Events
         [ResponseType(typeof(Event))]
-        public IHttpActionResult PostEvent(Event @event)
+        public IHttpActionResult PostEvent(Event e)
         {
+            System.Diagnostics.Debug.WriteLine(e.Id+","+ e.Price+","+ e.ShowName+","+ e.StartTime);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Events.Add(@event);
+            db.Events.Add(e);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = @event.Id }, @event);
+
+
+            return CreatedAtRoute("DefaultApi", new { id = e.Id }, e);
         }
 
         // DELETE: api/Events/5

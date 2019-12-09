@@ -5,15 +5,18 @@ import DB from "../db.js";
 import Auth from "../auth";
 import { Link } from "react-router-dom";
 
-export default class EventIndex extends React.Component {
+export default class RentingIndex extends React.Component {
   state = {
-    Events: []
+    theater: null,
+    ShowName: null
   };
 
   async componentDidMount() {
-    const json = await DB.Events.findAll();
+    const json = await DB.Theaters.findOne(this.props.match.params.id.split(">")[1]);
+    const ShowName = this.props.match.params.id.split(">")[0];
     console.log(json);
-    this.setState({ Events: json });
+    this.setState({ theater: json });
+    this.setState({ShowName});
   }
 
   handleBook = (Id) => {
@@ -26,35 +29,33 @@ export default class EventIndex extends React.Component {
     return (
       <div>
         <Link to={`/profile/complete`}>complete profile</Link>
-        <h2>Events</h2>
-
+        <h2>Seats</h2>
+        {this.state.theater == null? "Loading": 
         <Table striped bordered hover>
           <thead>
             <tr>
-              <th>ShowName</th>
-              <th>Price</th>
-              <th>Date</th>
-              <th>Time</th>
+              <th>Seat Number</th>
+              <th>Seat Type</th>
+              
               <th></th>
             </tr>
           </thead>
           <tbody>
-            {this.state.Events.map(item =>
+            {this.state.theater.Seats.map(item =>
                 <tr key={item.Id}>
-                  <td>{item.ShowName.split(">")[0]}</td>
-                  <td>{item.Price}</td>
-                  <td>{item.StartTime.split("T")[0]}</td>
-                  <td>{item.StartTime.split("T")[1]}</td>
+                <td>{item.Id}{this.state.theater.Asset.LocationCode}</td>
+                  <td>{item.Type} {" "} Seat</td>
                   {Auth.isLoggedIn() && (
                     <td>
-                      <Link to={`/seat/${item.ShowName}`}>View Seats</Link>
+                      <Link to={`/book/${item.Id}>${this.props.match.params.id}`}>Book</Link>
                     </td>
                   )}
                 </tr>
             
             )}
           </tbody>
-        </Table>
+        </Table>}
+        
         
           
 

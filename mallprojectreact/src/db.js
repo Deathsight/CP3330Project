@@ -33,6 +33,16 @@ class Entity {
     }
   };
 
+  findMany = async (id,query) => {
+    // console.log(id);
+    const response = await this.authFetch(`/api/${this.entity}/?query=${query}&id=${id}`);
+    const json = await response.json();
+    if (response.ok) {
+      return json;
+    }
+  };
+  
+
   findByName = async username => {
     // console.log(id);
     const response = await this.authFetch(
@@ -68,6 +78,30 @@ class Entity {
 
   create = async item => {
     const response = await this.authFetch(`/api/${this.entity}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(item)
+    });
+
+    console.log("response", response);
+    return response.ok;
+  };
+  bookEvent = async (item,rId,aId) => {
+    const response = await this.authFetch(`/api/${this.entity}?ar=${rId}&e=${aId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(item)
+    });
+
+    console.log("response", response);
+    return response.ok;
+  };
+  createEvent = async (item,rId,aId) => {
+    const response = await this.authFetch(`/api/${this.entity}?rentingId=${rId}&assetId=${aId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
