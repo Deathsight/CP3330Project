@@ -127,7 +127,7 @@ export default class Profile extends React.Component {
     this.setState({ Phone: event.target.value });
   };
 
-  ///////////////////////////////////
+   ///////////////////////////////////
   //////Uploading Profile Image//////
   ///////////////////////////////////
 
@@ -145,13 +145,14 @@ export default class Profile extends React.Component {
     this.fileUpload(this.state.file).then((response)=>{
       console.log(response.data);
     })
+    this.setState({isCreated:true})
   }
   onChange(e) {
     this.setState({file:e.target.files[0]})
     console.log(e.target.files[0])
   }
   fileUpload(file){
-    const url = 'http://localhost:3000/api/UploadImages?type=Profile';
+    const url = `http://localhost:3000/api/UploadImages?type=Profile`;
     const formData = new FormData();
     formData.append('file',file)
     const config = {

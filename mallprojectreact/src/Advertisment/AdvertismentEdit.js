@@ -122,7 +122,7 @@ export default class AdvertismentCreate extends React.Component {
   render(){
 
     return this.state.isCreated ? (
-      <Redirect to="/advertisment/create/upload" />
+      <Redirect to="/profile/" />
     ) : (
         this.state.Advertisment ? 
         <div style={{  
