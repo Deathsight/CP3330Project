@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using MallProject.Models;
+using Microsoft.AspNet.Identity;
 
 namespace MallProject.Controllers
 {
@@ -70,19 +71,95 @@ namespace MallProject.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        public class EventsPlus
+        {
+            
+            public DateTime StartTime { get; set; }
+            public string ShowName { get; set; }
+            public double Price { get; set; }
+
+        }
+        public class BookingSeatPlus
+        {
+
+            public string UserEmail { get; set; }
+            public int SeatId { get; set; }
+            public double Price { get; set; }
+            public string Status { get; set; }
+            public Nullable<int> SubscriptionId { get; set; }
+
+        }
+
         // POST: api/AssetRentingEvents
         [ResponseType(typeof(AssetRentingEvent))]
-        public IHttpActionResult PostAssetRentingEvent(AssetRentingEvent assetRentingEvent)
+        public IHttpActionResult PostAssetRentingEvent(BookingSeatPlus bs, int ar, int e)
         {
+            string email = User.Identity.GetUserName();
+            BookingSeat booking = new BookingSeat { UserEmail = User.Identity.GetUserName(), SeatId = bs.SeatId, Price = bs.Price,Status = bs.Status,SubscriptionId = bs.SubscriptionId };
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.AssetRentingEvents.Add(assetRentingEvent);
+            db.BookingSeats.Add(booking);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = assetRentingEvent.Id }, assetRentingEvent);
+            BookingSeat createdBooking = db.BookingSeats.SingleOrDefault( b => 
+            b.UserEmail == email &&
+            b.SeatId == booking.SeatId &&
+            b.Price == booking.Price &&
+            b.Status == booking.Status);
+
+            Event ev = db.Events.Find(e);
+            AssetRenting arg = db.AssetRentings.Find(ar);
+
+            
+
+            AssetRentingEvent ase = new AssetRentingEvent { EventId = ev.Id, BookingSeatId = createdBooking.Id, AssetRentingId = arg.Id };
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.AssetRentingEvents.Add(ase);
+            db.SaveChanges();
+
+            return CreatedAtRoute("DefaultApi", new { id = ase.Id }, ase);
+        }
+
+        // POST: api/AssetRentingEvents
+        [ResponseType(typeof(AssetRentingEvent))]
+        public IHttpActionResult PostAssetRentingEvent(EventsPlus e, int rentingId, int assetId)
+        {
+            Event newEvent = new Event { StartTime = e.StartTime, ShowName = e.ShowName, Price = e.Price };
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.Events.Add(newEvent);
+            db.SaveChanges();
+
+            Event createdEvent = db.Events.SingleOrDefault(r => r.StartTime == e.StartTime && r.ShowName == e.ShowName && r.Price == e.Price);
+
+            AssetRenting ar = db.AssetRentings.SingleOrDefault(a => a.RentingId == rentingId && a.AssetId == assetId);
+
+            System.Diagnostics.Debug.WriteLine(rentingId + "," + assetId );
+
+            AssetRentingEvent ase = new AssetRentingEvent { EventId = createdEvent.Id, BookingSeatId = null, AssetRentingId = ar.Id };
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.AssetRentingEvents.Add(ase);
+            db.SaveChanges();
+
+            return CreatedAtRoute("DefaultApi", new { id = ase.Id }, ase);
         }
 
         // DELETE: api/AssetRentingEvents/5

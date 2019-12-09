@@ -44,10 +44,10 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="EventId" Type="Int32" Nullable="false" />
-    <Property Name="BookingSeatId" Type="Int32" Nullable="false" />
+    <Property Name="BookingSeatId" Type="Int32" />
     <Property Name="AssetRentingId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="AssetRenting" Relationship="Self.FK__AssetRent__Asset__3493CFA7" FromRole="AssetRentingEvent" ToRole="AssetRenting" />
-    <NavigationProperty Name="BookingSeat" Relationship="Self.FK__AssetRent__Booki__339FAB6E" FromRole="AssetRentingEvent" ToRole="BookingSeat" />
+    <NavigationProperty Name="BookingSeat" Relationship="Self.FK__AssetRent__Booki__73852659" FromRole="AssetRentingEvent" ToRole="BookingSeat" />
     <NavigationProperty Name="Event" Relationship="Self.FK__AssetRent__Event__32AB8735" FromRole="AssetRentingEvent" ToRole="Event" />
   </EntityType>
   <EntityType Name="BookingSeat">
@@ -60,7 +60,7 @@
     <Property Name="Price" Type="Double" Nullable="false" />
     <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="SubscriptionId" Type="Int32" />
-    <NavigationProperty Name="AssetRentingEvents" Relationship="Self.FK__AssetRent__Booki__339FAB6E" FromRole="BookingSeat" ToRole="AssetRentingEvent" />
+    <NavigationProperty Name="AssetRentingEvents" Relationship="Self.FK__AssetRent__Booki__73852659" FromRole="BookingSeat" ToRole="AssetRentingEvent" />
     <NavigationProperty Name="Seat" Relationship="Self.FK__BookingSe__SeatI__2EDAF651" FromRole="BookingSeat" ToRole="Seat" />
     <NavigationProperty Name="Subscription" Relationship="Self.FK__BookingSe__Subsc__4D5F7D71" FromRole="BookingSeat" ToRole="Subscription" />
     <NavigationProperty Name="User" Relationship="Self.FK__BookingSe__UserE__2DE6D218" FromRole="BookingSeat" ToRole="User" />
@@ -457,8 +457,8 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__AssetRent__Booki__339FAB6E">
-    <End Role="BookingSeat" Type="Self.BookingSeat" Multiplicity="1" />
+  <Association Name="FK__AssetRent__Booki__73852659">
+    <End Role="BookingSeat" Type="Self.BookingSeat" Multiplicity="0..1" />
     <End Role="AssetRentingEvent" Type="Self.AssetRentingEvent" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="BookingSeat">
@@ -943,7 +943,7 @@
       <End Role="Renting" EntitySet="Rentings" />
       <End Role="AssetRenting" EntitySet="AssetRentings" />
     </AssociationSet>
-    <AssociationSet Name="FK__AssetRent__Booki__339FAB6E" Association="Self.FK__AssetRent__Booki__339FAB6E">
+    <AssociationSet Name="FK__AssetRent__Booki__73852659" Association="Self.FK__AssetRent__Booki__73852659">
       <End Role="BookingSeat" EntitySet="BookingSeats" />
       <End Role="AssetRentingEvent" EntitySet="AssetRentingEvents" />
     </AssociationSet>

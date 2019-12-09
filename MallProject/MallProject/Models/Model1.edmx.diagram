@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="91df8d01c9784533964088ce882b4925" Name="Diagram1">
+      <Diagram DiagramId="097d28f5bf8e49eba7b9f0083bc56826" Name="Diagram1">
         <EntityTypeShape EntityType="Database1Model.Advertisement" Width="1.5" PointX="5.25" PointY="17.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Database1Model.Asset" Width="1.5" PointX="1.5" PointY="11.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Database1Model.AssetRenting" Width="1.5" PointX="12.75" PointY="40" IsExpanded="true" />
@@ -25,7 +25,7 @@
         <EntityTypeShape EntityType="Database1Model.Seat" Width="1.5" PointX="3" PointY="15.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Database1Model.Security" Width="1.5" PointX="8.25" PointY="37" IsExpanded="true" />
         <EntityTypeShape EntityType="Database1Model.Service" Width="1.5" PointX="1.75" PointY="3.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Database1Model.STicketChat" Width="1.5" PointX="8.25" PointY="18" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.STicketChat" Width="1.5" PointX="8.25" PointY="18.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Database1Model.STicketType" Width="1.5" PointX="8" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Database1Model.Store" Width="1.5" PointX="3.75" PointY="9.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Database1Model.StorePM" Width="1.5" PointX="1.5" PointY="6.25" IsExpanded="true" />
@@ -42,7 +42,7 @@
         <AssociationConnector Association="Database1Model.FK__Theater__AssetId__236943A5" ManuallyRouted="false" />
         <AssociationConnector Association="Database1Model.FK__AssetRent__Asset__3493CFA7" ManuallyRouted="false" />
         <AssociationConnector Association="Database1Model.FK__AssetRent__Renti__6C190EBB" ManuallyRouted="false" />
-        <AssociationConnector Association="Database1Model.FK__AssetRent__Booki__339FAB6E" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK__AssetRent__Booki__73852659" ManuallyRouted="false" />
         <AssociationConnector Association="Database1Model.FK__AssetRent__Event__32AB8735" ManuallyRouted="false" />
         <AssociationConnector Association="Database1Model.FK__BookingSe__SeatI__2EDAF651" ManuallyRouted="false" />
         <AssociationConnector Association="Database1Model.FK__BookingSe__Subsc__4D5F7D71" ManuallyRouted="false" />

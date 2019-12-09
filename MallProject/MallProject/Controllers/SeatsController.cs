@@ -35,6 +35,15 @@ namespace MallProject.Controllers
             return Ok(seat);
         }
 
+        // GET: api/Seats/5
+        [ResponseType(typeof(Seat))]
+        public IHttpActionResult GetSeat(int id,string query)
+        {
+            Seat seat = db.Seats.Find(id);
+          
+            return Ok(seat);
+        }
+
         // PUT: api/Seats/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutSeat(int id, Seat seat)
