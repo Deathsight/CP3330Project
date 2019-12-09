@@ -18,7 +18,8 @@ export default class RentingCreate extends React.Component {
     StartDateTime: null,
     EndDateTime: null,
     TotalPrice: 0,
-    duration: null
+    duration: null,
+    Status: "Complete"
   };
 
   async componentDidMount() {
@@ -53,7 +54,11 @@ export default class RentingCreate extends React.Component {
   handleTime = (event, Time) => {
     this.setState({ Time });
   };
-
+  handleDraft = () =>
+  {
+    this.setState({ Status : "Draft" });
+    this.handleRent()
+  }
   handleRent = async () => {
     console.log(this.state.Date);
     console.log(this.state.Time);
@@ -64,7 +69,7 @@ export default class RentingCreate extends React.Component {
         StartDateTime: `${this.state.StartDateTime}T00:00:00`,
         EndDateTime: `${this.state.EndDateTime}T00:00:00`,
         TotalPrice: this.state.TotalPrice,
-        Status: "completed",
+        Status: this.state.Status,
         ReferalCode: null,
         SecurityId: this.state.Security.Id
       })
@@ -165,6 +170,8 @@ export default class RentingCreate extends React.Component {
         <Button onClick={this.handleTotalPrice}>Calculate Price</Button>
         <br></br>
         <Button onClick={this.handleRent}>Create</Button>
+        <br></br>
+        <Button onClick={this.handleDraft}>Save for later</Button>
       </div>
     );
   }
