@@ -19,7 +19,12 @@ export default class RentingCreate extends React.Component {
     TotalPrice: 0,
     duration: null,
     Status: "Complete",
-    steps:0
+    steps:0,
+    ReferalCode: null,
+    useRC: false,
+    Tokens: 0,
+    discount: false,
+    useToken: false
   };
 
   async componentDidMount() {
@@ -31,6 +36,9 @@ export default class RentingCreate extends React.Component {
     const SelectedStores = stores.filter(function(item) {
       return assetIds.indexOf(item.AssetId) !== -1;
     });
+
+    const json = await DB.Renters.findByQuery("getTokens");
+    this.setState({ Tokens: json });
     
     const renter = await DB.Renters.findByName(Auth.username());
     const securityCompanies = await DB.Securities.findAll();
@@ -49,6 +57,10 @@ export default class RentingCreate extends React.Component {
   handleEndDate = event => {
     console.log(event.target.value);
     this.setState({ EndDateTime: event.target.value,steps:1 });
+  };
+
+  handleReferalCode = event => {
+    this.setState({ ReferalCode: event.target.value });
   };
 
   handleTime = (event, Time) => {
@@ -70,11 +82,12 @@ export default class RentingCreate extends React.Component {
         EndDateTime: `${this.state.EndDateTime}T00:00:00`,
         TotalPrice: this.state.TotalPrice,
         Status: this.state.Status,
-        ReferalCode: null,
+        ReferalCode: this.state.useRC?(this.state.ReferalCode):(null),
         SecurityId: this.state.Security.Id
       })
     ) {
       this.setState({ isCreated: true });
+      await DB.Renters.findByQuery("tokenUsed");
     }
   };
 
@@ -132,6 +145,33 @@ export default class RentingCreate extends React.Component {
     this.setState({ Capacity: event.target.value });
   };
 
+  handleUseRC = async () => {
+    if(this.state.discount === false)
+    {
+      if (await DB.Renters.checkRC(this.state.ReferalCode)) 
+      {
+        alert("Referral Code Accepted! You got 10% Discount.")
+        this.setState({useRC: true})
+        this.setState({discount: true})
+        this.setState({ TotalPrice: this.state.TotalPrice - (this.state.TotalPrice * 0.1) })
+      }
+      else{
+        alert("Referral Code Not Available!")
+      }
+  }
+  };
+
+  handleUseToken = () => {
+    if(this.state.discount === false)
+    {
+      alert("Token is in use! You got 10% Discount.")
+      this.setState({useToken: true})
+      this.setState({discount: true})
+      this.setState({Tokens: this.state.Tokens - 1})
+      this.setState({ TotalPrice: this.state.TotalPrice - (this.state.TotalPrice * 0.1) })
+    }
+  };
+
   render() {
     return this.state.isCreated ? (
       <Redirect to="/profile" />
@@ -163,6 +203,7 @@ export default class RentingCreate extends React.Component {
             </label>
           </li>
         ))}
+        
         <label>Total price: {this.state.TotalPrice}</label>
         <br></br>
         { this.state.steps  === 1 ?
@@ -174,9 +215,15 @@ export default class RentingCreate extends React.Component {
         }
         { this.state.steps  === 2 ?
           <div>
-          <Button onClick={this.handleRent}>Create</Button>
-          <br></br>
-          <Button onClick={this.handleDraft}>Save for later</Button>
+            <label>Referal Code: </label>
+            <input type="text" onChange={this.handleReferalCode}></input>
+            <Button onClick={() => this.handleUseRC()}>Use Code</Button>
+            <br />
+            {this.state.Tokens > 0?(<div><label>Available Tokens: {this.state.Tokens}</label><Button onClick={() => this.handleUseToken()}>Use Token</Button><br /></div>
+            ):(null)}
+            <Button onClick={this.handleRent}>Create</Button>
+            <br></br>
+            <Button onClick={this.handleDraft}>Save for later</Button>
           </div>
         : null
         }

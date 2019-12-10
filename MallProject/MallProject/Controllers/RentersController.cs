@@ -52,7 +52,34 @@ namespace MallProject.Controllers
                 return Ok(approvedRenters);
             }
 
+            if (query == "getTokens" && renter != null)
+            {
+                return Ok(renter.Tokens);
+            }
+
+            if (query == "tokenUsed" && renter != null)
+            {
+                renter.Tokens = renter.Tokens - 1;
+                db.Entry(renter).State = EntityState.Modified;
+                db.SaveChanges();
+
+                return Ok();
+            }
+
             return NotFound();
+        }
+
+        //Check RC Availibilty
+        [ResponseType(typeof(Renter))]
+        public IHttpActionResult GetUseRC(string RC)
+        {
+            Renter renter = db.Renters.SingleOrDefault(r => r.ReferralCode == RC && r.RCUses > 0);
+            Renter renter2 = db.Renters.Find(User.Identity.GetUserName());
+            if(renter != null && renter2.RCodeUsed == null && RC != renter2.ReferralCode)
+            {
+                return Ok(true);
+            }
+            return Ok(false);
         }
 
         // PUT: api/Renters/5

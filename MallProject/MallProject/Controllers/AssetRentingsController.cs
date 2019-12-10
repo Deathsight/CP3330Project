@@ -122,6 +122,22 @@ namespace MallProject.Controllers
                 };
                 db.Rentings.Add(renting);
                 db.SaveChanges();
+
+                Renter currentRenter = db.Renters.Find(User.Identity.GetUserName());
+
+                currentRenter.RCodeUsed = assetRentingPlus.ReferalCode;
+
+                db.Entry(currentRenter).State = EntityState.Modified;
+                db.SaveChanges();
+
+                Renter rRenter = db.Renters.SingleOrDefault(r => r.ReferralCode == assetRentingPlus.ReferalCode);
+
+                rRenter.RCUses = rRenter.RCUses - 1;
+                rRenter.Tokens = rRenter.Tokens + 1;
+
+                db.Entry(rRenter).State = EntityState.Modified;
+                db.SaveChanges();
+
             }
 
             renting = db.Rentings.SingleOrDefault(r =>

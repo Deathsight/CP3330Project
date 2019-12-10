@@ -77,8 +77,7 @@ export default class RentingIndex extends React.Component {
   }
   async componentDidMount() {
     const Assets = await DB.Assets.findByQuery("getAssets");
-    const User = await DB.Users.findByQuery("profile");
-    this.setState({ Assets, User });
+    this.setState({ Assets});
     this.setState({ Assets2 : Assets});
   }
 

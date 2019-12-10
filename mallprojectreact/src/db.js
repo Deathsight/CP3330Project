@@ -66,6 +66,15 @@ class Entity {
     }
   };
 
+  checkRC = async RC => {
+    const response = await this.authFetch(`/api/${this.entity}?RC=${RC}`);
+    const json = await response.json();
+    console.log("RC Check Result: ",json);
+    if (response.ok) {
+      return json;
+    }
+  };
+
   generateCode = async email => {
     // console.log(id);
     const response = await this.authFetch(`/api/Users/generateCode?email=${email}`);
