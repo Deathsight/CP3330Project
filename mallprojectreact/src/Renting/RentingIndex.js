@@ -19,9 +19,11 @@ import { Button } from "react-bootstrap";
 export default class RentingIndex extends React.Component {
   state = {
     Assets: [],
+    Assets2:[],
     User: null,
     SelectedAssets: [],
-    type:"Store"
+    type:"Store",
+    SearchValue: null
   };
   useStyles = {
     '@global': {
@@ -77,6 +79,7 @@ export default class RentingIndex extends React.Component {
     const Assets = await DB.Assets.findByQuery("getAssets");
     const User = await DB.Users.findByQuery("profile");
     this.setState({ Assets, User });
+    this.setState({ Assets2 : Assets});
   }
 
   handleSelect = (Id) => {
@@ -84,6 +87,25 @@ export default class RentingIndex extends React.Component {
     this.setState({ SelectedAssets: this.state.SelectedAssets.concat(temp) });
     console.log(this.state.SelectedAssets)
   };
+
+  handleSearchValue = (event)=>{
+    console.log(event.target.value);
+    this.setState({ SearchValue: event.target.value });
+  }
+
+
+  handleSearch = () => {
+    if(this.state.SearchValue == null || this.state.SearchValue == ""){
+      this.setState({ Assets: this.state.Assets2 });
+    }
+    else{
+      let searched = this.state.Assets2.filter(s => s.LocationCode == this.state.SearchValue);
+      console.log(this.state.SearchValue);
+      console.log(searched);
+      this.setState({ Assets: searched });
+    }
+    
+  }
 
   render() {
     return (
@@ -105,11 +127,11 @@ export default class RentingIndex extends React.Component {
         <CssBaseline />
         <Paper style={this.useStyles.paper}>
         <h2>Stores</h2>
+        <label>Search By Location: </label><input onChange={this.handleSearchValue}></input>{" "}<Button onClick={this.handleSearch}>Search</Button>
         <Table size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
               <TableCell align="left">Location Code</TableCell>
-              <TableCell align="left">Description</TableCell>
               <TableCell align="left">Size</TableCell>
               <TableCell align="left">Price</TableCell>
               <TableCell align="left"></TableCell>
@@ -121,8 +143,7 @@ export default class RentingIndex extends React.Component {
                       item.Type === "Store" ?
                 <TableRow key={item.Id}>
                   <TableCell align="left">{item.LocationCode}</TableCell>
-                  <TableCell align="left">{item.Description}</TableCell>
-                  <TableCell align="left">{item.Store.Size}</TableCell>
+                  <TableCell align="left">{item.Store.StorePM.Description}</TableCell>
                   <TableCell align="left">{item.Store.StorePM.Price}</TableCell>
         
                   <TableCell align="left">
@@ -147,6 +168,7 @@ export default class RentingIndex extends React.Component {
         
         <Paper style={this.useStyles.paper}>
         <h2>Theaters</h2>
+        <label>Search By Location: </label><input onChange={this.handleSearchValue}></input>{" "}<Button onClick={this.handleSearch}>Search</Button>
         <Table size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
