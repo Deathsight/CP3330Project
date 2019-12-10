@@ -35,7 +35,20 @@ export default class BookTicket extends React.Component {
 
 
   handleCreate = async () => {
-    console.log(`${this.state.StartDate}T${this.state.StartTime}:00`);
+    console.log(`${this.state.show.StartDate}`);
+
+    if (
+      await DB.Emails.SendEmail({
+        To: this.state.Email,
+        Body: `Your Event ID is ${this.state.show.Id}, 
+        The Show Name is ${this.state.params[1]}, 
+        And The Total Price is ${this.state.show.Price}. 
+        the Show will take Place on ${this.state.show.StartTime.split("T")[0]} 
+        and at ${this.state.show.StartTime.split("T")[0]}. To go back to ypu profile and check all your bookings please use this link http:${"//localhost:3000/profile"}`,
+        Subject: "Seat Booking Confirmation",
+      }
+    )
+    )
 
     if (
       await DB.AssetRentingEvents.bookEvent({
