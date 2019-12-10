@@ -8,7 +8,7 @@ import Auth from "../auth";
 
 export default class RentingCreate extends React.Component {
   state = {
-    renter: "",
+    Renting: null,
     Security: null,
     securityCompanies: [],
     isCreated: false,
@@ -23,8 +23,8 @@ export default class RentingCreate extends React.Component {
   };
 
   async componentDidMount() {
-    let assetIds = this.props.match.params.id.split(",")
-    assetIds = assetIds.map(item => parseInt(item))
+    const json = await DB.Rentings.findOne(this.props.match.params.id)
+    this.setState({ Renting: json});
 
     const stores = await DB.Stores.findAll();
 
@@ -42,6 +42,7 @@ export default class RentingCreate extends React.Component {
     this.setState({ renter });
   }
 
+
   handleStartDate = event => {
     console.log(event.target.value);
     this.setState({ StartDateTime: event.target.value });
@@ -54,30 +55,25 @@ export default class RentingCreate extends React.Component {
   handleTime = (event, Time) => {
     this.setState({ Time });
   };
-  handleDraft = async () =>
+  handleRenew = async () =>
   {
-    await this.setState({ Status: "Draft" });
-    this.handleRent()
+      if(await DB.Rentings.edit(
+        this.state.Renting.Id,
+        {
+          Id: this.state.Renting.Id,
+          RenterEmail: Auth.username(),
+          StartDateTime: `${this.state.Renting.StartDateTime}`,
+          EndDateTime: `${this.state.Renting.EndDateTime}T00:00:00`,
+          TotalPrice: this.state.Renting.TotalPrice,
+          Status: "completed",
+          ReferalCode: null,
+          SecurityId: this.state.Renting.Security.Id
+        }
+      )){
+        this.setState({ isCreated: true });
+      }
   }
-  handleRent = async () => {
-    console.log(this.state.Date);
-    console.log(this.state.Time);
-
-    if (
-      await DB.AssetRentings.create({
-        AssetId: this.state.SelectedIds,
-        StartDateTime: `${this.state.StartDateTime}T00:00:00`,
-        EndDateTime: `${this.state.EndDateTime}T00:00:00`,
-        TotalPrice: this.state.TotalPrice,
-        Status: this.state.Status,
-        ReferalCode: null,
-        SecurityId: this.state.Security.Id
-      })
-    ) {
-      this.setState({ isCreated: true });
-    }
-  };
-
+  
   handleTotalPrice = () => {
     var d = this.handleDuration();
     console.log(d);
@@ -100,6 +96,16 @@ export default class RentingCreate extends React.Component {
     }
   };
 
+  isAvailable = time => {
+    // search for time in all times in
+    //this.state.movie.assetBookings.Bookings;
+    const search = `${this.state.Date}T${time}`;
+    return (
+      this.state.movie.AssetBookings.filter(
+        assetBooking => assetBooking.Booking.StartDateTime === search
+      ).length === 0
+    );
+  };
   handleDuration = () => {
     if (this.state.StartDateTime != null && this.state.EndDateTime != null) {
       var edt = new Date(this.state.EndDateTime);
@@ -116,34 +122,22 @@ export default class RentingCreate extends React.Component {
   handleSecurity = sec => {
     this.setState({ Security: sec });
   };
-
-  isAvailable = time => {
-    // search for time in all times in
-    //this.state.movie.assetBookings.Bookings;
-    const search = `${this.state.Date}T${time}`;
-    return (
-      this.state.movie.AssetBookings.filter(
-        assetBooking => assetBooking.Booking.StartDateTime === search
-      ).length === 0
-    );
-  };
-
   handleCapacity = event => {
     this.setState({ Capacity: event.target.value });
   };
+
 
   render() {
     return this.state.isCreated ? (
       <Redirect to="/profile" />
     ) : (
+      this.state.renter ?
       <div>
         <h2>Please Fill the Form Below</h2>
-        <label>Renter: {this.state.renter.Email}</label>
+        <label>Renter: { Auth.username()}</label>
         <br />
-        <label>Store Name: {this.state.renter.StoreName}</label>
-        <br></br>
         <label>Start date: </label>
-        <input type="date" onChange={this.handleStartDate}></input>
+        <input disabled type="date" onChange={this.handleStartDate}></input>
         <br />
         <label>End date: </label>
         <input type="date" onChange={this.handleEndDate}></input>
@@ -174,13 +168,12 @@ export default class RentingCreate extends React.Component {
         }
         { this.state.steps  === 2 ?
           <div>
-          <Button onClick={this.handleRent}>Create</Button>
-          <br></br>
-          <Button onClick={this.handleDraft}>Save for later</Button>
+          <Button onClick={this.handleRenew}>Create</Button>
           </div>
         : null
         }
       </div>
+      :<p>Loading...</p>
     );
   }
 }

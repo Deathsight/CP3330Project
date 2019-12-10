@@ -81,7 +81,6 @@ export default class Profile extends React.Component {
   async componentDidMount() {
     const json = await DB.Users.findByQuery("profile");
     this.setState({ User: json,Name:json.Name,Phone:json.Phone });
-    console.log(json)
     if(this.state.User.Role.Name === "SupportAgent"){
       const json2 = await DB.SupportTickets.findAll();
       this.setState({ Tickets: json2 });
@@ -361,6 +360,8 @@ export default class Profile extends React.Component {
               <Grid item xs={12}>
               </Grid>
             </Grid>
+            
+            {this.state.User.Role.Name === "Customer" ? this.state.User.Subscriptions[0] ==null?(<Link to={`/Subscription`}><Button>Subscribe now !</Button></Link>):this.state.User.Subscriptions[0].ExpiryDate : null}
             <Button onClick={this.handleProfileEdit}>Edit Profile</Button>
           </div>
         </Paper>
@@ -508,9 +509,16 @@ export default class Profile extends React.Component {
                   <TableHead>
                     {console.log(item.AssetRentings)}
                     {item.AssetRentings.map(item => (
+                      item.Asset.Type === "Store" ?
                       <TableRow key={item.Id}>
                         <TableCell>{item.Asset.Type}</TableCell>
                         <TableCell>{item.Asset.Store.StorePM.Description}</TableCell>
+                        <TableCell>{item.Asset.LocationCode}</TableCell>
+                      </TableRow>
+                      :
+                      <TableRow key={item.Id}>
+                        <TableCell>{item.Asset.Type}</TableCell>
+                        <TableCell>{item.Asset.Theater.TheaterPM.Description}</TableCell>
                         <TableCell>{item.Asset.LocationCode}</TableCell>
                       </TableRow>
                     ))}
@@ -531,7 +539,7 @@ export default class Profile extends React.Component {
                   <Link to={`/renting/renew/${item.Id}`}>Renew Contract</Link>
                   </TableCell>
                   <TableCell align="left">
-                  <Link to={`/renting/end/${item.Id}`}>End Contract</Link>
+                  <Link to={`/renting/endcontract/${item.Id}`}>End Contract</Link>
                   </TableCell>
                   </TableRow>
                 )):
