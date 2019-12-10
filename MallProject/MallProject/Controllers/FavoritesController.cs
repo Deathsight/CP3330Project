@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using MallProject.Models;
+using Microsoft.AspNet.Identity;
 
 namespace MallProject.Controllers
 {
@@ -33,6 +34,23 @@ namespace MallProject.Controllers
             }
 
             return Ok(favorite);
+        }
+
+        // GET: -------BY QUERY--------
+        [ResponseType(typeof(Favorite))]
+        public IHttpActionResult GetLike(string query)
+        {
+            User user = db.Users.Find(User.Identity.GetUserName());
+
+            var nothing = "";
+            if (query == "user")
+            {
+                var favorites = db.Favorites.Where(l => l.UserEmail == user.Email);
+                return Ok(favorites);
+            }
+            
+
+            return Ok(nothing);
         }
 
         // PUT: api/Favorites/5
@@ -78,6 +96,10 @@ namespace MallProject.Controllers
             {
                 return BadRequest(ModelState);
             }
+            User user = db.Users.Find(User.Identity.GetUserName());
+
+            favorite.UserEmail = user.Email;
+
 
             db.Favorites.Add(favorite);
             db.SaveChanges();

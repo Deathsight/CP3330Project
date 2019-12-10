@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using MallProject.Models;
+using Microsoft.AspNet.Identity;
 
 namespace MallProject.Controllers
 {
@@ -33,6 +34,23 @@ namespace MallProject.Controllers
             }
 
             return Ok(like);
+        }
+
+        // GET: -------BY QUERY--------
+        [ResponseType(typeof(Like))]
+        public IHttpActionResult GetLike(string query)
+        {
+            User user = db.Users.Find(User.Identity.GetUserName());
+
+            var nothing = "";
+            if (query == "user")
+            {
+                var likes = db.Likes.Where(l => l.UserEmail == user.Email);
+                return Ok(likes);
+            }
+      
+
+            return Ok(nothing);
         }
 
         // PUT: api/Likes/5
@@ -78,6 +96,12 @@ namespace MallProject.Controllers
             {
                 return BadRequest(ModelState);
             }
+
+
+            User user = db.Users.Find(User.Identity.GetUserName());
+
+
+            like.UserEmail = user.Email;
 
             db.Likes.Add(like);
             db.SaveChanges();
