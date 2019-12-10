@@ -3,12 +3,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import DB from "../db.js";
 import Button from "react-bootstrap/Button";
 import { Redirect } from "react-router-dom";
-import Box from '@material-ui/core/Box';
-import Tooltip from '@material-ui/core/Tooltip';
-import Typography from '@material-ui/core/Typography';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
-import { withStyles } from '@material-ui/core/styles';
 import { DropdownList } from 'react-widgets'
+import 'react-widgets/dist/css/react-widgets.css'
 export default class ParkingEdit extends React.Component {
   state = {
     Parking: null,
