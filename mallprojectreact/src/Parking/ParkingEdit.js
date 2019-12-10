@@ -3,7 +3,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import DB from "../db.js";
 import Button from "react-bootstrap/Button";
 import { Redirect } from "react-router-dom";
-
+import Box from '@material-ui/core/Box';
+import Tooltip from '@material-ui/core/Tooltip';
+import Typography from '@material-ui/core/Typography';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+import { withStyles } from '@material-ui/core/styles';
+import { DropdownList } from 'react-widgets'
 export default class ParkingEdit extends React.Component {
   state = {
     Parking: null,
@@ -12,11 +17,18 @@ export default class ParkingEdit extends React.Component {
     ParkingNumber: "",
     CarPlate: "",
     Status: "",
-    isEdited: false
+    isEdited: false,
+    User: null
   };
 
   async componentDidMount() {
     const json = await DB.Parkings.findOne(this.props.match.params.id);
+    const json2 = await DB.Subscriptions.findAll()
+    let tempArr = []
+    json2.map(item => 
+        tempArr.push(item.Id)
+      )
+    this.setState({ User: tempArr});
     this.setState({ Parking: json });
   }
 
@@ -54,10 +66,23 @@ export default class ParkingEdit extends React.Component {
           <br />
 
           <label>Subscriper </label>
-          <input
+          {this.state.User ?(
+          <DropdownList style={{width: 250}} filter
+          data={this.state.User}
+          
+          //onCreate={name => this.handleCreate(name)}
+          //onChange={value => this.setState({ value })}
+          // textField="name"
+          value={this.state.value}
+          
+          onChange={value => this.setState({ value, SubscriptionID: value })}
+        />
+        ) : null}
+
+          {/* <input
             type="text"
             onChange={this.handleSubscriptionID}
-          ></input>
+          ></input> */}
           <br></br>
 
           <label>CArPlat: </label>

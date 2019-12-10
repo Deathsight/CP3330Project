@@ -42,7 +42,7 @@ namespace MallProject.Controllers
 
             if (query == "getAssets")
             {
-                List<Asset> availableAssets = db.Assets.Where(a => a.AssetRentings.Where(ar => ar.Renting.EndDateTime > DateTime.Now && ar.Renting.Status != "Draft").Count() == 0).ToList();
+                List<Asset> availableAssets = db.Assets.Where(a => a.AssetRentings.Where(ar => ar.Renting.EndDateTime > DateTime.Now && ar.Renting.Status != "Draft" && ar.Renting.Status != "Expired").Count() == 0).ToList();
 
                 //foreach (Asset asset in assets)
                 //{

@@ -46,6 +46,11 @@ namespace MallProject.Controllers
             {
                 return Ok(renter);
             }
+            if (query == "getAllRenter")
+            {
+                List<Renter> approvedRenters = db.Renters.Where(r => r.Status == "Approved").ToList();
+                return Ok(approvedRenters);
+            }
 
             return NotFound();
         }

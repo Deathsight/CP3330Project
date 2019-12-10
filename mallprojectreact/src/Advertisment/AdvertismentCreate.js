@@ -2,7 +2,6 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DB from "../db"
 import auth from "../auth"
-import { post } from 'axios';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
@@ -21,7 +20,7 @@ export default class AdvertismentCreate extends React.Component {
       Description: "",
       Status: "waitingApproval",
     },
-    Types:["Sport","Electronic","Clothes","Accesory's","Prefium","Entertaniment","Food"],
+    Types:["Sport","Electronic","Clothes","Accessoris","Perfume","Entertaniment","Food"],
     User: null,
     isCreated: false
   };
@@ -81,6 +80,7 @@ export default class AdvertismentCreate extends React.Component {
     this.setState({Advertisment : temp})
   } 
 
+ 
   render(){
 
     return this.state.isCreated ? (
@@ -92,6 +92,7 @@ export default class AdvertismentCreate extends React.Component {
         paddingTop:"16.8%",
         paddingBottom:"11.5%",
         width:"100%",
+
         }}>
         <div>
           <div style={{  position: 'absolute',  left: '0px', top: '0px',zIndex: -1, backgroundImage:`url(https://w.wallhaven.cc/full/4y/wallhaven-4yd13k.jpg)`}}></div>
@@ -101,7 +102,7 @@ export default class AdvertismentCreate extends React.Component {
         
         <Grid container spacing={3} >
         <Grid container item xs={12} spacing={1}>
-        <h2 style={{borderBottom:"1.8px solid lightgray"}}>Advertisment</h2>
+        <h2 style={{borderBottom:"1.8px solid lightgray"}}>Advertisement Create</h2>
         </Grid>
         <Grid container item xs={6} spacing={1}>
             <TextField
@@ -161,6 +162,7 @@ export default class AdvertismentCreate extends React.Component {
               }}
               onChange={this.handleEndDateTime}
             />
+
         </Grid>
         <Grid container item xs={12} spacing={1}>
           <TextField
